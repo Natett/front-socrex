@@ -1,5 +1,36 @@
-<p>This is the partial for view 2.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<div>
+  <h2>Socrex Listings</h2>
+  <h2>{{rows.length}} Listing{{plural(rows)}} <span ng-show="temp">?<small class="muted"><em > (only {{rows.length-1}} actually....)</em></small></span></h2>
+  <form class="form-horizontal">
+  <span ng-class="{'input-append':addName}">
+    <input id="add" type="text" placeholder="Another one ?" ng-model="addName" ng-change="addTemp()"/>
+    <input type="submit" class="btn btn-primary" ng-click="addRow()" ng-show="addName" value="+ add"/>
+    </span>
+
+    <span class="search input-prepend" ng-class="{'input-append':search}">
+      <span class="add-on"><i class="icon-search"></i></span>
+  <input type="text" class="span2"  placeholder="Search" ng-model="search">
+    <button type="submit" class="btn btn-inverse" ng-click="search=''" ng-show="search" value="+ add"><i class="icon-remove icon-white"></i></button>
+</span>
+  </form>
+  <table  class="table table-striped">
+    <tr>
+    <td></td>
+    <td>Title</td>
+    <td>Link</td>
+    <td>Price</td>
+    <td>Bedroom</td>
+    <td>Bathroom</td>
+    <td></td>
+    </tr>
+    <tr ng-repeat="row in rows | filter : search"  ng-class="{'muted':isTemp($index)}">
+      <td>{{$index+1}}</td>
+      <td>{{row[0]}}</td>
+      <td><a href="{{row[1]}}">{{row[1]}}</a></td>
+      <td>{{row[2]}}</td>
+      <td>{{row[4]}}</td>
+      <td>{{row[5]}}</td>
+      <td><img src="{{row[3]}}" height="80" width="80"></td>
+    </tr>
+  </table>
+</div>
