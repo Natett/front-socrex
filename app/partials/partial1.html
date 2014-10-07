@@ -1,39 +1,27 @@
 <div>
-<h2>{{listing[0]}}</h2>
+<h2>{{selectedListing.title}}</h2>
 <br>
 <div id="mainContent">
+    <input type="button" value="Back" ng-click="redirecToListingList();" />
     <table>
         <tr>
-        <td>Price: {{listing[2]}}</td>
+        <td>Price: {{selectedListing.price}}</td>
         </tr>
         <tr>
-        <td>Bedroom: {{listing[4]}}</td>
+        <td>Address: {{selectedListing.address}}</td>
         </tr>
         <tr>
-        <td>Bathroom: {{listing[5]}}</td>
+        <td>Bedroom: {{selectedListing.bedroom}}</td>
+        </tr>
+        <tr>
+        <td>Bathroom: {{selectedListing.bathroom}}</td>
         </tr>
     </table>
     <br>
-    <img src="{{listing[3]}}">
+    <img src="{{selectedListing.photo}}">
     <br>
     <br>
-     **AVAILABLE 1/1/15**
-
-* Hardwood Floors
-* Lots of Closet Space
-* Nice Bathroom
-* Great Location
-* Heat & Hot Water Included
-
-Close to T, shops, bars, and restaurants!
-
-***Don't hesitate to call/text Ryan Kelly from Modern Real Estate show contact info to set up a showing, or to inquire about one of the thousands of apartments in my database!
-Or fill out this easy rental form online
-https://ryanmodern.wufoo.com/forms/zrpg8b71vv8kv9/
-
-Only a fraction of my properties are on craigslist! I also have listings in/close to: Allston, Brighton, Brookline, Cambridge, Fenway, Kenmore, Mission Hill, Back Bay, South End, Beacon Hill, Boston University, Emmanuel, Simmons, Northeastern, Emerson, Berklee, Mass Art, Longwood, Wheelock, Suffolk, Newbury College, Wentworth, MCPHS, Boston Conservatory, Northeastern and more!
-
-
+     {{selectedListing.description}}
 </div>
 <!--
 <table  class="table table-striped">
