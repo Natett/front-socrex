@@ -1,13 +1,18 @@
 var socrexControllers = angular.module('socrex.controllers', []);
 
-socrexControllers.controller('listCtrl', ['$scope' , '$http', '$rootScope',
-    function($scope,$http,$rootScope) {
-        
+socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope',
+    function($scope,$http, $location,$rootScope) {
+        $scope.redirecToListingList = function(){
+            $location.path( "/view2/"+$rootScope.currentListingFilter, false );
+        }
     }
 ]);
 
-socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$rootScope',
-    function($scope,$http,$location, $rootScope) {
+socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$rootScope', '$routeParams',
+    function($scope,$http,$location, $rootScope, $routeParams) {
+        
+        $scope.filterId = $routeParams.filterId;
+        
         $scope.rows = [];
         
         $scope.rows2 = [];
@@ -68,15 +73,12 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             $location.path( "/view1", false );
         }
         
-        $scope.redirecToListingList = function(){
-            $location.path( "/view2", false );
-        }
-        
         $scope.filterListings = function(item, event) {
 		    // dummy filters
             // must be bery carefull with the filters value structure, it has to start with single couotes, and de inner quotes be double
             // otherwise there would be an error in python decoding  
-		    var filters = {'filters':'{"bedroom":2}'};
+		    //var filters = {'filters':'{"bedroom":2}'};
+		    var filters = {'id':$scope.filterId};
 		    
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
@@ -87,6 +89,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             });
 
             responsePromise.success(function(data, status, headers, config) {
+                $rootScope.currentListingFilter = $scope.filterId;
                 $scope.rows2 = data.Data.Listings;
                 console.log($scope.rows2);
             });
