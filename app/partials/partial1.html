@@ -22,6 +22,24 @@
     <br>
     <br>
      {{selectedListing.description}}
+    <br>
+    <br>
+    <table  class="table table-striped">
+        <tr style="width:100px">
+            <td><input type="button" value="Original listing" ng-click="onClickOriginalListingButton();" /></td>
+            <td><input type="button" value="Contact" ng-click="onClickContact();" /></td>
+            <td><input type="button" value="Verify availability" ng-click="onClickVerifyAvailability();" /></td>
+            <td><input type="button" value="Expert review" ng-click="onClickExpertReview();" /></td>
+            <td><input type="button" value="Tour" ng-click="onClickTour();" /></td>
+        </tr>
+        <tr style="width:100px">
+            <td> Go to the original listing page</td>
+            <td> Get the info of the landlord and contac him directly </td>
+            <td> we are going to verify availability and any special requirements by the landlord </td>
+            <td> A local expert will review the listing</td>
+            <td> We will enable a virtual tour so you can do a 360 degrees tour</td>
+        </tr>
+    </table>
 </div>
 <!--
 <table  class="table table-striped">

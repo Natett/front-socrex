@@ -2,6 +2,31 @@ var socrexControllers = angular.module('socrex.controllers', []);
 
 socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope',
     function($scope,$http, $location,$rootScope) {
+        
+        $scope.onClickOriginalListingButton = function(){
+            $scope.openOriginalListingTab();
+        }
+        
+        $scope.onClickContact = function(){
+            
+        }
+        
+        $scope.onClickVerifyAvailability = function(){
+            
+        }
+        
+        $scope.onClickExpertReview = function(){
+            
+        }
+        
+        $scope.onClickTour = function(){
+            
+        }
+        
+        $scope.openOriginalListingTab = function(){
+            window.open($rootScope.selectedListing.url,'_blank');
+        }
+        
         $scope.redirecToListingList = function(){
             $location.path( "/view2/"+$rootScope.currentListingFilter, false );
         }
@@ -20,6 +45,10 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         $rootScope.selectedListing = {};
                        
         $scope.temp = false;
+        
+        $scope.initRating = function(){
+            
+        }
     
         $scope.addRow = function(){
             $scope.temp = false;
@@ -99,7 +128,14 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             });
         }
         
-        // Do the first call
-        $scope.filterListings();
+        $scope.init = function(){
+            // Do the first call to server
+            $scope.filterListings();
+            // init rating 
+            $scope.initRating();
+        }
+        
+        $scope.init();
+        
     }
 ]);
