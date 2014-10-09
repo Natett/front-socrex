@@ -8,18 +8,17 @@ angular.module('socrex.directives', []).
     return function(scope, elm, attrs) {
       elm.text(version);
     };
-  }]).directive( 'rating', function() {
+  }]).directive( 'jqueryuidialog', function() {
     var linkFn;
     linkFn = function( scope, element, attrs ) {
-      angular.element( '.basic_rating' ).jRating({
-	      step:true,
-	      length : 5, // nb of stars
-	      showRateInfo:false,
-	      canRateAgain : true,
-	      nbRates : 1000,
-	      decimalLength:0 // number of decimal in the rate
-	    });
+      var dialogConfig = {
+        autoOpen: false,
+        height: 350,
+        width: 350,
+        modal: true
+      };
       
+      element.dialog(dialogConfig);
     }
   
     return {

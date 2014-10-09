@@ -8,19 +8,19 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
         }
         
         $scope.onClickContact = function(){
-            
+            angular.element('#contactdialog').dialog( "open" );
         }
         
         $scope.onClickVerifyAvailability = function(){
-            
+            angular.element('#verifyavailabilitydialog').dialog( "open" );
         }
         
         $scope.onClickExpertReview = function(){
-            
+            angular.element('#expertreviewdialog').dialog( "open" );
         }
         
         $scope.onClickTour = function(){
-            
+            angular.element('#tourdialog').dialog( "open" );
         }
         
         $scope.openOriginalListingTab = function(){
