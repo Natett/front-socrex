@@ -30,18 +30,22 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
         
         $scope.onClickContact = function(){
             angular.element('#contactdialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,"jhon@socrex.com","sendemail")
         }
         
         $scope.onClickVerifyAvailability = function(){
             angular.element('#verifyavailabilitydialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,"jhon@socrex.com","verifyavailability")
         }
         
         $scope.onClickExpertReview = function(){
             angular.element('#expertreviewdialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,"jhon@socrex.com","expertreview")
         }
         
         $scope.onClickTour = function(){
             angular.element('#tourdialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,"jhon@socrex.com","virtualtour")
         }
         
         $scope.openOriginalListingTab = function(){
@@ -56,6 +60,18 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             if($rootScope.selectedListing == null){
                 $scope.getDetailedListing($routeParams.listingId)
             }
+        }
+        
+        $scope.saveClickOnDB = function(listingid,useremail, option) {
+            // dummy filters
+    		//var listingId = '542c3f86b43c2c00029a8211';
+    		    
+            var responsePromise = $http({
+    		    //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option,
+                method: 'POST',
+    		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
         }
         
         $scope.validateSelectedListing();
