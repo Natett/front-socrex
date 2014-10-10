@@ -1,7 +1,28 @@
 var socrexControllers = angular.module('socrex.controllers', []);
 
-socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope',
-    function($scope,$http, $location,$rootScope) {
+socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope', '$routeParams' ,
+    function($scope,$http, $location,$rootScope, $routeParams) {
+        
+        $scope.getDetailedListing = function(listingId) {
+            // dummy filters
+    		//var listingId = '542c3f86b43c2c00029a8211';
+    		    
+            var responsePromise = $http({
+    		    //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                method: 'GET',
+    		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+    
+            responsePromise.success(function(data, status, headers, config) {
+                //$scope.rows2 = data.Data;
+                $rootScope.selectedListing = data.Data;
+            });
+                
+            responsePromise.error(function(data, status, headers, config) {
+                alert("AJAX failed!");
+            });
+        }
         
         $scope.onClickOriginalListingButton = function(){
             $scope.openOriginalListingTab();
@@ -28,8 +49,17 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
         }
         
         $scope.redirecToListingList = function(){
-            $location.path( "/view2/"+$rootScope.currentListingFilter, false );
+            $location.path( "/listings/filter/"+$rootScope.currentListingFilter, false );
         }
+        
+        $scope.validateSelectedListing = function(){
+            if($rootScope.selectedListing == null){
+                $scope.getDetailedListing($routeParams.listingId)
+            }
+        }
+        
+        $scope.validateSelectedListing();
+        
     }
 ]);
 
@@ -42,7 +72,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         
         $scope.rows2 = [];
         
-        $rootScope.selectedListing = {};
+        $rootScope.selectedListing = null;
                        
         $scope.temp = false;
         
@@ -99,7 +129,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         }
         
         $scope.redirecToListingDetail = function(){
-            $location.path( "/view1", false );
+            $location.path( "/listing/" + $rootScope.selectedListing._id.$oid, false );
         }
         
         $scope.filterListings = function(item, event) {
