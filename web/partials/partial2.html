@@ -1,0 +1,30 @@
+<div>
+  <h2>Socrex Listings</h2>
+  <h2>{{rows2.length}} Listing{{plural(rows2)}} <span ng-show="temp">?<small class="muted"><em > (only {{rows2.length-1}} actually....)</em></small></span></h2>
+  <form class="form-horizontal">
+  <input type="button" value="reload" ng-click="filterListings();" />
+  </form>
+  <table  class="table table-striped">
+    <tr>
+    <td>Socrex rank</td>
+    <td>Your rank</td>
+    <td>Price</td>
+    <td>Bedroom</td>
+    <td>Bathroom</td>
+    <td>Address</td>
+    <td>Details</td>
+    </tr>
+    <tr ng-repeat="row in rows2 | filter : search"  ng-class="{'muted':isTemp($index)}">
+      <td>{{$index+1}}</td>
+      <!--<td><div class="basic_rating" data-average="0" data-id="{{$index+1}}" rating></div></td>-->
+      <td>
+        <input type="range" value="0" min="0" max="5" step="1">
+      </td>
+      <td>{{row.price}}</td>
+      <td>{{row.bedroom}}</td>
+      <td>{{row.bathroom}}</td>
+      <td>{{row.address}}</td>
+      <td><input type="button" value="details" ng-click="getDetailedListing('{{row._id.$oid}}');"></td>
+    </tr>
+  </table>
+</div>
