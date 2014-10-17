@@ -28,7 +28,7 @@ angular.module('socrex.directives', []).
   }).directive( 'bxslider', function() {
     var linkFn;
     linkFn = function( scope, element, attrs ) {
-      element.bxSlider({adaptiveHeight: true, responsive:false});
+      element.bxSlider({adaptiveHeight: true});
     }
   
     return {
