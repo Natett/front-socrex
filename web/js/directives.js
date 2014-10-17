@@ -25,5 +25,21 @@ angular.module('socrex.directives', []).
       restrict: 'A',
       link: linkFn
     }
+  }).directive( 'slidesjs', function() {
+    var linkFn;
+    linkFn = function( scope, element, attrs ) {
+      var sliderConfig = {
+        width: 940,
+        height: 528
+      };
+      
+      element.slidesjs(sliderConfig);
+      
+    }
+  
+    return {
+      restrict: 'A',
+      link: linkFn
+    }
   });
   
