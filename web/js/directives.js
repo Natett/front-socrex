@@ -45,7 +45,7 @@ angular.module('socrex.directives', []).
        replace: true,
        template: '<ul class="bxslider">' +
                    '<li ng-repeat="picture in selectedListing.pictures">' +
-                     '<img ng-src="{{picture.src}}" alt="" />' +
+                     '<img ng-src="{{picture}}" alt="" />' +
                    '</li>' +
                   '</ul>',
        link: function(scope, elm, attrs) {
