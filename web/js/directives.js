@@ -39,7 +39,7 @@ angular.module('socrex.directives', []).
                    '</li>',
       link: linkFn
     }
-  })app.directive('startslider',function() {
+  }).directive('startslider',function() {
     return {
        restrict: 'A',
        replace: true,
