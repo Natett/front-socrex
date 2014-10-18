@@ -17,11 +17,24 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             responsePromise.success(function(data, status, headers, config) {
                 //$scope.rows2 = data.Data;
                 $rootScope.selectedListing = data.Data;
+                $scope.updateSliderPhotos(data.Data.pictures);
+                
             });
                 
             responsePromise.error(function(data, status, headers, config) {
                 alert("AJAX failed!");
             });
+        }
+        
+        $scope.updateSliderPhotos = function(photoArray){
+            var sliderElement = angular.element('#sliderelement');
+            
+            for (index = 0; index < photoArray.length; ++index) {
+                sliderElement.append('<li><img src="'+photoArray[index]+'"></li>');
+            }
+            
+            sliderElement.reloadSlider();
+            
         }
         
         $scope.onClickOriginalListingButton = function(){
