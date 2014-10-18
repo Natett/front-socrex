@@ -6,6 +6,16 @@
     <table>
         <tr>
           <td>
+            <div>
+              <ul class="bxslider" bxslider>
+                <li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>
+                <li><img src="http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg" /></li>
+                <li><img src="http://images.craigslist.org/00H0H_hKFjFn3Dw4B_600x450.jpg" /></li>
+                <li><img src="http://images.craigslist.org/00s0s_8XViC9BNrrD_600x450.jpg" /></li>
+              </ul>
+            </div>
+          </td>
+          <td>
             <table>
               <tr>
                 <td>Price: {{selectedListing.price}}</td>
@@ -19,25 +29,12 @@
               <tr>
                 <td>Bathroom: {{selectedListing.bathroom}}</td>
               </tr>
-              <tr>
-                <td>{{selectedListing.description}}</td>
-              </tr>
             </table>
-          </td>
-          <td>
-            <div>
-              <ul class="bxslider" bxslider>
-                <li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>
-                <li><img src="http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg" /></li>
-                <li><img src="http://images.craigslist.org/00H0H_hKFjFn3Dw4B_600x450.jpg" /></li>
-                <li><img src="http://images.craigslist.org/00s0s_8XViC9BNrrD_600x450.jpg" /></li>
-              </ul>
-            </div>
           </td>
         </tr>
     </table>
     <br>
-    
+      {{selectedListing.description}}
     <br>
     <br>
      
