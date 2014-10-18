@@ -39,5 +39,26 @@ angular.module('socrex.directives', []).
                    '</li>',
       link: linkFn
     }
-  });
+  })app.directive('startslider',function() {
+    return {
+       restrict: 'A',
+       replace: true,
+       template: '<ul class="bxslider">' +
+                   '<li ng-repeat="picture in selectedListing.pictures">' +
+                     '<img ng-src="{{picture.src}}" alt="" />' +
+                   '</li>' +
+                  '</ul>',
+       link: function(scope, elm, attrs) {
+          elm.ready(function() {    
+               $("." + $(elm[0]).attr('class')).bxSlider({
+                    mode: 'fade',
+                    autoControls: true,
+                    slideWidth: 360,
+                    slideHeight:600
+            });
+
+          });
+      }
+    };
+});;
   
