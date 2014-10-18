@@ -35,7 +35,7 @@ angular.module('socrex.directives', []).
       restrict: 'A',
       replace: true,
       template: '<li ng-repeat="picture in selectedListing.pictures">' +
-                     '<img ng-src="{{picture.src}}" alt="" />' +
+                     '<img ng-src="{{picture}}" alt="" />' +
                    '</li>',
       link: linkFn
     }
