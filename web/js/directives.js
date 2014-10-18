@@ -33,6 +33,10 @@ angular.module('socrex.directives', []).
   
     return {
       restrict: 'A',
+      replace: true,
+      template: '<li ng-repeat="picture in selectedListing.pictures">' +
+                     '<img ng-src="{{picture.src}}" alt="" />' +
+                   '</li>',
       link: linkFn
     }
   });
