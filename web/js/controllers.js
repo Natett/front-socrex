@@ -28,6 +28,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
                 
                 //$scope.pictures = $rootScope.selectedListing.pictures;
                 $scope.$broadcast('reload-slider')
+                $scope.$apply();
             });
                 
             responsePromise.error(function(data, status, headers, config) {
