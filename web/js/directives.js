@@ -29,10 +29,11 @@ angular.module('socrex.directives', []).
     var linkFn;
     linkFn = function( scope, element, attrs ) {
       var slider = element.bxSlider({adaptiveHeight: false, responsive:false});
-      
+      /*
       scope.$on('reload-slider', function() {
                 slider.reloadSlider();
             });
+            */
     }
   
     return {
