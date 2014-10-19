@@ -27,6 +27,18 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             $scope.directives3.push(directive);
             $scope.$broadcast('reload-slider')
         }
+        
+        $scope.addPictureToSlider = function(pictureUrl) {
+            var directive = '<li><img src="'+pictureUrl+'" /></li>';
+            $scope.directives3.push(directive);
+        }
+        
+        $scope.addPictureArrayToSlider = function(pictureUrlArray) {
+            for (var i = 0; i < pictureUrlArray.length; i++) {
+                $scope.addPictureToSlider(pictureUrlArray[i]);
+            }
+        }
+        
         $scope.getDetailedListing = function(listingId) {
             // dummy filters
     		//var listingId = '542c3f86b43c2c00029a8211';
@@ -41,7 +53,8 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             responsePromise.success(function(data, status, headers, config) {
                 //$scope.rows2 = data.Data;
                 $rootScope.selectedListing = data.Data;
-                $scope.pictures.push("http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg");
+                //$scope.pictures.push("http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg");
+                
                 /*
                 // clear array
                 $scope.pictures.length = 0;
@@ -49,6 +62,8 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
                 for (var i = 0; i < $rootScope.selectedListing.pictures.length; i++) {
                     $scope.pictures.push($rootScope.selectedListing.pictures[i]);
                 }*/
+                
+                $scope.addPictureArrayToSlider($rootScope.selectedListing.pictures);
                 
                 //$scope.pictures = $rootScope.selectedListing.pictures;
                 $scope.$broadcast('reload-slider')
