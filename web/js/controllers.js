@@ -2,7 +2,7 @@ var socrexControllers = angular.module('socrex.controllers', []);
 
 socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope', '$routeParams' ,
     function($scope,$http, $location,$rootScope, $routeParams) {
-        
+        $scope.pictures = ["http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg"];
         $scope.getDetailedListing = function(listingId) {
             // dummy filters
     		//var listingId = '542c3f86b43c2c00029a8211';

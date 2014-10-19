@@ -46,7 +46,7 @@ angular.module('socrex.directives', []).
        restrict: 'A',
        replace: true,
        template: '<ul class="bxslider">' +
-                   '<li ng-repeat="picture in selectedListing.pictures">' +
+                   '<li ng-repeat="picture in pictures">' +
                      '<img ng-src="{{picture}}" alt="" />' +
                    '</li>' +
                   '</ul>',
