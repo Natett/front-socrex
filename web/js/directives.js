@@ -64,5 +64,31 @@ angular.module('socrex.directives', []).
           });
       }
     };
-});;
+}).directive('dynamic', function ($compile, $parse) {
+  return {
+    restrict: 'A',
+    replace: true,
+    link: function (scope, element, attr) {
+      attr.$observe('dynamic', function(val) {
+        element.html('');
+        var directives = $parse(val)(scope);
+        angular.forEach(directives, function(directive) {
+          element.append($compile(directive)(scope));
+        });
+      });
+    }
+  };
+}).directive('two', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div>Directive two</div>'
+    }
+}).directive('one', function() {
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<div>Directive one</div>'
+    }
+});
   
