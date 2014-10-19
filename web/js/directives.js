@@ -78,17 +78,5 @@ angular.module('socrex.directives', []).
       });
     }
   };
-}).directive('two', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div>Directive two</div>'
-    }
-}).directive('one', function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        template: '<div>Directive one</div>'
-    }
 });
   
