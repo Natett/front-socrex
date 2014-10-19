@@ -20,6 +20,10 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
                 // clear array
                 $scope.pictures.length = 0;
                 $scope.pictures.concat($rootScope.selectedListing.pictures);
+                for (var i = 0; i < $rootScope.selectedListing.pictures.length; i++) {
+                    $scope.pictures.push($rootScope.selectedListing.pictures[i]);
+                }
+                
                 //$scope.pictures = $rootScope.selectedListing.pictures;
                 $scope.$broadcast('reload-slider')
             });
