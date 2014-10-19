@@ -43,6 +43,32 @@ angular.module('socrex.directives', []).
                    '</li>',
       link: linkFn
     }
+  }).directive( 'bxslider2', function() {
+    var linkFn;
+    linkFn = function( scope, element, attrs ) {
+      var slider = element.bxSlider({adaptiveHeight: false, responsive:false});
+      
+      attrs.$observe('bxslider2', function(val) {
+        bxslider2.html('');
+        var directives = $parse(val)(scope);
+        angular.forEach(directives, function(directive) {
+          element.append($compile(directive)(scope));
+        });
+      });
+      
+      scope.$on('reload-slider', function() {
+                slider.reloadSlider();
+            });
+    }
+  
+    return {
+      restrict: 'A',
+      //template: '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>',
+      template:   '<li ng-repeat="picture in pictures">' +
+                     '<img ng-src="{{picture}}" alt="" />' +
+                   '</li>',
+      link: linkFn
+    }
   }).directive('startslider',function() {
     return {
        restrict: 'A',
@@ -83,11 +109,13 @@ angular.module('socrex.directives', []).
     restrict: 'A',
     replace: true,
     link: function (scope, element, attr) {
+      var slider = element.bxSlider({adaptiveHeight: false, responsive:false});
       attr.$observe('dynamic3', function(val) {
         element.html('');
         var directives = $parse(val)(scope);
         angular.forEach(directives, function(directive) {
           element.append($compile(directive)(scope));
+          slider.reloadSlider();
         });
       });
     }
