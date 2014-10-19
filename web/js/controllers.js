@@ -19,7 +19,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
                 $rootScope.selectedListing = data.Data;
                 // clear array
                 $scope.pictures.length = 0;
-                $scope.pictures.concat($rootScope.selectedListing.pictures);
+                // add images to array
                 for (var i = 0; i < $rootScope.selectedListing.pictures.length; i++) {
                     $scope.pictures.push($rootScope.selectedListing.pictures[i]);
                 }
