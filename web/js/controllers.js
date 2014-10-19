@@ -9,11 +9,11 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             $scope.directives.push(directive);
         }
         $scope.add2 = function() {
-            var directive = 'http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg';
+            var directive = '<p>http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg</p>';
             $scope.directives2.push(directive);
         }
         $scope.add3 = function() {
-            var directive = 'http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg';
+            var directive = '<p>http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg</p>';
             $scope.directives2.push(directive);
         }
         $scope.getDetailedListing = function(listingId) {
