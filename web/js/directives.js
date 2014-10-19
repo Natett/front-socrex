@@ -28,7 +28,11 @@ angular.module('socrex.directives', []).
   }).directive( 'bxslider', function() {
     var linkFn;
     linkFn = function( scope, element, attrs ) {
-      element.bxSlider({adaptiveHeight: false, responsive:false});
+      var slider = element.bxSlider({adaptiveHeight: false, responsive:false});
+      
+      scope.$on('reload-slider', function() {
+                slider.reloadSlider();
+            });
     }
   
     return {
