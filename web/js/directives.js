@@ -110,13 +110,18 @@ angular.module('socrex.directives', []).
     replace: true,
     link: function (scope, element, attr) {
       var slider = element.bxSlider({adaptiveHeight: false, responsive:false});
+      
       attr.$observe('dynamic3', function(val) {
         element.html('');
         var directives = $parse(val)(scope);
         angular.forEach(directives, function(directive) {
           element.append($compile(directive)(scope));
-          slider.reloadSlider();
+          //slider.reloadSlider();
         });
+      });
+      
+      scope.$on('reload-slider', function() {
+                slider.reloadSlider();
       });
     }
   };
