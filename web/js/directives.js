@@ -64,6 +64,20 @@ angular.module('socrex.directives', []).
           });
       }
     };
+}).directive('dynamic2', function ($compile, $parse) {
+  return {
+    restrict: 'A',
+    replace: true,
+    link: function (scope, element, attr) {
+      attr.$observe('dynamic2', function(val) {
+        element.html('');
+        var directives = $parse(val)(scope);
+        angular.forEach(directives, function(directive) {
+          element.append($compile(directive)(scope));
+        });
+      });
+    }
+  };
 }).directive('dynamic', function ($compile, $parse) {
   return {
     restrict: 'A',
