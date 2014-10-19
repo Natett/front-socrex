@@ -28,12 +28,7 @@ angular.module('socrex.directives', []).
   }).directive( 'bxslider', function() {
     var linkFn;
     linkFn = function( scope, element, attrs ) {
-      var slider = element.bxSlider({adaptiveHeight: false, responsive:false});
-      /*
-      scope.$on('reload-slider', function() {
-                slider.reloadSlider();
-            });
-            */
+      element.bxSlider({adaptiveHeight: false, responsive:false});
     }
   
     return {
@@ -44,5 +39,26 @@ angular.module('socrex.directives', []).
                    '</li>',
       link: linkFn
     }
-  });
+  }).directive('startslider',function() {
+    return {
+       restrict: 'A',
+       replace: true,
+       template: '<ul class="bxslider">' +
+                   '<li ng-repeat="picture in selectedListing.pictures">' +
+                     '<img ng-src="{{picture.}}" alt="" />' +
+                   '</li>' +
+                  '</ul>',
+       link: function(scope, elm, attrs) {
+          elm.ready(function() {    
+               $("." + $(elm[0]).attr('class')).bxSlider({
+                    mode: 'fade',
+                    autoControls: true,
+                    slideWidth: 360,
+                    slideHeight:600
+            });
+
+          });
+      }
+    };
+});;
   
