@@ -19,11 +19,11 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
         }
         $scope.add4 = function() {
             var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
-            $scope.directives2.push(directive);
+            $scope.directives3.push(directive);
         }
         $scope.add5 = function() {
             var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
-            $scope.directives2.push(directive);
+            $scope.directives3.push(directive);
         }
         $scope.getDetailedListing = function(listingId) {
             // dummy filters
