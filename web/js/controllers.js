@@ -17,6 +17,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             responsePromise.success(function(data, status, headers, config) {
                 //$scope.rows2 = data.Data;
                 $rootScope.selectedListing = data.Data;
+                $scope.pictures = $rootScope.selectedListing.pictures;
                 $scope.$broadcast('reload-slider')
             });
                 
