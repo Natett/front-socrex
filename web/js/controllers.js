@@ -3,17 +3,17 @@ var socrexControllers = angular.module('socrex.controllers', []);
 socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope', '$routeParams' ,
     function($scope,$http, $location,$rootScope, $routeParams) {
         $scope.pictures = ["http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg", "http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg"];
-        $scope.directives2 = ["<p>http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg</p>", "<p>http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg</p>"];
+        $scope.directives2 = [];
         $scope.directives = ['<div>Directive one</div>', '<div>Directive two</div>'];
         $scope.add = function(directive) {
             $scope.directives.push(directive);
         }
         $scope.add2 = function() {
-            var directive = '<p>http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg</p>';
+            var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
             $scope.directives2.push(directive);
         }
         $scope.add3 = function() {
-            var directive = '<p>http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg</p>';
+            var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
             $scope.directives2.push(directive);
         }
         $scope.getDetailedListing = function(listingId) {
@@ -41,7 +41,6 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
                 
                 //$scope.pictures = $rootScope.selectedListing.pictures;
                 $scope.$broadcast('reload-slider')
-                $scope.$apply();
             });
                 
             responsePromise.error(function(data, status, headers, config) {
