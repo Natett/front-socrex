@@ -48,7 +48,7 @@ angular.module('socrex.directives', []).
     restrict: 'A',
     replace: true,
     link: function (scope, element, attr) {
-      var slider = element.bxSlider({adaptiveHeight: false, responsive:false});
+      var slider = element.bxSlider({adaptiveHeight: true, responsive:false});
       
       attr.$observe('dynamic3', function(val) {
         element.html('');
