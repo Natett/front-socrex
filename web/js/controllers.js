@@ -73,9 +73,10 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
         }
         
         $scope.validateSelectedListing = function(){
-            if($rootScope.selectedListing == null){
+            // always call listing detail from server to get images
+            //if($rootScope.selectedListing == null){
                 $scope.getDetailedListing($routeParams.listingId)
-            }
+            //}
         }
         
         $scope.saveClickOnDB = function(listingid,useremail, option) {
