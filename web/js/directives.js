@@ -40,7 +40,7 @@ angular.module('socrex.directives', []).
       //replace: true,
       
       //template: '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>',
-      template:   '<li ng-repeat="picture in pictures">' +
+      template:   '<li ng-repeat="picture in selectedListing.pictures">' +
                      '<img ng-src="{{picture}}" alt="" />' +
                    '</li>',
       link: linkFn
