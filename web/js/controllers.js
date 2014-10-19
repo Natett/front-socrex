@@ -17,6 +17,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             responsePromise.success(function(data, status, headers, config) {
                 //$scope.rows2 = data.Data;
                 $rootScope.selectedListing = data.Data;
+                $scope.pictures.push("http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg");
                 /*
                 // clear array
                 $scope.pictures.length = 0;
