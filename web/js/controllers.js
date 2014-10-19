@@ -2,31 +2,8 @@ var socrexControllers = angular.module('socrex.controllers', []);
 
 socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope', '$routeParams' ,
     function($scope,$http, $location,$rootScope, $routeParams) {
-        $scope.pictures = ["http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg", "http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg"];
-        $scope.directives2 = [];
+        
         $scope.directives3 = [];
-        $scope.directives = ['<div>Directive one</div>', '<div>Directive two</div>'];
-        $scope.add = function(directive) {
-            $scope.directives.push(directive);
-        }
-        $scope.add2 = function() {
-            var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
-            $scope.directives2.push(directive);
-        }
-        $scope.add3 = function() {
-            var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
-            $scope.directives2.push(directive);
-        }
-        $scope.add4 = function() {
-            var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
-            $scope.directives3.push(directive);
-            $scope.$broadcast('reload-slider')
-        }
-        $scope.add5 = function() {
-            var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
-            $scope.directives3.push(directive);
-            $scope.$broadcast('reload-slider')
-        }
         
         $scope.addPictureToSlider = function(pictureUrl) {
             var directive = '<li><img src="'+pictureUrl+'" /></li>';
@@ -51,21 +28,10 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             });
     
             responsePromise.success(function(data, status, headers, config) {
-                //$scope.rows2 = data.Data;
                 $rootScope.selectedListing = data.Data;
-                //$scope.pictures.push("http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg");
-                
-                /*
-                // clear array
-                $scope.pictures.length = 0;
-                // add images to array
-                for (var i = 0; i < $rootScope.selectedListing.pictures.length; i++) {
-                    $scope.pictures.push($rootScope.selectedListing.pictures[i]);
-                }*/
-                
+                // add pictures to slider
                 $scope.addPictureArrayToSlider($rootScope.selectedListing.pictures);
-                
-                //$scope.pictures = $rootScope.selectedListing.pictures;
+                // reload slider styles
                 $scope.$broadcast('reload-slider')
             });
                 
