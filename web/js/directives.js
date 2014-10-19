@@ -118,10 +118,7 @@ angular.module('socrex.directives', []).
           element.append($compile(directive)(scope));
           //slider.reloadSlider();
         });
-      });
-      
-      scope.$on('reload-slider', function() {
-                slider.reloadSlider();
+        slider.reloadSlider();
       });
     }
   };
