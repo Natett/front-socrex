@@ -4,6 +4,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
     function($scope,$http, $location,$rootScope, $routeParams) {
         $scope.pictures = ["http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg", "http://images.craigslist.org/00G0G_3yEtFrm5hOJ_600x450.jpg"];
         $scope.directives2 = [];
+        $scope.directives3 = [];
         $scope.directives = ['<div>Directive one</div>', '<div>Directive two</div>'];
         $scope.add = function(directive) {
             $scope.directives.push(directive);
@@ -13,6 +14,14 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             $scope.directives2.push(directive);
         }
         $scope.add3 = function() {
+            var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
+            $scope.directives2.push(directive);
+        }
+        $scope.add4 = function() {
+            var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
+            $scope.directives2.push(directive);
+        }
+        $scope.add5 = function() {
             var directive = '<li><img src="http://images.craigslist.org/00V0V_7KrsygPW5pf_600x450.jpg" /></li>';
             $scope.directives2.push(directive);
         }
