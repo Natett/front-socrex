@@ -42,26 +42,27 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
         
         $scope.onClickOriginalListingButton = function(){
             $scope.openOriginalListingTab();
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"originallisting");
         }
         
         $scope.onClickContact = function(){
             angular.element('#contactdialog').dialog( "open" );
-            $scope.saveClickOnDB($routeParams.listingId,"jhon@socrex.com","sendemail")
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"sendemail");
         }
         
         $scope.onClickVerifyAvailability = function(){
             angular.element('#verifyavailabilitydialog').dialog( "open" );
-            $scope.saveClickOnDB($routeParams.listingId,"jhon@socrex.com","verifyavailability")
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"verifyavailability");
         }
         
         $scope.onClickExpertReview = function(){
             angular.element('#expertreviewdialog').dialog( "open" );
-            $scope.saveClickOnDB($routeParams.listingId,"jhon@socrex.com","expertreview")
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"expertreview");
         }
         
         $scope.onClickTour = function(){
             angular.element('#tourdialog').dialog( "open" );
-            $scope.saveClickOnDB($routeParams.listingId,"jhon@socrex.com","virtualtour")
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"virtualtour");
         }
         
         $scope.openOriginalListingTab = function(){
@@ -141,7 +142,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         $scope.getDetailedListing = function(listingId) {
             // dummy filters
     		//var listingId = '542c3f86b43c2c00029a8211';
-    		$scope.saveClickOnDB(listingId,"jhon@socrex.com","listingdetails")
+    		$scope.saveClickOnDB(listingId,$rootScope.userId ,"listingdetails")
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
@@ -184,6 +185,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             responsePromise.success(function(data, status, headers, config) {
                 $rootScope.currentListingFilter = $scope.filterId;
                 $scope.rows2 = data.Data.Listings;
+                $rootScope.userId = data.Data.Email
                 console.log($scope.rows2);
             });
             
