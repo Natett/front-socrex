@@ -61,5 +61,30 @@ angular.module('socrex.directives', []).
       });
     }
   };
-});
+}).directive( 'simplepaginator', function() {
+    var linkFn;
+    
+    var customOnPageClick = function(pageNumber, event){
+        console.log("pageNumber");
+        console.log(pageNumber);
+        console.log("event");
+        console.log(event);
+    }
+    
+    linkFn = function( scope, element, attrs ) {
+      element.pagination({
+        items: 100,
+        itemsOnPage: 10,
+        cssStyle: 'light-theme',
+        selectOnClick : false,
+        hrefTextPrefix : "./",
+        onPageClick : customOnPageClick
+      });
+    }
+  
+    return {
+      restrict: 'A',
+      link: linkFn
+    }
+  });
   

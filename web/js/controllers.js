@@ -141,6 +141,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         $scope.getDetailedListing = function(listingId) {
             // dummy filters
     		//var listingId = '542c3f86b43c2c00029a8211';
+    		$scope.saveClickOnDB(listingId,"jhon@socrex.com","listingdetails")
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
@@ -196,6 +197,18 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             $scope.filterListings();
             // init rating 
             $scope.initRating();
+        }
+        
+        $scope.saveClickOnDB = function(listingid,useremail, option) {
+            // dummy filters
+    		//var listingId = '542c3f86b43c2c00029a8211';
+    		    
+            var responsePromise = $http({
+    		    //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option,
+                method: 'POST',
+    		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
         }
         
         $scope.init();
