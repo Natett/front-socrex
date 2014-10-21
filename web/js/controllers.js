@@ -120,6 +120,8 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         
         $scope.totalPages = 0;
         
+        $scope.totalListings = 0;
+        
         
         
         $scope.hideTable = function(){
@@ -167,7 +169,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         };
     
         $scope.plural = function (tab){
-            return tab.length > 1 ? 's': ''; 
+            return tab > 1 ? 's': ''; 
         };
     
         $scope.addTemp = function(){
@@ -264,6 +266,13 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
                     $scope.totalPages = data.Data.TotalPages;
                     //$scope.totalPages = 6;
                 }
+                
+                if($scope.totalListings != data.Data.Total){
+                    $scope.totalListings = data.Data.Total;
+                    //$scope.totalPages = 6;
+                }
+                
+                
             });
             
             responsePromise.error(function(data, status, headers, config) {

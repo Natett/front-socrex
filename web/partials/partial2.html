@@ -1,6 +1,6 @@
 <div>
   <h1>Socrex Listings</h1>
-  <h3>{{rows2.length}} Listing{{plural(rows2)}} <span ng-show="temp">?<small class="muted"><em > (only {{rows2.length-1}} actually....)</em></small></span></h3>
+  <h3>{{totalListings}} Listing{{plural(totalListings)}} <span ng-show="temp">?<small class="muted"><em > (only {{rows2.length-1}} actually....)</em></small></span></h3>
   <input type="button" value="reload" ng-click="filterListings(1,10);" />
   <!-- <div id="simplepaginator" simplepaginator></div> -->
   <div dynamic4="{{totalPages}}" class="pagination-large"></div>
