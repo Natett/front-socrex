@@ -77,9 +77,27 @@ angular.module('socrex.directives', []).
         itemsOnPage: 10,
         cssStyle: 'light-theme',
         selectOnClick : false,
-        hrefTextPrefix : "./",
+        hrefTextPrefix : "",
         onPageClick : customOnPageClick
       });
+    }
+  
+    return {
+      restrict: 'A',
+      link: linkFn
+    }
+  }).directive( 'twbspagination', function() {
+    var linkFn;
+    
+    
+    linkFn = function( scope, element, attrs ) {
+      element.twbsPagination({
+        totalPages: 35,
+        visiblePages: 7,
+        onPageClick: function (event, page) {
+          scope.$apply("clickedPaginationButton("+page+")");
+        }
+    });
     }
   
     return {

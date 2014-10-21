@@ -139,6 +139,33 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             return i==$scope.rows.length-1 && $scope.temp;
         };
         
+        $scope.clickedPaginationButton = function(pageNumber) {
+            
+            console.log("pageNumber");
+            console.log(pageNumber);
+            
+            /*
+    		$scope.saveClickOnDB(listingId,$rootScope.userId ,"listingdetails")
+    		    
+            var responsePromise = $http({
+    		    //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                method: 'GET',
+    		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+    
+            responsePromise.success(function(data, status, headers, config) {
+                //$scope.rows2 = data.Data;
+                $rootScope.selectedListing = data.Data;
+                //$rootScope.selectedListing['price'] = 3000;
+                $scope.redirecToListingDetail();
+            });
+                
+            responsePromise.error(function(data, status, headers, config) {
+                alert("AJAX failed!");
+            });*/
+        }
+        
         $scope.getDetailedListing = function(listingId) {
             // dummy filters
     		//var listingId = '542c3f86b43c2c00029a8211';
