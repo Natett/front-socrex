@@ -102,6 +102,14 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         
         $scope.filterId = $routeParams.filterId;
         
+        $scope.isTableVisibleFlag = false;
+        
+        $scope.isLoadingListingsFlag = true;
+        
+        $scope.noListingFoundFlag = false;
+        
+        $scope.unexpectedErrorFlag = false;
+        
         $scope.rows = [];
         
         $scope.rows2 = [];
@@ -109,6 +117,41 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         $rootScope.selectedListing = null;
                        
         $scope.temp = false;
+        
+        $scope.totalPages = 0;
+        
+        
+        
+        $scope.hideTable = function(){
+            $scope.rows2.length = 0;
+            $scope.updateIsTableVisibleFlag(false);
+        }
+        
+        $scope.showTable = function(){
+            $scope.updateIsTableVisibleFlag(true);
+            $scope.updateLoadingListingsFlag(false);
+            $scope.updateNoListingFoundFlag(false);
+        }
+
+        
+        $scope.updateIsTableVisibleFlag = function(value){
+            $scope.isTableVisibleFlag = value;
+        }
+        
+        $scope.updateLoadingListingsFlag = function(value){
+            $scope.isLoadingListingsFlag = value;
+        }
+        
+        $scope.updateNoListingFoundFlag = function(value){
+            $scope.noListingFoundFlag = value;
+        }
+        
+        $scope.updateUnexpectedErrorFlag = function(value){
+            $scope.unexpectedErrorFlag = value;
+        }
+        
+        
+        
         
         $scope.initRating = function(){
             
@@ -141,8 +184,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         
         $scope.clickedPaginationButton = function(pageNumber) {
             
-            console.log("pageNumber");
-            console.log(pageNumber);
+            $scope.filterListings(pageNumber,10);
             
             /*
     		$scope.saveClickOnDB(listingId,$rootScope.userId ,"listingdetails")
@@ -186,7 +228,8 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             });
                 
             responsePromise.error(function(data, status, headers, config) {
-                alert("AJAX failed!");
+                $scope.updateLoadingListingsFlag(false);
+                $scope.updateUnexpectedErrorFlag(true);
             });
         }
         
@@ -194,13 +237,16 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             $location.path( "/listing/" + $rootScope.selectedListing._id.$oid, false );
         }
         
-        $scope.filterListings = function(item, event) {
+        $scope.filterListings = function(currentPage, numberOfItems) {
 		    // dummy filters
             // must be bery carefull with the filters value structure, it has to start with single couotes, and de inner quotes be double
             // otherwise there would be an error in python decoding  
 		    //var filters = {'filters':'{"bedroom":2}'};
-		    var filters = {'id':$scope.filterId};
-		    
+		    var filters = {'id':$scope.filterId, 'currentPage' : currentPage , 'itemsOnPage': numberOfItems };
+		    // clean current listing list
+		    $scope.hideTable();
+		    $scope.updateLoadingListingsFlag(true);
+		    // do call to server to retrieve listings list
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
                 url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
@@ -213,17 +259,22 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
                 $rootScope.currentListingFilter = $scope.filterId;
                 $scope.rows2 = data.Data.Listings;
                 $rootScope.userId = data.Data.Email
-                console.log($scope.rows2);
+                $scope.showTable();
+                if($scope.totalPages != data.Data.TotalPages){
+                    $scope.totalPages = data.Data.TotalPages;
+                    //$scope.totalPages = 6;
+                }
             });
             
             responsePromise.error(function(data, status, headers, config) {
-                alert("AJAX failed!");
+                $scope.updateLoadingListingsFlag(false);
+                $scope.updateUnexpectedErrorFlag(true);
             });
         }
         
         $scope.init = function(){
             // Do the first call to server
-            $scope.filterListings();
+            $scope.filterListings(1,10);
             // init rating 
             $scope.initRating();
         }

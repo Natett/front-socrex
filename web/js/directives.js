@@ -61,6 +61,31 @@ angular.module('socrex.directives', []).
       });
     }
   };
+}).directive('dynamic4', function ($compile, $parse) {
+  return {
+    restrict: 'A',
+    replace: true,
+    link: function (scope, element, attr) {
+      //var slider = element.bxSlider({adaptiveHeight: true, responsive:false});
+      
+      attr.$observe('dynamic4', function(val) {
+        
+        var totalPages = $parse(val)(scope);
+        if(totalPages !== 0){
+          // TOD: this only works once, if the totalpages changes ie. from 45 to 56 it wont be updated
+          // ultil the user reload the page
+          element.twbsPagination({
+            totalPages: totalPages,
+            href : "javascript:void(0);",
+            visiblePages: 10,
+            onPageClick: function (event, page) {
+              scope.$apply("clickedPaginationButton("+page+")");
+            }
+          });
+        }
+      });
+    }
+  };
 }).directive( 'simplepaginator', function() {
     var linkFn;
     
@@ -89,15 +114,14 @@ angular.module('socrex.directives', []).
   }).directive( 'twbspagination', function() {
     var linkFn;
     
-    
     linkFn = function( scope, element, attrs ) {
       element.twbsPagination({
         totalPages: 35,
-        visiblePages: 7,
+        visiblePages: 10,
         onPageClick: function (event, page) {
           scope.$apply("clickedPaginationButton("+page+")");
         }
-    });
+      });
     }
   
     return {
