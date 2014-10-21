@@ -12,6 +12,7 @@
     <td>Price</td>
     <td>Bedroom</td>
     <td>Bathroom</td>
+    <td>Neighborhood</td>
     <td>Address</td>
     <td>Details</td>
     </tr>
@@ -25,6 +26,7 @@
       <td>{{row.price}}</td>
       <td>{{row.bedroom}}</td>
       <td>{{row.bathroom}}</td>
+      <td>{{row.neighborhood.Name}}</td>
       <td>{{row.address}}</td>
       <td><input type="button" value="details" ng-click="getDetailedListing('{{row._id.$oid}}');"></td>
     </tr>
