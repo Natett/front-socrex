@@ -100,6 +100,8 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
 socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$rootScope', '$routeParams',
     function($scope,$http,$location, $rootScope, $routeParams) {
         
+        $rootScope.selectedListingCity = {};
+        
         $scope.filterId = $routeParams.filterId;
         
         $scope.isTableVisibleFlag = false;
@@ -210,6 +212,14 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             });*/
         }
         
+        
+        
+        $scope.onTableRowHover = function(latitude, longitude) {
+            //console.log("onTableRowHover");
+            var coordPoint = {'latitude':latitude,  'longitude':longitude}
+            $rootScope.selectedListingCity = coordPoint;
+        }
+        
         $scope.getDetailedListing = function(listingId) {
             // dummy filters
     		//var listingId = '542c3f86b43c2c00029a8211';
@@ -272,13 +282,27 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
                     //$scope.totalPages = 6;
                 }
                 
+                //$scope.setRandomStarRating($scope.rows2);
                 
             });
+            
+            
             
             responsePromise.error(function(data, status, headers, config) {
                 $scope.updateLoadingListingsFlag(false);
                 $scope.updateUnexpectedErrorFlag(true);
             });
+        }
+        
+        // from here: http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
+        $scope.getRandomInt = function(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        $scope.setRandomStarRating = function(listingsArray){
+            for (var i = 0; i < listingsArray.length; i++) {
+                listingsArray[i].relevance = $scope.getRandomInt(0,20);
+            }
         }
         
         $scope.init = function(){
@@ -304,3 +328,86 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         
     }
 ]);
+
+socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($scope, $rootScope) {
+
+    var mapOptions = {
+        zoom: 12,
+        center: new google.maps.LatLng(42.3432, -71.082866),
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+    }
+    
+    $rootScope.$watch( 'selectedListingCity',
+        function(newValue, oldValue){
+            if('latitude' in newValue){
+                //console.log(newValue);
+                //console.log(oldValue);
+            
+                var newPoint = new google.maps.LatLng(newValue.latitude,newValue.longitude);
+            
+                $scope.clearMarkers();
+                $scope.createMarker(newValue);
+                //$scope.map.setCenter(newPoint);
+                // with animation
+                $scope.map.panTo(newPoint);
+            }else{
+                
+            }
+        }
+    );
+
+    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    $scope.markers = [];
+    
+    var infoWindow = new google.maps.InfoWindow();
+    
+    $scope.createMarker = function (info){
+        
+        var marker = new google.maps.Marker({
+            map: $scope.map,
+            position: new google.maps.LatLng(info.latitude, info.longitude),
+            title: info.city
+        });
+        
+        //marker.content = '<div class="infoWindowContent">' + info.desc + '</div>';
+        
+        /*
+        google.maps.event.addListener(marker, 'click', function(){
+            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
+            infoWindow.open($scope.map, marker);
+        });*/
+        
+        $scope.markers.push(marker);
+        
+    }  
+
+    $scope.openInfoWindow = function(e, selectedMarker){
+        e.preventDefault();
+        google.maps.event.trigger(selectedMarker, 'click');
+    }
+    
+    // Sets the map on all markers in the array.
+    $scope.setAllMap = function setAllMap(map) {
+      for (var i = 0; i < $scope.markers.length; i++) {
+        $scope.markers[i].setMap(map);
+      }
+    }
+
+    // Removes the markers from the map, but keeps them in the array.
+    $scope.clearMarkers = function () {
+      $scope.setAllMap(null);
+    }
+    
+    // Shows any markers currently in the array.
+    $scope.showMarkers = function () {
+      $scope.setAllMap(map);
+    }
+    
+    // Deletes all markers in the array by removing references to them.
+    $scope.deleteMarkers = function() {
+      $scope.clearMarkers();
+      $scope.markers = [];
+    }
+
+}]);

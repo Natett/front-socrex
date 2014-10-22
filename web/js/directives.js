@@ -25,6 +25,20 @@ angular.module('socrex.directives', []).
       restrict: 'A',
       link: linkFn
     }
+  }).directive( 'jrating', function() {
+    var linkFn;
+    linkFn = function( scope, element, attrs ) {
+      // TODO: improve this, there must ve a better way to do this.
+      element.attr('data-average', attrs.average);
+      element.attr('data-id', attrs.id);
+      element.jRating({isDisabled : true});
+      
+    }
+  
+    return {
+      restrict: 'A',
+      link: linkFn
+    }
   }).directive( 'bxslider', function() {
     var linkFn;
     linkFn = function( scope, element, attrs ) {
@@ -122,6 +136,36 @@ angular.module('socrex.directives', []).
           scope.$apply("clickedPaginationButton("+page+")");
         }
       });
+    }
+  
+    return {
+      restrict: 'A',
+      link: linkFn
+    }
+  }).directive( 'map', function() {
+    var linkFn;
+    
+    linkFn = function( scope, element, attrs ) {
+      var mapOptions = {
+        zoom: 8,
+        center: new google.maps.LatLng(-34.397, 150.644)
+      };
+      new google.maps.Map(element,mapOptions);
+    }
+  
+    return {
+      restrict: 'A',
+      link: linkFn
+    }
+  }).directive( 'rank', function() {
+    var linkFn;
+    
+    linkFn = function( scope, element, attrs ) {
+      var mapOptions = {
+        zoom: 8,
+        center: new google.maps.LatLng(-34.397, 150.644)
+      };
+      new google.maps.Map(element,mapOptions);
     }
   
     return {
