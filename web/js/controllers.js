@@ -124,6 +124,8 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         
         $scope.totalListings = 0;
         
+        $rootScope.reloadMap = false;
+        
         
         
         $scope.hideTable = function(){
