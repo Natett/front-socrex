@@ -342,10 +342,13 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
     
     $rootScope.$watch( 'reloadMap',
         function(newValue, oldValue){
+            $scope.refreshMap();
+            $rootScope.reloadMap = false;   
+            /*
             if(oldValue == false && newValue == true){
                 google.maps.event.trigger($scope.map, 'resize');
                 $rootScope.reloadMap = false;    
-            }
+            }*/
             
         }
     );
@@ -421,6 +424,11 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
     $scope.deleteMarkers = function() {
       $scope.clearMarkers();
       $scope.markers = [];
+    }
+    
+    // this is because the google api bug: http://stackoverflow.com/questions/15748374/assistance-needed-map-does-not-load-properly-in-jquery-ui-tabs-not-a-duplica    
+    $scope.refreshMap = function(){
+        google.maps.event.trigger($scope.map, 'resize'); 
     }
 
 }]);
