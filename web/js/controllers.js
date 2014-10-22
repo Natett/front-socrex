@@ -282,6 +282,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
                     //$scope.totalPages = 6;
                 }
                 
+                $rootScope.reloadMap = true;
                 //$scope.setRandomStarRating($scope.rows2);
                 
             });
@@ -337,6 +338,16 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
         mapTypeId: google.maps.MapTypeId.TERRAIN
     }
     
+    $rootScope.$watch( 'reloadMap',
+        function(newValue, oldValue){
+            if(oldValue == false && newValue == true){
+                google.maps.event.trigger($scope.map, 'resize');
+                $rootScope.reloadMap = false;    
+            }
+            
+        }
+    );
+    
     $rootScope.$watch( 'selectedListingCity',
         function(newValue, oldValue){
             if('latitude' in newValue){
@@ -351,7 +362,7 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
                 // with animation
                 $scope.map.panTo(newPoint);
             }else{
-                
+                google.maps.event.trigger($scope.map, 'resize');
             }
         }
     );
