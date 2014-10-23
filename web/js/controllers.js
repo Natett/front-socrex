@@ -126,6 +126,8 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         
         $rootScope.reloadMap = false;
         
+        $rootScope.currentListedListings = [];
+        
         
         
         $scope.hideTable = function(){
@@ -218,8 +220,10 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         
         $scope.onTableRowHover = function(latitude, longitude) {
             //console.log("onTableRowHover");
+            /*
             var coordPoint = {'latitude':latitude,  'longitude':longitude}
             $rootScope.selectedListingCity = coordPoint;
+            */
         }
         
         $scope.getDetailedListing = function(listingId) {
@@ -271,6 +275,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
 
             responsePromise.success(function(data, status, headers, config) {
                 $rootScope.currentListingFilter = $scope.filterId;
+                $rootScope.currentListedListings = data.Data.Listings;
                 $scope.rows2 = data.Data.Listings;
                 $rootScope.userId = data.Data.Email
                 $scope.showTable();
@@ -334,11 +339,15 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
 
 socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($scope, $rootScope) {
 
+    $scope.latlngList = [];
+    $scope.bounds = new google.maps.LatLngBounds();
+    
     var mapOptions = {
         zoom: 12,
         center: new google.maps.LatLng(42.3432, -71.082866),
         mapTypeId: google.maps.MapTypeId.TERRAIN
     }
+    
     
     $rootScope.$watch( 'reloadMap',
         function(newValue, oldValue){
@@ -369,6 +378,57 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
             }else{
                 google.maps.event.trigger($scope.map, 'resize');
             }
+        }
+    );
+    
+    $rootScope.$watch( 'currentListedListings',
+        function(newValue, oldValue){
+            
+            
+            
+            
+            
+            
+            $scope.deleteMarkers();
+            $scope.latlngList.length = 0;
+            
+            for (var i = 0; i < $rootScope.currentListedListings.length; i++) {
+                
+                var newPoint = { 'latitude' : $rootScope.currentListedListings[i].latitude , 'longitude': $rootScope.currentListedListings[i].longitude};
+                var newGoogleMapsPoint = new google.maps.LatLng($rootScope.currentListedListings[i].latitude,$rootScope.currentListedListings[i].longitude);
+                $scope.latlngList.push(newGoogleMapsPoint);
+                $scope.createMarker(newPoint);    
+            }
+            
+            
+            $scope.bounds = new google.maps.LatLngBounds();
+            
+            for (var i = 0; i < $scope.latlngList.length; i++) {
+                $scope.bounds.extend($scope.latlngList[i]);
+            }
+            
+            // TODO: center de map once all the markers are identifyed
+            var boundsCenter = $scope.bounds.getCenter();
+            var newCenter = new google.maps.LatLng(42.3432, -71.082866);
+            
+            //$scope.map.setCenter(boundsCenter); //or use custom center
+            //$scope.map.panTo(newCenter); //or use custom center
+            
+            /*
+            if('latitude' in newValue){
+                //console.log(newValue);
+                //console.log(oldValue);
+            
+                var newPoint = new google.maps.LatLng(newValue.latitude,newValue.longitude);
+            
+                $scope.clearMarkers();
+                $scope.createMarker(newValue);
+                //$scope.map.setCenter(newPoint);
+                // with animation
+                $scope.map.panTo(newPoint);
+            }else{
+                google.maps.event.trigger($scope.map, 'resize');
+            }*/
         }
     );
 
@@ -408,6 +468,11 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
       for (var i = 0; i < $scope.markers.length; i++) {
         $scope.markers[i].setMap(map);
       }
+    }
+    
+    // Removes the markers from the array
+    $scope.clearMarkersArray = function () {
+      $scope.markers.length = 0;
     }
 
     // Removes the markers from the map, but keeps them in the array.
