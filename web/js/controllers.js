@@ -218,12 +218,12 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         
         
         
-        $scope.onTableRowHover = function(latitude, longitude) {
+        $scope.onTableRowHover = function(id) {
             //console.log("onTableRowHover");
-            /*
-            var coordPoint = {'latitude':latitude,  'longitude':longitude}
+            
+            var coordPoint = {'id' : id}
             $rootScope.selectedListingCity = coordPoint;
-            */
+            
         }
         
         $scope.getDetailedListing = function(listingId) {
@@ -339,6 +339,8 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
 
 socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($scope, $rootScope) {
 
+    $scope.normalIcon = null;
+    $scope.selectedIcon = null;
     $scope.latlngList = [];
     $scope.bounds = new google.maps.LatLngBounds();
     
@@ -364,19 +366,22 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
     
     $rootScope.$watch( 'selectedListingCity',
         function(newValue, oldValue){
-            if('latitude' in newValue){
+            if('id' in newValue){
                 //console.log(newValue);
                 //console.log(oldValue);
-            
-                var newPoint = new google.maps.LatLng(newValue.latitude,newValue.longitude);
-            
-                $scope.clearMarkers();
-                $scope.createMarker(newValue);
-                //$scope.map.setCenter(newPoint);
-                // with animation
-                $scope.map.panTo(newPoint);
-            }else{
-                google.maps.event.trigger($scope.map, 'resize');
+                
+                for (var i = 0; i < $scope.markers.length; i++) {
+                    var currentMarker = $scope.markers[i]['marker']
+                    if($scope.normalIcon == null){
+                        $scope.normalIcon = currentMarker.getIcon();
+                    }
+                    
+                    if($scope.markers[i]['listingId'] == newValue['id']){
+                        currentMarker.setAnimation(google.maps.Animation.BOUNCE);
+                    }else{
+                        currentMarker.setAnimation(null);
+                    }
+                }
             }
         }
     );
@@ -394,7 +399,7 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
             
             for (var i = 0; i < $rootScope.currentListedListings.length; i++) {
                 
-                var newPoint = { 'latitude' : $rootScope.currentListedListings[i].latitude , 'longitude': $rootScope.currentListedListings[i].longitude};
+                var newPoint = { 'id': $rootScope.currentListedListings[i]._id.$oid, 'latitude' : $rootScope.currentListedListings[i].latitude , 'longitude': $rootScope.currentListedListings[i].longitude};
                 var newGoogleMapsPoint = new google.maps.LatLng($rootScope.currentListedListings[i].latitude,$rootScope.currentListedListings[i].longitude);
                 $scope.latlngList.push(newGoogleMapsPoint);
                 $scope.createMarker(newPoint);    
@@ -454,7 +459,8 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
             infoWindow.open($scope.map, marker);
         });*/
         
-        $scope.markers.push(marker);
+        //$scope.markers.push(marker);
+        $scope.markers.push({'listingId':info.id , 'marker':marker});
         
     }  
 
@@ -466,7 +472,7 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
     // Sets the map on all markers in the array.
     $scope.setAllMap = function setAllMap(map) {
       for (var i = 0; i < $scope.markers.length; i++) {
-        $scope.markers[i].setMap(map);
+        $scope.markers[i]['marker'].setMap(map);
       }
     }
     
