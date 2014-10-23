@@ -396,28 +396,33 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
             
             $scope.deleteMarkers();
             $scope.latlngList.length = 0;
+            $scope.bounds = new google.maps.LatLngBounds();
             
             for (var i = 0; i < $rootScope.currentListedListings.length; i++) {
                 
                 var newPoint = { 'id': $rootScope.currentListedListings[i]._id.$oid, 'latitude' : $rootScope.currentListedListings[i].latitude , 'longitude': $rootScope.currentListedListings[i].longitude};
                 var newGoogleMapsPoint = new google.maps.LatLng($rootScope.currentListedListings[i].latitude,$rootScope.currentListedListings[i].longitude);
                 $scope.latlngList.push(newGoogleMapsPoint);
+                $scope.bounds.extend(newGoogleMapsPoint);
                 $scope.createMarker(newPoint);    
             }
             
-            
+            /*
             $scope.bounds = new google.maps.LatLngBounds();
             
             for (var i = 0; i < $scope.latlngList.length; i++) {
                 $scope.bounds.extend($scope.latlngList[i]);
-            }
+            }*/
             
             // TODO: center de map once all the markers are identifyed
             var boundsCenter = $scope.bounds.getCenter();
-            var newCenter = new google.maps.LatLng(42.3432, -71.082866);
+            $scope.centerPoint = boundsCenter;
+            //var newCenter = new google.maps.LatLng(42.3432, -71.082866);
             
-            //$scope.map.setCenter(boundsCenter); //or use custom center
+            //$scope.map.setCenter(newCenter); //or use custom center
             //$scope.map.panTo(newCenter); //or use custom center
+            
+            //$scope.refreshMap();
             
             /*
             if('latitude' in newValue){
@@ -438,6 +443,11 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
     );
 
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
+    google.maps.event.addListener($scope.map, 'tilesloaded', function(){
+        $scope.refreshMap();
+        // do something only the first time the map is loaded
+    });
 
     $scope.markers = [];
     
@@ -499,6 +509,9 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
     
     // this is because the google api bug: http://stackoverflow.com/questions/15748374/assistance-needed-map-does-not-load-properly-in-jquery-ui-tabs-not-a-duplica    
     $scope.refreshMap = function(){
+        //var newCenter = new google.maps.LatLng(42.3432, -71.082866);
+        var newCenter = $scope.centerPoint;
+        $scope.map.setCenter(newCenter); //or use custom center
         google.maps.event.trigger($scope.map, 'resize'); 
     }
 
