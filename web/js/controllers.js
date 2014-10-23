@@ -332,7 +332,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             });
         }
         
-        $scope.init();
+        //$scope.init();
         
     }
 ]);
