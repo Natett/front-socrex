@@ -1,0 +1,254 @@
+<div ng-controller="preferencesFormController as preferencesFormCtrl">
+  <h1>Find Me a Place</h1>
+  <h2>We need to know what you want before we go get it for you</h2>
+  <form role="form">
+    <div>
+      <div ng-show="preferencesFormCtrl.isShownQuestionNumber('One')">
+        <h3>What kind of place are you looking for?</h3>
+        <table class="table">
+          <tr>
+            <td>
+              <img src="./img/rooms/sublet.jpg" alt="Smiley face" width="304" height="228">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                  A Room or Sublet. 
+                  <br>
+                  Average Price for Boston: $900
+                </label>
+              </div>
+            </td>
+            <td>
+              <img src="./img/rooms/studio.jpg" alt="Smiley face" width="304" height="228">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                  A Studio Apartment. 
+                  <br>
+                  Average price for Boston: $1,600
+                </label>
+              </div>
+            </td>
+            <td>
+              <img src="./img/rooms/onebedroom.png" alt="Smiley face" width="304" height="228">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                  A One-bedroom Apartment. 
+                  <br>
+                  Average price for Boston: $2,200
+                </label>
+              </div>
+            </td>
+            <td>
+              <img src="./img/rooms/twobedroom.jpg" alt="Smiley face" width="304" height="228">
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">
+                  A Two-bedroom Apartment.
+                  <br>
+                  Average price for Boston: $2,700
+                </label>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Two')">
+        <h3>Let's talk about Neighborhoods</h3>
+        <h4>At the minimum, I would EXPECT to live in a neighborhood that:</h4>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is near downtown ($$$)
+          </label>
+        </div>   
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is considered very safe ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has easy access to public transport ($)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has easy street parking ($)
+          </label>
+        </div> 
+        <h4>I would LOVE to live in a neighborhood that (Choose up to 3)</h4>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              HaHas great local bars and restaurants ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has beautiful parks ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is very walkable ($)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is family friendly ($)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has a student vibe ($)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has a young professional vibe ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is quaint and quiet ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has the classic Boston architecture ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has modern architecture and new construction ($$$)
+          </label>
+        </div> 
+      </div>
+      <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Three')">
+        <h3>Let's talk about the unit</h3>
+        <h4>At the minimum, I would EXPECT to live in a unit that:  (Choose 3)</h4>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is pet friendly ($)
+          </label>
+        </div>   
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is above ground ($)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              
+              Has its own parking spot ($$$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is comfortably large ($$)
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is well maintained ($$)
+          </label>
+        </div>
+        <h4>I would LOVE to live in a unit that: (Choose up to 3)</h4>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has hardwood floors ($)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has in unit laundry ($)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has lots of natural light ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has a roof deck or balcony ($$$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has high ceilings ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has a modern and updated kitchen ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is oversized ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has a gym or pool ($$)
+          </label>
+        </div> 
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has a great view ($$$)
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is modern and new ($$$)
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Has the classic Boston look ($$)
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="">
+              Is a loft ($$)
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- Prev button -->
+    <button class="btn btn-default" ng-show="preferencesFormCtrl.validateDecreaseShowQuestionIndex();" type="button" ng-click="preferencesFormCtrl.onClickPreviousButton();">Previous</button>
+    <!-- Next button -->
+    <button type="button" class="btn btn-default" style="clear:both;float:right;" ng-click="preferencesFormCtrl.onClickNextButton();">Next</button>
+  </form>
+</div>

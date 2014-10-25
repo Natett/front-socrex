@@ -520,3 +520,58 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
     }
 
 }]);
+
+socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScope', function ($scope, $rootScope) {
+
+    // zero based index
+  this.showQuestionIndex = 0;
+  // array of questions
+  this.questionsArray = ['One','Two','Three'];
+  
+  this.isShownQuestionNumber = function(questionNumber){
+      var returnValue = false;
+      
+      if (this.questionsArray[this.showQuestionIndex] === questionNumber){
+          returnValue = true;
+      }
+      
+      return returnValue;
+  }
+  
+  this.onClickNextButton = function(){
+      this.increaseShowQuestionIndex();
+  }
+  
+  this.onClickPreviousButton = function(){
+      this.decreaseShowQuestionIndex();
+  }
+  
+  this.increaseShowQuestionIndex = function(){
+      if(this.validateIncreaseShowQuestionIndex()){
+          this.showQuestionIndex++;
+      }
+  }
+  
+  this.decreaseShowQuestionIndex = function(){
+      if(this.validateDecreaseShowQuestionIndex()){
+          this.showQuestionIndex--;
+      }
+  }
+  
+  this.validateIncreaseShowQuestionIndex = function(){
+      var returnValue = false;
+      if(this.showQuestionIndex < this.questionsArray.length - 1){
+          returnValue = true;
+      }
+      return returnValue;
+  }
+  
+  this.validateDecreaseShowQuestionIndex = function(){
+      var returnValue = false;
+      if(this.showQuestionIndex > 0){
+          returnValue = true;
+      }
+      return returnValue;
+  }
+
+}]);
