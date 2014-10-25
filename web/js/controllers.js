@@ -526,7 +526,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
     // zero based index
   this.showQuestionIndex = 0;
   // array of questions
-  this.questionsArray = ['One','Two','Three'];
+  this.questionsArray = ['One','Two','Three', 'Four' , 'Five'];
   
   this.isShownQuestionNumber = function(questionNumber){
       var returnValue = false;

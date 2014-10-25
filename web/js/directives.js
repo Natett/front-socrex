@@ -39,6 +39,17 @@ angular.module('socrex.directives', []).
       restrict: 'A',
       link: linkFn
     }
+  }).directive( 'bootstrapdatepicker', function() {
+    var linkFn;
+    linkFn = function( scope, element, attrs ) {
+      element.datepicker({});
+      
+    }
+  
+    return {
+      restrict: 'A',
+      link: linkFn
+    }
   }).directive( 'bxslider', function() {
     var linkFn;
     linkFn = function( scope, element, attrs ) {

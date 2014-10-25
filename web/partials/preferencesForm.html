@@ -1,10 +1,11 @@
 <div ng-controller="preferencesFormController as preferencesFormCtrl">
-  <h1>Find Me a Place</h1>
-  <h2>We need to know what you want before we go get it for you</h2>
+  <!--<h1>Find Me a Place</h1>
+  <h2>We need to know what you want before we go get it for you</h2>-->
   <form role="form">
     <div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('One')">
-        <h3>What kind of place are you looking for?</h3>
+        <!--<h3>What kind of place are you looking for?</h3>-->
+        <h3>What kind of space do you want?</h3>
         <table class="table">
           <tr>
             <td>
@@ -53,8 +54,79 @@
             </td>
           </tr>
         </table>
+        <h3>What is your target rent?</h3>
+        <div class="form-group" >
+          <div class="col-lg-3">
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="">
+          </div>
+        </div>
       </div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Two')">
+        <!--<h3>What kind of place are you looking for?</h3>-->
+        <h3>How long will you be here?</h3>
+        <div class="form-group" >
+          <div class="col-lg-3">
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="from">
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="to">
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h3>Are you a student or a professional?</h3>
+        <div class="radio">
+                <label>
+                  <input type="radio" name="personActivityOptionsRadios" id="optionsRadiosStudent" value="student">
+                  Student
+                </label>
+        </div>
+        <div class="radio">
+                <label>
+                  <input type="radio" name="personActivityOptionsRadios" id="optionsRadiosProfessional" value="professional">
+                  Professional
+                </label>
+        </div>
+      </div>
+      <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Three')">
+        <!--<h3>What kind of place are you looking for?</h3>-->
+        <h3>What is your desired commute</h3>
+        <div class="form-group" >
+          <div class="col-lg-3">
+            <input type="email" class="form-control" id="addressInput" placeholder="enter adress or university">
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h4>Only include modes of transportation that you are interested in</h4>
+        <div class="form-group">
+          <div class="col-lg-3">
+            <label for="exampleInputEmail1">Walking</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-3">
+            <label for="exampleInputEmail1">Biking</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-3">
+            <label for="exampleInputEmail1">Driving</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+          </div>
+        </div>
+         <div class="form-group">
+          <div class="col-lg-3">
+            <label for="exampleInputEmail1">Public Transit</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+          </div>
+        </div>
+      </div>
+      <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Four')">
         <h3>Let's talk about Neighborhoods</h3>
         <h4>At the minimum, I would EXPECT to live in a neighborhood that:</h4>
         <div class="checkbox">
@@ -137,7 +209,7 @@
           </label>
         </div> 
       </div>
-      <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Three')">
+      <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Five')">
         <h3>Let's talk about the unit</h3>
         <h4>At the minimum, I would EXPECT to live in a unit that:  (Choose 3)</h4>
         <div class="checkbox">
@@ -246,9 +318,15 @@
         </div>
       </div>
     </div>
-    <!-- Prev button -->
-    <button class="btn btn-default" ng-show="preferencesFormCtrl.validateDecreaseShowQuestionIndex();" type="button" ng-click="preferencesFormCtrl.onClickPreviousButton();">Previous</button>
-    <!-- Next button -->
-    <button type="button" class="btn btn-default" style="clear:both;float:right;" ng-click="preferencesFormCtrl.onClickNextButton();">Next</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div>
+      <!-- Prev button -->
+      <button class="btn btn-default" ng-show="preferencesFormCtrl.validateDecreaseShowQuestionIndex();" type="button" ng-click="preferencesFormCtrl.onClickPreviousButton();">Previous</button>
+      <!-- Next button -->
+      <button type="button" class="btn btn-default" style="clear:both;float:right;" ng-click="preferencesFormCtrl.onClickNextButton();">Next</button>
+    </div>
   </form>
 </div>
