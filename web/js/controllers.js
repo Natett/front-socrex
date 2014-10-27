@@ -751,7 +751,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
   }
   
   $scope.redirecToListingList = function(filterId){
-            $location.path( "/listings/filter/" + filterId);
+            $location.path( "/listings/filter/" + filterId);   
         }
   
   /*
