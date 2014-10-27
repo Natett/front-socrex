@@ -521,12 +521,14 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
 
 }]);
 
-socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScope', function ($scope, $rootScope) {
+socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScope' , '$http' , '$location', function ($scope, $rootScope, $http , $location) {
 
     // zero based index
   this.showQuestionIndex = 0;
   // array of questions
-  this.questionsArray = ['One','Two','Three', 'Four' , 'Five'];
+  this.questionsArray = ['One','Two','Three', 'Four'];
+  
+  this.userPreferences = {};
   
   this.isShownQuestionNumber = function(questionNumber){
       var returnValue = false;
@@ -573,5 +575,191 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
       }
       return returnValue;
   }
+  
+  this.onSubmitFirstPage = function(){
+      console.log("onSubmitFirstPage");
+      //console.log("this.userPreferences.budget");
+      //console.log(this.userPreferences.budget);
+      console.log("userPreferences.unitType");
+      console.log(this.userPreferences.unitType);
+      this.onClickNextButton();
+  }
+  
+  this.saveUserPreferences = function(){
+		    // do call to server to save preferences
+            var responsePromise = $http({
+		        //url: 'http://127.0.0.1:5000/listings/filter', 
+		        //url: 'https://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
+                url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+                method: 'POST',
+		        data: $.param(this.userPreferences),
+		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+
+            responsePromise.success(function(data, status, headers, config) {
+                console.log("Succeeded response");
+                $scope.redirecToListingList(data.Data.PreferenceId.$oid);
+            });
+            
+            responsePromise.error(function(data, status, headers, config) {
+                console.log("Succeeded response");
+            }); 
+  }
+  
+  this.onSubmitSecondPage = function(){
+      console.log("onSubmitSecondPage");
+      console.log("#### HOOD Expected:");
+      console.log("this.userPreferences.Near_action");
+      console.log(this.userPreferences.Near_action);
+      console.log("this.userPreferences.Safe");
+      console.log(this.userPreferences.Safe);
+      console.log("userPreferences.Easy_transport");
+      console.log(this.userPreferences.Easy_transport);
+      console.log("userPreferences.Parking");
+      console.log(this.userPreferences.Parking);
+      console.log("#### HOOD Love:");
+      console.log("this.userPreferences.Locales_good");
+      console.log(this.userPreferences.Locales_good);
+      console.log("this.userPreferences.Parks");
+      console.log(this.userPreferences.Parks);
+      console.log("userPreferences.Family");
+      console.log(this.userPreferences.Family);
+      console.log("userPreferences.Student_vibe");
+      console.log(this.userPreferences.Student_vibe);
+      console.log("this.userPreferences.Young_pro");
+      console.log(this.userPreferences.Young_pro);
+      console.log("this.userPreferences.Quiet");
+      console.log(this.userPreferences.Quiet);
+      console.log("userPreferences.Classic");
+      console.log(this.userPreferences.Classic);
+      console.log("userPreferences.Modern");
+      console.log(this.userPreferences.Modern);
+      
+      /*
+      console.log("this.userPreferences.moveInDate");
+      console.log(this.userPreferences.moveInDate);
+      console.log("this.userPreferences.moveOutDate");
+      console.log(this.userPreferences.moveOutDate);
+      console.log("userPreferences.moveReason");
+      console.log(this.userPreferences.moveReason);*/
+      this.onClickNextButton();
+  }
+  
+  this.onSubmitThirdPage = function(){
+      console.log("onSubmitThirdPage");
+      console.log("UNIT LOVE");
+      console.log("this.userPreferences.pet");
+      console.log(this.userPreferences.pet);
+      /*
+      console.log("this.userPreferences.spacingUnitLove");
+      console.log(this.userPreferences.spacingUnitLove);
+      console.log("this.userPreferences.lightingUnitLove");
+      console.log(this.userPreferences.lightingUnitLove);
+      */
+      console.log("this.userPreferences.spacing");
+      console.log(this.userPreferences.spacing);
+      console.log("this.userPreferences.lighting");
+      console.log(this.userPreferences.lighting);
+      
+      console.log("this.userPreferences.maintaned");
+      console.log(this.userPreferences.maintaned);
+      console.log("this.userPreferences.parking");
+      console.log(this.userPreferences.parking);
+      
+      console.log("UNIT EXPECT");
+      console.log("this.userPreferences.hardwood");
+      console.log(this.userPreferences.hardwood);
+      console.log("this.userPreferences.laundry");
+      console.log(this.userPreferences.laundry);
+      /*
+      console.log("this.userPreferences.lightingUnitExpect");
+      console.log(this.userPreferences.lightingUnitExpect);
+      */
+      console.log("this.userPreferences.deck_balcony");
+      console.log(this.userPreferences.deck_balcony);
+      console.log("this.userPreferences.cieling");
+      console.log(this.userPreferences.cieling);
+      console.log("this.userPreferences.kitchen");
+      console.log(this.userPreferences.kitchen);
+      /*
+      console.log("this.userPreferences.spacingUnitExpect");
+      console.log(this.userPreferences.spacingUnitExpect);
+      */
+      console.log("this.userPreferences.ameneties");
+      console.log(this.userPreferences.ameneties);
+      console.log("this.userPreferences.view");
+      console.log(this.userPreferences.view);
+      console.log("this.userPreferences.modern");
+      console.log(this.userPreferences.modern);
+      console.log("this.userPreferences.classic");
+      console.log(this.userPreferences.classic);
+      console.log("this.userPreferences.loft");
+      console.log(this.userPreferences.loft);
+      
+      /*
+      console.log("this.userPreferences.desiredComute");
+      console.log(this.userPreferences.desiredComute);
+      console.log("this.userPreferences.Walking");
+      console.log(this.userPreferences.Walking);
+      console.log("userPreferences.Biking");
+      console.log(this.userPreferences.Biking);
+      console.log("userPreferences.Biking");
+      console.log(this.userPreferences.Driving);
+      console.log("userPreferences.Biking");
+      console.log(this.userPreferences.PublicTransi);*/
+      
+      this.onClickNextButton();
+  }
+  
+  this.onSubmitFourthPage = function(){
+      console.log("onSubmitFourthPage");
+      console.log("this.userPreferences.firstname");
+      console.log(this.userPreferences.firstname);
+      console.log("this.userPreferences.lastname");
+      console.log(this.userPreferences.lastname);
+      console.log("this.userPreferences.gender");
+      console.log(this.userPreferences.gender);
+      console.log("this.userPreferences.email");
+      console.log(this.userPreferences.email);
+      console.log("this.userPreferences.budget");
+      console.log(this.userPreferences.budget);
+      console.log("this.userPreferences.move_reason");
+      console.log(this.userPreferences.move_reason);
+      console.log("this.userPreferences.movein");
+      console.log(this.userPreferences.movein);
+      console.log("this.userPreferences.importance");
+      console.log(this.userPreferences.importance);
+      console.log("this.userPreferences.wherecommuting");
+      console.log(this.userPreferences.wherecommuting);
+      console.log("this.userPreferences.transportation");
+      console.log(this.userPreferences.transportation);
+      
+      this.saveUserPreferences();
+      
+      /*
+      console.log("this.userPreferences.desiredComute");
+      console.log(this.userPreferences.desiredComute);
+      console.log("this.userPreferences.Walking");
+      console.log(this.userPreferences.Walking);
+      console.log("userPreferences.Biking");
+      console.log(this.userPreferences.Biking);
+      console.log("userPreferences.Biking");
+      console.log(this.userPreferences.Driving);
+      console.log("userPreferences.Biking");
+      console.log(this.userPreferences.PublicTransi);*/
+      
+  }
+  
+  $scope.redirecToListingList = function(filterId){
+            $location.path( "/listings/filter/" + filterId);
+        }
+  
+  /*
+  preferencesFormCtrl.userPreferences.desiredComute
+  
+  Walking 
+Biking 
+Driving 
+Public Transit*/
 
 }]);

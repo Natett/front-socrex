@@ -1,134 +1,416 @@
 <div ng-controller="preferencesFormController as preferencesFormCtrl">
   <!--<h1>Find Me a Place</h1>
   <h2>We need to know what you want before we go get it for you</h2>-->
-  <form role="form">
     <div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('One')">
         <!--<h3>What kind of place are you looking for?</h3>-->
-        <h3>What kind of space do you want?</h3>
-        <table class="table">
-          <tr>
-            <td>
-              <img src="./img/rooms/sublet.jpg" alt="Smiley face" width="304" height="228">
-              <div class="radio">
-                <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                  A Room or Sublet. 
-                  <br>
-                  Average Price for Boston: $900
-                </label>
-              </div>
-            </td>
-            <td>
-              <img src="./img/rooms/studio.jpg" alt="Smiley face" width="304" height="228">
-              <div class="radio">
-                <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                  A Studio Apartment. 
-                  <br>
-                  Average price for Boston: $1,600
-                </label>
-              </div>
-            </td>
-            <td>
-              <img src="./img/rooms/onebedroom.png" alt="Smiley face" width="304" height="228">
-              <div class="radio">
-                <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-                  A One-bedroom Apartment. 
-                  <br>
-                  Average price for Boston: $2,200
-                </label>
-              </div>
-            </td>
-            <td>
-              <img src="./img/rooms/twobedroom.jpg" alt="Smiley face" width="304" height="228">
-              <div class="radio">
-                <label>
-                  <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">
-                  A Two-bedroom Apartment.
-                  <br>
-                  Average price for Boston: $2,700
-                </label>
-              </div>
-            </td>
-          </tr>
-        </table>
-        <h3>What is your target rent?</h3>
-        <div class="form-group" >
-          <div class="col-lg-3">
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="">
+        <form role="form" ng-submit="preferencesFormCtrl.onSubmitFirstPage()" novalidate>
+          <!-- <h3>What kind of space do you want?</h3> -->
+          <h1>What kind of place are you looking for?</h1>
+          <table class="table">
+            <tr>
+              <td>
+                <img src="./img/rooms/sublet.jpg" alt="Smiley face" width="304" height="228">
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.sublet_roomate" name="optionsRadios" id="optionsRadios1" value="sublet_roomate" checked>
+                    A Room or Sublet. 
+                    <br>
+                    Average Price for Boston: $900
+                  </label>
+                </div>
+              </td>
+              <td>
+                <img src="./img/rooms/studio.jpg" alt="Smiley face" width="304" height="228">
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.studio" name="optionsRadios" id="optionsRadios2" value="studio">
+                    A Studio Apartment. 
+                    <br>
+                    Average price for Boston: $1,600
+                  </label>
+                </div>
+              </td>
+              <td>
+                <img src="./img/rooms/onebedroom.png" alt="Smiley face" width="304" height="228">
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.1bed" name="optionsRadios" id="optionsRadios3" value="1bed">
+                    A One-bedroom Apartment. 
+                    <br>
+                    Average price for Boston: $2,200
+                  </label>
+                </div>
+              </td>
+              <td>
+                <img src="./img/rooms/twobedroom.jpg" alt="Smiley face" width="304" height="228">
+                <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.2bed" name="optionsRadios" id="optionsRadios4" value="2bed">
+                    A Two-bedroom Apartment.
+                    <br>
+                    Average price for Boston: $2,700
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <!-- 
+          <h3>What is your target rent?</h3>
+          <div class="form-group" >
+            <div class="col-lg-3">
+              <input type="number" class="form-control" id="exampleInputEmail1" placeholder="" ng-model="preferencesFormCtrl.userPreferences.budget" required>
+            </div>
           </div>
-        </div>
+          -->
+          </br>
+          </br>
+          </br>
+          </br>
+          <!-- Next button -->
+          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next First page</button>
+        </form>
       </div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Two')">
-        <!--<h3>What kind of place are you looking for?</h3>-->
-        <h3>How long will you be here?</h3>
-        <div class="form-group" >
-          <div class="col-lg-3">
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="from">
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="to">
+       	<h1>Let's talk about Neighborhoods</h1>
+        <h3>What kind of place are you looking for?</h3>
+        <form ng-submit="preferencesFormCtrl.onSubmitSecondPage()" novalidate>
+          <h4>At the minimum, I would EXPECT to live in a neighborhood that: </h4>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Near_action" value="Near_action">
+              Is near downtown ($$$)
+            </label>
           </div>
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h3>Are you a student or a professional?</h3>
-        <div class="radio">
-                <label>
-                  <input type="radio" name="personActivityOptionsRadios" id="optionsRadiosStudent" value="student">
-                  Student
-                </label>
-        </div>
-        <div class="radio">
-                <label>
-                  <input type="radio" name="personActivityOptionsRadios" id="optionsRadiosProfessional" value="professional">
-                  Professional
-                </label>
-        </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Safe" value="Safe">
+              Is considered very safe ($$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Easy_transport" value="Easy_transport">
+              Has easy access to public transport ($)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Parking" value="Parking">
+              Has easy street parking ($) 
+            </label>
+          </div>
+          <h4>I would LOVE to live in a neighborhood that: (Choose up to 3): </h4>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Locales_good" value="">
+              Has great local bars and restaurants ($$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Parks" value="">
+              Has beautiful parks ($$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Family" value="">
+              Is family friendly ($)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Student_vibe" value="">
+              Has a student vibe ($)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Young_pro" value="">
+               Has a young professional vibe ($$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Quiet" value="">
+              Is quaint and quiet ($$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Classic" value="">
+              Has the classic Boston architecture ($$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Modern" value="">
+              Has modern architecture and new construction ($$$)
+            </label>
+          </div>
+          
+         
+          
+          <!-- <h3>How long will you be here?</h3> 
+          <h3>At the minimum, I would EXPECT to live in a neighborhood that: </h3>
+          <div class="form-group" >
+            <div class="col-lg-3">
+              <input type="text" ng-model="preferencesFormCtrl.userPreferences.moveInDate" class="form-control" id="exampleInputEmail1" placeholder="from">
+              <input type="text" ng-model="preferencesFormCtrl.userPreferences.moveOutDate" class="form-control" id="exampleInputEmail1" placeholder="to">
+            </div>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <h3>Are you a student or a professional?</h3>
+          <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.moveReason" name="personActivityOptionsRadios" id="optionsRadiosStudent" value="student">
+                    Student
+                  </label>
+          </div>
+          <div class="radio">
+                  <label>
+                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.moveReason" name="personActivityOptionsRadios" id="optionsRadiosProfessional" value="professional">
+                    Professional
+                  </label>
+          </div>
+          </br>
+          </br>
+          </br>
+          </br>
+          -->
+          <!-- Next button -->
+          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next Second page</button>
+        </form>
       </div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Three')">
         <!--<h3>What kind of place are you looking for?</h3>-->
-        <h3>What is your desired commute</h3>
-        <div class="form-group" >
-          <div class="col-lg-3">
-            <input type="email" class="form-control" id="addressInput" placeholder="enter adress or university">
+        <h1>Let's talk about Neighborhoods</h1>
+        <h3>What kind of place are you looking for?</h3>
+        <form ng-submit="preferencesFormCtrl.onSubmitThirdPage()" novalidate>
+          <h4>At the minimum, I would LOVE to live in a unit that: (Choose 3)  </h4>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.pet" value="pet">
+              Is pet friendly ($)
+            </label>
           </div>
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h4>Only include modes of transportation that you are interested in</h4>
-        <div class="form-group">
-          <div class="col-lg-3">
-            <label for="exampleInputEmail1">Walking</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+          <div class="checkbox">
+            <label>
+              <!-- <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.spacingUnitLove" value="spacingUnitLove">-->
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.spacingUnitLove" value="spacing">
+              Is comfortably large ($$)
+            </label>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-lg-3">
-            <label for="exampleInputEmail1">Biking</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+          <div class="checkbox">
+            <label>
+            <!-- <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.lightingUnitLove" value="lightingUnitLove">-->
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.lighting" value="lighting">
+              Is above ground ($)
+            </label>
           </div>
-        </div>
-        <div class="form-group">
-          <div class="col-lg-3">
-            <label for="exampleInputEmail1">Driving</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.maintaned" value="maintaned">
+              Is well maintained ($$)
+            </label>
           </div>
-        </div>
-         <div class="form-group">
-          <div class="col-lg-3">
-            <label for="exampleInputEmail1">Public Transit</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.parking" value="parking">
+              Has its own parking spot ($$$) 
+            </label>
           </div>
-        </div>
+          <h4>   At the minimum, I would EXPECT to live in a unit that: (Choose 3)  </h4>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.hardwood" value="hardwood">
+              Has hardwood floors ($)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.laundry" value="laundry">
+              Has in unit laundry ($)
+            </label>
+          </div>
+          <!--
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.lightingUnitExpect" value="lightingUnitExpect">
+              Has lots of natural light ($$)
+            </label>
+          </div>
+          -->
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.deck_balcony" value="deck_balcony">
+              Has a roof deck or balcony ($$$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.cieling" value="cieling">
+              Has high ceilings ($$)
+            </label>
+          </div>  </h4>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.kitchen" value="kitchen">
+              Has a modern and updated kitchen ($$)
+            </label>
+          </div>
+          <!--
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.spacingUnitExpect" value="spacingUnitExpect">
+              Is oversized ($$)
+            </label>
+          </div>
+          -->
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.ameneties" value="ameneties">
+              Has a gym or pool ($$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.view" value="view">
+              Has a great view ($$$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.modern" value="modern">
+              Is modern and new ($$$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.classic" value="classic">
+              Has the classic Boston look ($$)
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.loft" value="loft">
+              Is a loft ($$)
+            </label>
+          </div>
+          <!--
+          <h3>What is your desired commute</h3>
+          <div class="form-group" >
+            <div class="col-lg-3">
+              <input type="text" ng-model="preferencesFormCtrl.userPreferences.desiredComute" class="form-control" id="addressInput" placeholder="enter adress or university">
+            </div>
+          </div>
+          -->
+          <br>
+          <br>
+          <br>
+          <br>
+          <!--
+          <h4>Only include modes of transportation that you are interested in</h4>
+          <div class="form-group">
+            <div class="col-lg-3">
+              <label for="exampleInputEmail1">Walking</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-3">
+              <label for="exampleInputEmail1">Biking</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-lg-3">
+              <label for="exampleInputEmail1">Driving</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+            </div>
+          </div>
+           <div class="form-group">
+            <div class="col-lg-3">
+              <label for="exampleInputEmail1">Public Transit</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="duration">
+            </div>
+          </div>
+          -->
+          <!-- Next button -->
+          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next Third page</button>
+        </form>
       </div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Four')">
-        <h3>Enjor more than just your apartment</h3>
+        <form ng-submit="preferencesFormCtrl.onSubmitFourthPage()" novalidate>
+          <!-- <h3>Enjor more than just your apartment</h3>-->
+          <h1>Tell us a little about yourself and your move</h1>
+          <div class="form-group">
+            <label for="exampleInputEmail1">First Name</label>
+            <input type="text" ng-model="preferencesFormCtrl.userPreferences.firstname" class="form-control" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Last Name</label>
+            <input type="text" ng-model="preferencesFormCtrl.userPreferences.lastname" class="form-control" placeholder="">
+          </div>
+          <h5>Gender</h5>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" ng-model="preferencesFormCtrl.userPreferences.gender" name="optionsRadios" id="optionsRadios1" value="male" checked>
+                      Male
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" ng-model="preferencesFormCtrl.userPreferences.gender" name="optionsRadios" id="optionsRadios2" value="female">
+                      Female
+                    </label>
+                  </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email</label>
+            <input type="text" ng-model="preferencesFormCtrl.userPreferences.email" class="form-control" placeholder="">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">What is your absolute max rent budget?</label>
+            <input type="text" ng-model="preferencesFormCtrl.userPreferences.budget" class="form-control" placeholder="">
+          </div>
+          <h5>Why are you moving to boston? </h5>
+          <select ng-model="preferencesFormCtrl.userPreferences.move_reason" class="form-control">
+            <option>I'm coming to study</option>
+            <option>I'm coming to work</option>
+            <option>I'm already living here</option>
+          </select>
+          <div class="form-group">
+            <label for="exampleInputEmail1">When is your move-in date?</label>
+            <input type="text" ng-model="preferencesFormCtrl.userPreferences.movein" class="form-control" placeholder="YYYYMMDD">
+          </div>
+          <h5>What's more important to you? </h5>
+          <select class="form-control" ng-model="preferencesFormCtrl.userPreferences.importance" >
+            <option>Price</option>
+            <option>Location</option>
+            <option>Both are just as important</option>
+          </select>
+          <h5>Where will you be commuting to? </h5>
+          <select class="form-control" ng-model="preferencesFormCtrl.userPreferences.wherecommuting" >
+            <option>Near downtown</option>
+            <option>The suburbs</option>
+            <option>A university</option>
+          </select>
+          <h5>How are you thinking of commuting? (transportation)  </h5>
+          <select class="form-control" ng-model="preferencesFormCtrl.userPreferences.transportation">
+            <option>Car</option>
+            <option>Public Transit</option>
+            <option>Bike</option>
+  			    <option>Walk</option>
+          </select>
+          <!-- Next button -->
+          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Submit Fourth page</button>
+        </form>
         
+        <!--
         <table>
           <tr>
             <td><h4>Getting around</h4></td>
@@ -261,8 +543,9 @@
               <input type="checkbox" value="">
             </td>
           </tr>
-        </table>
+        </table>-->
       </div>
+      <!--
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Five')">
         <h3>Love your space</h3>
         <table>
@@ -379,6 +662,7 @@
         </table>
       </div>
     </div>
+    -->
     <br>
     <br>
     <br>
@@ -391,5 +675,4 @@
       <!-- Submit button -->
       <button type="button" ng-hide="preferencesFormCtrl.validateIncreaseShowQuestionIndex();" class="btn btn-default" style="clear:both;float:right;" ng-click="preferencesFormCtrl.onClickSubmitButton();">Submit</button>
     </div>
-  </form>
 </div>
