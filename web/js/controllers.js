@@ -255,6 +255,47 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             $location.path( "/listing/" + $rootScope.selectedListing._id.$oid, false );
         }
         
+        // when the filter listings request fails, this method is added in the requestobject on the error attribute
+        $scope.onErrorFilterListings = function(data, status, headers, config) {
+            $scope.errorFilterListings();
+        }
+        
+        $scope.errorFilterListings = function() {
+            $scope.updateLoadingListingsFlag(false);
+            $scope.updateUnexpectedErrorFlag(true);
+        }
+        
+        // when the filter listings request succeeded, this method is added in the requestobject on the success attribute
+        $scope.onSuccessFilterListings = function(data, status, headers, config) {
+            if(data.IsValid === true)
+            { 
+                if(data.Data.Listings.length > 0){
+                    $rootScope.currentListingFilter = $scope.filterId;
+                    $rootScope.currentListedListings = data.Data.Listings;
+                    $scope.rows2 = data.Data.Listings;
+                    $rootScope.userId = data.Data.Email
+                    $scope.showTable();
+                    
+                    if($scope.totalPages != data.Data.TotalPages){
+                        $scope.totalPages = data.Data.TotalPages;
+                        //$scope.totalPages = 6;
+                    }
+                        
+                    if($scope.totalListings != data.Data.Total){
+                        $scope.totalListings = data.Data.Total;
+                    }
+                        
+                    $rootScope.reloadMap = true;
+                    
+                }else{
+                    $scope.updateLoadingListingsFlag(false);
+                    $scope.updateNoListingFoundFlag(true);
+                }
+            } else {
+                $scope.errorFilterListings();
+            }
+        };
+        
         $scope.filterListings = function(currentPage, numberOfItems) {
 		    // dummy filters
             // must be bery carefull with the filters value structure, it has to start with single couotes, and de inner quotes be double
@@ -273,34 +314,9 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
 		        data: $.param(filters),
 		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
-
-            responsePromise.success(function(data, status, headers, config) {
-                $rootScope.currentListingFilter = $scope.filterId;
-                $rootScope.currentListedListings = data.Data.Listings;
-                $scope.rows2 = data.Data.Listings;
-                $rootScope.userId = data.Data.Email
-                $scope.showTable();
-                if($scope.totalPages != data.Data.TotalPages){
-                    $scope.totalPages = data.Data.TotalPages;
-                    //$scope.totalPages = 6;
-                }
-                
-                if($scope.totalListings != data.Data.Total){
-                    $scope.totalListings = data.Data.Total;
-                    //$scope.totalPages = 6;
-                }
-                
-                $rootScope.reloadMap = true;
-                //$scope.setRandomStarRating($scope.rows2);
-                
-            });
-            
-            
-            
-            responsePromise.error(function(data, status, headers, config) {
-                $scope.updateLoadingListingsFlag(false);
-                $scope.updateUnexpectedErrorFlag(true);
-            });
+            // added methods when call succeeds or fails
+            responsePromise.success($scope.onSuccessFilterListings);
+            responsePromise.error($scope.onErrorFilterListings);
         }
         
         // from here: http://stackoverflow.com/questions/1527803/generating-random-numbers-in-javascript-in-a-specific-range
