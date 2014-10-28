@@ -22,7 +22,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                //url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
                 method: 'GET',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -267,6 +267,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
 		    // do call to server to retrieve listings list
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
+		        //url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/filter',
                 url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
                 method: 'POST',
 		        data: $.param(filters),
@@ -589,7 +590,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
 		    // do call to server to save preferences
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
-		        //url: 'https://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
+		        //url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
                 url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
                 method: 'POST',
 		        data: $.param(this.userPreferences),

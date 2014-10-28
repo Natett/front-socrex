@@ -348,6 +348,7 @@
         <form ng-submit="preferencesFormCtrl.onSubmitFourthPage()" novalidate>
           <!-- <h3>Enjor more than just your apartment</h3>-->
           <h1>Tell us a little about yourself and your move</h1>
+          <!--
           <div class="form-group">
             <label for="exampleInputEmail1">First Name</label>
             <input type="text" ng-model="preferencesFormCtrl.userPreferences.firstname" class="form-control" placeholder="">
@@ -369,24 +370,29 @@
                       Female
                     </label>
                   </div>
+          -->
           <div class="form-group">
             <label for="exampleInputEmail1">Email</label>
             <input type="text" ng-model="preferencesFormCtrl.userPreferences.email" class="form-control" placeholder="">
           </div>
+          
           <div class="form-group">
             <label for="exampleInputEmail1">What is your absolute max rent budget?</label>
             <input type="text" ng-model="preferencesFormCtrl.userPreferences.budget" class="form-control" placeholder="">
           </div>
+          <!--
           <h5>Why are you moving to boston? </h5>
           <select ng-model="preferencesFormCtrl.userPreferences.move_reason" class="form-control">
             <option>I'm coming to study</option>
             <option>I'm coming to work</option>
             <option>I'm already living here</option>
           </select>
+          -->
           <div class="form-group">
             <label for="exampleInputEmail1">When is your move-in date?</label>
             <input type="text" ng-model="preferencesFormCtrl.userPreferences.movein" class="form-control" placeholder="YYYYMMDD">
           </div>
+          <!--
           <h5>What's more important to you? </h5>
           <select class="form-control" ng-model="preferencesFormCtrl.userPreferences.importance" >
             <option>Price</option>
@@ -406,6 +412,7 @@
             <option>Bike</option>
   			    <option>Walk</option>
           </select>
+          -->
           <!-- Next button -->
           <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Submit Fourth page</button>
         </form>
