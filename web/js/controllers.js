@@ -393,7 +393,12 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
         function(newValue, oldValue){
             
             
-            
+             google.maps.event.addListenerOnce($scope.map, 'tilesloaded', function(){
+                $scope.isReadyMapFlag = true;
+                $scope.loadingMapFlag = false;
+                $scope.refreshMap();
+                // do something only the first time the map is loaded
+            });
             
             
             
@@ -447,12 +452,7 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
 
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
     
-    google.maps.event.addListener($scope.map, 'tilesloaded', function(){
-        $scope.isReadyMapFlag = true;
-        $scope.loadingMapFlag = false;
-        $scope.refreshMap();
-        // do something only the first time the map is loaded
-    });
+   
 
     $scope.markers = [];
     
