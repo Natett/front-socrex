@@ -22,7 +22,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                //url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
                 method: 'GET',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
