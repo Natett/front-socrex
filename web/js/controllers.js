@@ -407,7 +407,7 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
     
     $rootScope.$watch( 'currentListedListings',
         function(newValue, oldValue){
-            
+             $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
             
              google.maps.event.addListenerOnce($scope.map, 'tilesloaded', function(){
                 $scope.isReadyMapFlag = true;
@@ -466,7 +466,7 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
         }
     );
 
-    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
     
    
 
