@@ -4,7 +4,7 @@
     <div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('One')">
         <!--<h3>What kind of place are you looking for?</h3>-->
-        <form role="form" ng-submit="preferencesFormCtrl.onSubmitFirstPage()" novalidate>
+        <form role="form" ng-submit="preferencesFormCtrl.onSubmitFirstPage()">
           <!-- <h3>What kind of space do you want?</h3> -->
           <h1>What kind of place are you looking for?</h1>
           <table class="table">
@@ -13,7 +13,7 @@
                 <img src="./img/rooms/sublet.jpg" alt="Smiley face" width="304" height="228">
                 <div class="radio">
                   <label>
-                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.sublet_roomate" name="optionsRadios" id="optionsRadios1" value="sublet_roomate" checked>
+                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.sublet_roomate" name="optionsRadios" id="optionsRadios1" value="sublet_roomate">
                     A Room or Sublet. 
                     <br>
                     Average Price for Boston: $900
@@ -24,7 +24,7 @@
                 <img src="./img/rooms/studio.jpg" alt="Smiley face" width="304" height="228">
                 <div class="radio">
                   <label>
-                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.studio" name="optionsRadios" id="optionsRadios2" value="studio">
+                    <input type="radio" ng-model="preferencesFormCtrl.userPreferences.studio" name="optionsRadios" id="optionsRadios2" value="studio" required>
                     A Studio Apartment. 
                     <br>
                     Average price for Boston: $1,600
@@ -78,7 +78,7 @@
           <h4>At the minimum, I would EXPECT to live in a neighborhood that: </h4>
           <div class="checkbox">
             <label>
-              <input type="checkbox" ng-model="preferencesFormCtrl.userPreferences.Near_action" value="Near_action">
+              <input type="checkbox" checklist-model="preferencesFormCtrl.hoodExpectSelectedOptions" checklist-value="Near_action" >
               Is near downtown ($$$)
             </label>
           </div>
@@ -188,7 +188,7 @@
       </div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Three')">
         <!--<h3>What kind of place are you looking for?</h3>-->
-        <h1>Let's talk about Neighborhoods</h1>
+        <h1>Let's talk about the Unit</h1>
         <h3>What kind of place are you looking for?</h3>
         <form ng-submit="preferencesFormCtrl.onSubmitThirdPage()" novalidate>
           <h4>At the minimum, I would LOVE to live in a unit that: (Choose 3)  </h4>
@@ -345,7 +345,7 @@
         </form>
       </div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Four')">
-        <form ng-submit="preferencesFormCtrl.onSubmitFourthPage()" novalidate>
+        <form class="form-horizontal" role="form" ng-submit="preferencesFormCtrl.onSubmitFourthPage()">
           <!-- <h3>Enjor more than just your apartment</h3>-->
           <h1>Tell us a little about yourself and your move</h1>
           <!--
@@ -372,13 +372,17 @@
                   </div>
           -->
           <div class="form-group">
-            <label for="exampleInputEmail1">Email</label>
-            <input type="text" ng-model="preferencesFormCtrl.userPreferences.email" class="form-control" placeholder="">
+            <div class="col-sm-4">
+              <label for="userPreferenceEmailInput">Email</label>
+              <input type="email" id="userPreferenceEmailInput" ng-model="preferencesFormCtrl.userPreferences.email" class="form-control" placeholder="" required>
+            </div>
           </div>
           
           <div class="form-group">
-            <label for="exampleInputEmail1">What is your absolute max rent budget?</label>
-            <input type="text" ng-model="preferencesFormCtrl.userPreferences.budget" class="form-control" placeholder="">
+            <div class="col-sm-4">
+              <label for="userPreferenceBudgetInput">What is your absolute max rent budget?</label>
+              <input type="number" id="userPreferenceBudgetInput" ng-model="preferencesFormCtrl.userPreferences.budget" class="form-control" placeholder="" required>
+            </div>
           </div>
           <!--
           <h5>Why are you moving to boston? </h5>
@@ -389,8 +393,10 @@
           </select>
           -->
           <div class="form-group">
-            <label for="exampleInputEmail1">When is your move-in date?</label>
-            <input type="text" ng-model="preferencesFormCtrl.userPreferences.movein" class="form-control" placeholder="YYYYMMDD">
+            <div class="col-sm-4">
+              <label for="exampleInputEmail1">When is your move-in date?</label>
+              <input type="date" ng-model="preferencesFormCtrl.userPreferences.movein" class="form-control" required>
+            </div>
           </div>
           <!--
           <h5>What's more important to you? </h5>

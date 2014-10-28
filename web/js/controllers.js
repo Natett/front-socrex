@@ -547,6 +547,16 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
   
   this.userPreferences = {};
   
+  this.hoodExpectSelectedOptions = [];
+  
+  this.onClickHoodExpectOption = function(checkBoxElement){
+      console.log("onClickHoodExpectOption");
+      console.log("checkBoxElement");
+      console.log(checkBoxElement);
+      console.log("checkBoxElement.checked");
+      console.log(checkBoxElement.checked);
+  }
+  
   this.isShownQuestionNumber = function(questionNumber){
       var returnValue = false;
       
@@ -742,7 +752,10 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
       console.log(this.userPreferences.budget);
       console.log("this.userPreferences.move_reason");
       console.log(this.userPreferences.move_reason);
-      console.log("this.userPreferences.movein");
+      console.log("this.userPreferences.moveinoriginal");
+      console.log(this.userPreferences.movein);
+      this.userPreferences.movein = this.userPreferences.movein.split("-").join("");
+      console.log("this.userPreferences.moveinreplaced");
       console.log(this.userPreferences.movein);
       console.log("this.userPreferences.importance");
       console.log(this.userPreferences.importance);

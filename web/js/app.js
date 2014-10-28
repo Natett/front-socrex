@@ -7,7 +7,8 @@ angular.module('socrex', [
   'socrex.filters',
   'socrex.services',
   'socrex.directives',
-  'socrex.controllers'
+  'socrex.controllers',
+  'checklist-model'
 ]).
 config(['$routeProvider', function($routeProvider) {
   
