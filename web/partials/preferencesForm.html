@@ -68,7 +68,7 @@
           </br>
           </br>
           <!-- Next button -->
-          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next First page</button>
+          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next</button>
         </form>
       </div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Two')">
@@ -183,7 +183,7 @@
           </br>
           -->
           <!-- Next button -->
-          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next Second page</button>
+          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next</button>
         </form>
       </div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Three')">
@@ -341,7 +341,7 @@
           </div>
           -->
           <!-- Next button -->
-          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next Third page</button>
+          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next</button>
         </form>
       </div>
       <div ng-show="preferencesFormCtrl.isShownQuestionNumber('Four')">
@@ -414,7 +414,7 @@
           </select>
           -->
           <!-- Next button -->
-          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Submit Fourth page</button>
+          <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Submit</button>
         </form>
         
         <!--
@@ -670,16 +670,12 @@
       </div>
     </div>
     -->
-    <br>
-    <br>
-    <br>
-    <br>
     <div>
       <!-- Prev button -->
       <button class="btn btn-default" ng-show="preferencesFormCtrl.validateDecreaseShowQuestionIndex();" type="button" ng-click="preferencesFormCtrl.onClickPreviousButton();">Previous</button>
       <!-- Next button -->
-      <button type="button" ng-show="preferencesFormCtrl.validateIncreaseShowQuestionIndex();" class="btn btn-default" style="clear:both;float:right;" ng-click="preferencesFormCtrl.onClickNextButton();">Next</button>
+      <!-- <button type="button" ng-show="preferencesFormCtrl.validateIncreaseShowQuestionIndex();" class="btn btn-default" style="clear:both;float:right;" ng-click="preferencesFormCtrl.onClickNextButton();">Next</button> -->
       <!-- Submit button -->
-      <button type="button" ng-hide="preferencesFormCtrl.validateIncreaseShowQuestionIndex();" class="btn btn-default" style="clear:both;float:right;" ng-click="preferencesFormCtrl.onClickSubmitButton();">Submit</button>
+      <!-- <button type="button" ng-hide="preferencesFormCtrl.validateIncreaseShowQuestionIndex();" class="btn btn-default" style="clear:both;float:right;" ng-click="preferencesFormCtrl.onClickSubmitButton();">Submit</button> -->
     </div>
 </div>
