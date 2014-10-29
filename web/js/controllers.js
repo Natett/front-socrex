@@ -543,9 +543,11 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
     // zero based index
   this.showQuestionIndex = 0;
   // array of questions
-  this.questionsArray = ['One','Two','Three', 'Four'];
+  this.questionsArray = ['One','Two'];
   
   this.userPreferences = {};
+  
+  this.archetype = {};
   
   this.hoodExpectSelectedOptions = [];
   
@@ -603,12 +605,63 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
       return returnValue;
   }
   
+  this.addAttributesOfArchetype1 = function(objectToModify){
+      objectToModify['Near_action'] = true;
+      objectToModify['Locales_good'] = true;
+  }
+  
+  this.addAttributesOfArchetype2 = function(objectToModify){
+      objectToModify['Safe'] = true;
+      objectToModify['Parks'] = true;
+  }
+  
+  this.addAttributesOfArchetype3 = function(objectToModify){
+      objectToModify['Easy_transport'] = true;
+      objectToModify['Family'] = true;
+  }
+  
+  this.addAttributesOfArchetype4 = function(objectToModify){
+      objectToModify['Parking'] = true;
+      objectToModify['Student_vibe'] = true;
+  }
+  
+  this.addAttributesOfArchetype5 = function(objectToModify){
+      objectToModify['Near_action'] = true;
+      objectToModify['Locales_good'] = true;
+  }
+  
+  this.addAttributesOfArchetype6 = function(objectToModify){
+      objectToModify['Safe'] = true;
+      objectToModify['Parks'] = true;
+  }
+  
   this.onSubmitFirstPage = function(){
       console.log("onSubmitFirstPage");
+      switch(this.archetype){
+          case 'sublet_roomate':
+            this.addAttributesOfArchetype1(this.userPreferences);    
+            break;
+          case 'studio':
+            this.addAttributesOfArchetype2(this.userPreferences);    
+            break;
+          case '1bed':
+            this.addAttributesOfArchetype3(this.userPreferences);    
+            break;
+          case '2bed':
+            this.addAttributesOfArchetype4(this.userPreferences);    
+            break;
+          case '3bed':
+            this.addAttributesOfArchetype5(this.userPreferences);    
+            break;
+          case '4bed':
+            this.addAttributesOfArchetype6(this.userPreferences);    
+            break;
+      }
+      
       //console.log("this.userPreferences.budget");
       //console.log(this.userPreferences.budget);
-      console.log("userPreferences.unitType");
-      console.log(this.userPreferences.unitType);
+      console.log("userPreferences");
+      console.log(this.userPreferences);
       this.onClickNextButton();
   }
   
@@ -632,7 +685,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
                 console.log("Succeeded response");
             }); 
   }
-  
+  /*
   this.onSubmitSecondPage = function(){
       console.log("onSubmitSecondPage");
       console.log("#### HOOD Expected:");
@@ -662,15 +715,9 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
       console.log("userPreferences.Modern");
       console.log(this.userPreferences.Modern);
       
-      /*
-      console.log("this.userPreferences.moveInDate");
-      console.log(this.userPreferences.moveInDate);
-      console.log("this.userPreferences.moveOutDate");
-      console.log(this.userPreferences.moveOutDate);
-      console.log("userPreferences.moveReason");
-      console.log(this.userPreferences.moveReason);*/
+  
       this.onClickNextButton();
-  }
+  }*/
   
   this.onSubmitThirdPage = function(){
       console.log("onSubmitThirdPage");
@@ -738,7 +785,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
       this.onClickNextButton();
   }
   
-  this.onSubmitFourthPage = function(){
+  this.onSubmitSecondPage = function(){
       console.log("onSubmitFourthPage");
       console.log("this.userPreferences.firstname");
       console.log(this.userPreferences.firstname);
