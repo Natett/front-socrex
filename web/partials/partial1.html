@@ -40,22 +40,23 @@
      
     <br>
     <br>
+    <input type="button" value="Have us check this place out!" ng-click="onClickInterested();" />
+    <!--
     <table  class="table table-striped">
         <tr style="width:100px">
             <td><input type="button" value="Original listing" ng-click="onClickOriginalListingButton();" /></td>
-            <!--<td><input type="button" value="Contact" ng-click="onClickContact();" /></td>-->
             <td><input type="button" value="Verify availability" ng-click="onClickVerifyAvailability();" /></td>
             <td><input type="button" value="Expert review" ng-click="onClickExpertReview();" /></td>
             <td><input type="button" value="Tour" ng-click="onClickTour();" /></td>
         </tr>
         <tr style="width:100px">
             <td> Go to the original listing page</td>
-            <!-- <td> Get the info of the landlord and contac him directly </td>-->
             <td> we are going to verify availability and any special requirements by the landlord </td>
             <td> A local expert will review the listing</td>
             <td> We will enable a virtual tour so you can do a 360 degrees tour</td>
         </tr>
     </table>
+    -->
 </div>
 <!--
 <table  class="table table-striped">
@@ -76,6 +77,36 @@
   <p>"I am interested in this rental and would like to schedule a viewing. Please let me know when this would be possible."</p>
   <input type="button" value="Send"/>
 </div>
+
+<div id="provide_email_dialog" title="Provide email" jqueryuidialog>
+  <p>Please provide us with your basic contact information so that we can reach you regarding this apartment.</p>
+  <br>
+  <div>
+    <form>
+      <table  class="table table-striped">
+      <tr>
+        <td>Full Name: </td><td><input type="text" ng-model="user.fullname" id="nameInput" placeholder="" required/></td>
+      </tr>
+      <tr>
+        <td>Email: </td><td><input type="email" ng-model="user.email" id="emailInput" placeholder="" required/></td>
+      </tr>
+      <tr>
+        <td>Phone: </td><td><input type="text" ng-model="user.phone" id="phoneInput" placeholder="" required/></td>
+      </tr>
+
+      <tr>
+        <td><button ng-click="onSubmitConcierge(user);">Submit</button></td>
+      </tr>
+      </table>
+    </form>
+  </div>
+</div>
+
+<div id="workingdialog" title="Thank you" jqueryuidialog>
+  <p>Thank you for your request!</p>
+  <p>One of our agents will be reviewing this listing for you and will get back to you as soon as possible!</p>
+</div>
+
 <div id="verifyavailabilitydialog" title="Verify availability" jqueryuidialog>
   <!--<p>Linkedin url: www.google.com</p>-->
   <p>We will contact the landlord or agent directly on your behalf and ask if the unit is available and if they would accept someone with your credentials. We will also ensure the listing is authentic and protect you from scams.</p>
