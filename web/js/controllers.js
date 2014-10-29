@@ -606,18 +606,47 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
   }
   
   this.addAttributesOfArchetype1 = function(objectToModify){
+      // for hood
       objectToModify['Near_action'] = true;
       objectToModify['Locales_good'] = true;
+      objectToModify['Parks'] = true;
+      objectToModify['Modern'] = true;
+      objectToModify['Easy_transport'] = true;
+      // for unit
+      objectToModify['modern'] = true;
+      objectToModify['loft'] = true;
+       // person type
+      objectToModify['Student_vibe'] = true; 
   }
   
+  
   this.addAttributesOfArchetype2 = function(objectToModify){
-      objectToModify['Safe'] = true;
-      objectToModify['Parks'] = true;
+      // for hood
+      objectToModify['Near_action'] = true;
+      objectToModify['Easy_transport'] = true;
+      objectToModify['Classic'] = true; 
+      // for unit
+      objectToModify['maintaned'] = true; 
+      objectToModify['lighting'] = true;
+      objectToModify['hardwood'] = true; 
+      objectToModify['laundry'] = true;
+      objectToModify['maintaned'] = true;
+      objectToModify['classic'] = true; 
+       // person type
+      objectToModify['Young_pro'] = true; 
   }
   
   this.addAttributesOfArchetype3 = function(objectToModify){
-      objectToModify['Easy_transport'] = true;
-      objectToModify['Family'] = true;
+      // for hood
+      objectToModify['Quiet'] = true;
+      // for unit
+      objectToModify['deck_balcony'] = true;
+      objectToModify['cieling'] = true; 
+      objectToModify['kitchen'] = true; 
+      objectToModify['ameneties'] = true; 
+      objectToModify['deck_balcony'] = true; 
+      // person type
+      objectToModify['Family'] = true; 
   }
   
   this.addAttributesOfArchetype4 = function(objectToModify){

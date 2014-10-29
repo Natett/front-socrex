@@ -6,11 +6,11 @@
         <!--<h3>What kind of place are you looking for?</h3>-->
         <form role="form" ng-submit="preferencesFormCtrl.onSubmitFirstPage()">
           <!-- <h3>What kind of space do you want?</h3> -->
-          <h1> What kind of place are you looking for?</h1>
+          <h1> What are you looking for?</h1>
           <table class="table">
             <tr>
               <td>
-                <img src="./img/rooms/sublet.jpg" class="img-responsive" alt="Smiley face" width="304" height="228" >
+                <img src="./img/rooms/subletSmall.jpg" class="img-responsive" alt="Smiley face" >
                 <div class="radio">
                   <label>
                     <input type="radio" ng-model="preferencesFormCtrl.userPreferences.sublet_roomate" name="placeTypeOptionsRadios" id="optionsRadios1" value="sublet_roomate">
@@ -21,7 +21,7 @@
                 </div>
               </td>
               <td>
-                <img src="./img/rooms/studio.jpg" class="img-responsive" alt="Smiley face" width="304" height="228" >
+                <img src="./img/rooms/studioSmall.jpg" class="img-responsive" alt="Smiley face" >
                 <div class="radio">
                   <label>
                     <input type="radio" ng-model="preferencesFormCtrl.userPreferences.studio" name="placeTypeOptionsRadios" id="optionsRadios2" value="studio" required>
@@ -32,7 +32,7 @@
                 </div>
               </td>
               <td>
-                <img src="./img/rooms/onebedroom.png" class="img-responsive" alt="Smiley face" width="304" height="228" >
+                <img src="./img/rooms/onebedroomSmall.jpg" class="img-responsive" alt="Smiley face">
                 <div class="radio">
                   <label>
                     <input type="radio" ng-model="preferencesFormCtrl.userPreferences.1bed" name="placeTypeOptionsRadios" id="optionsRadios3" value="1bed">
@@ -43,7 +43,7 @@
                 </div>
               </td>
               <td>
-                <img src="./img/rooms/twobedroom.jpg" class="img-responsive" alt="Smiley face" width="304" height="228">
+                <img src="./img/rooms/twobedroomSmall.jpg" class="img-responsive" alt="Smiley face" >
                 <div class="radio">
                   <label>
                     <input type="radio" ng-model="preferencesFormCtrl.userPreferences.2bed" name="placeTypeOptionsRadios" id="optionsRadios4" value="2bed">
@@ -55,11 +55,11 @@
               </td>
             </tr>
           </table>
-          <h1>What style do you like most?</h1>
+          <h1>Choose the style you like:</h1>
           <table class="table">
             <tr>
               <td>
-                <img src="./img/rooms/sublet.jpg" class="img-responsive" alt="Smiley face" width="304" height="228">
+                <img src="./img/archetypes/Kenmore-1Small.jpg" class="img-responsive" alt="Smiley face" width="304" height="100">
                 <div class="radio">
                   <label>
                     <input type="radio" ng-model="preferencesFormCtrl.archetype" name="archetypeOptionsRadios" id="optionsRadios1" value="sublet_roomate">
@@ -70,7 +70,7 @@
                 </div>
               </td>
               <td>
-                <img src="./img/rooms/studio.jpg" class="img-responsive" alt="Smiley face" width="304" height="228">
+                <img src="./img/archetypes/500-boston-neighborhoods-back-bayCroppedSmall.jpg" class="img-responsive" alt="Smiley face" width="304" height="150">
                 <div class="radio">
                   <label>
                     <input type="radio" ng-model="preferencesFormCtrl.archetype" name="archetypeOptionsRadios" id="optionsRadios2" value="studio" required>
@@ -81,7 +81,7 @@
                 </div>
               </td>
               <td>
-                <img src="./img/rooms/onebedroom.png" class="img-responsive" alt="Smiley face" width="304" height="228">
+                <img src="./img/archetypes/agassiz-housesSmall.jpg" class="img-responsive" alt="Smiley face" width="304" height="200">
                 <div class="radio">
                   <label>
                     <input type="radio" ng-model="preferencesFormCtrl.archetype" name="archetypeOptionsRadios" id="optionsRadios3" value="1bed">
@@ -91,6 +91,7 @@
                   </label>
                 </div>
               </td>
+              <!-- 
               <td>
                 <img src="./img/rooms/sublet.jpg" class="img-responsive" alt="Smiley face" width="304" height="228">
                 <div class="radio">
@@ -113,6 +114,7 @@
                   </label>
                 </div>
               </td>
+              -->
             </tr>
           </table>
           
@@ -124,10 +126,6 @@
             </div>
           </div>
           -->
-          </br>
-          </br>
-          </br>
-          </br>
           <!-- Next button -->
           <button type="submit" class="btn btn-default" style="clear:both;float:right;" >Next</button>
         </form>
