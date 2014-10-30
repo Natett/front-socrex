@@ -472,6 +472,8 @@ socrexControllers.controller('MapCtrl', ['$scope' , '$rootScope', function ($sco
 
     $scope.markers = [];
     
+    $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
     var infoWindow = new google.maps.InfoWindow();
     
     $scope.createMarker = function (info){
@@ -616,7 +618,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
       objectToModify['modern'] = true;
       objectToModify['loft'] = true;
        // person type
-      objectToModify['Student_vibe'] = true; 
+      //objectToModify['Student_vibe'] = true; 
   }
   
   
@@ -633,7 +635,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
       objectToModify['maintaned'] = true;
       objectToModify['classic'] = true; 
        // person type
-      objectToModify['Young_pro'] = true; 
+      //objectToModify['Young_pro'] = true; 
   }
   
   this.addAttributesOfArchetype3 = function(objectToModify){
@@ -646,7 +648,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
       objectToModify['ameneties'] = true; 
       objectToModify['deck_balcony'] = true; 
       // person type
-      objectToModify['Family'] = true; 
+      //objectToModify['Family'] = true; 
   }
   
   this.addAttributesOfArchetype4 = function(objectToModify){
