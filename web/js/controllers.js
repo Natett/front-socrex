@@ -51,7 +51,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
         }
 
         $scope.onClickInterested = function(){
-            if (typeof($rootScope.userId) === 'undefined') {
+            if (typeof($rootScope.userId) === 'undefined' || $rootScope.userId == "") {
                 angular.element('#provide_email_dialog').dialog( "open" );
             } else {
                 angular.element('#workingdialog').dialog( "open" );
@@ -104,10 +104,17 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
         $scope.saveClickOnDB = function(listingid,useremail, option) {
             // dummy filters
     		//var listingId = '542c3f86b43c2c00029a8211';
+            url = ""
+
+            if (typeof(useremail) === 'undefined' || useremail == "") {
+                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+            } else {
+                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+            }
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option,
+                url: url,
                 method: 'POST',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -120,7 +127,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
                 
             var responsePromise = $http({
                 //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://localhost:5000/conciergeEmail',
+                url: 'http://byopapp-api-stage.herokuapp.com/conciergeEmail',
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: {
@@ -271,7 +278,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         $scope.getDetailedListing = function(listingId) {
             // dummy filters
     		//var listingId = '542c3f86b43c2c00029a8211';
-    		$scope.saveClickOnDB(listingId,$rootScope.userId ,"listingdetails")
+    		//$scope.saveClickOnDB(listingId,$rootScope.userId ,"listingdetails")
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
@@ -315,7 +322,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
                     $rootScope.currentListingFilter = $scope.filterId;
                     $rootScope.currentListedListings = data.Data.Listings;
                     $scope.rows2 = data.Data.Listings;
-                    $rootScope.userId = data.Data.Email
+                    //$rootScope.userId = data.Data.Email
                     $scope.showTable();
                     
                     if($scope.totalPages != data.Data.TotalPages){
@@ -382,10 +389,16 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         $scope.saveClickOnDB = function(listingid,useremail, option) {
             // dummy filters
     		//var listingId = '542c3f86b43c2c00029a8211';
+            url = ""
+            if (typeof(useremail) === 'undefined' || useremail == "") {
+                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+            } else {
+                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+            }
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option,
+                url: url,
                 method: 'POST',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });

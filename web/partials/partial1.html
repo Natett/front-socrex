@@ -82,20 +82,20 @@
   <p>Please provide us with your basic contact information so that we can reach you regarding this apartment.</p>
   <br>
   <div>
-    <form>
-      <table  class="table table-striped">
+    <form ng-submit="onSubmitConcierge(user);">
+      <table class="table table-striped">
       <tr>
-        <td>Full Name: </td><td><input type="text" ng-model="user.fullname" id="nameInput" placeholder="" required/></td>
+        <td>Full Name: </td><td><input type="text" ng-model="user.fullname" placeholder="" required/></td>
       </tr>
       <tr>
-        <td>Email: </td><td><input type="email" ng-model="user.email" id="emailInput" placeholder="" required/></td>
+        <td>Email: </td><td><input type="email" ng-model="user.email" placeholder="" required/></td>
       </tr>
       <tr>
-        <td>Phone: </td><td><input type="text" ng-model="user.phone" id="phoneInput" placeholder="" required/></td>
+        <td>Phone: </td><td><input type="text" ng-model="user.phone" placeholder="" required/></td>
       </tr>
 
       <tr>
-        <td><button ng-click="onSubmitConcierge(user);">Submit</button></td>
+        <td><button type="submit">Submit</button></td>
       </tr>
       </table>
     </form>
