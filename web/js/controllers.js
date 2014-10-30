@@ -52,10 +52,8 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
 
         $scope.onClickInterested = function(){
             if (typeof($rootScope.userId) === 'undefined') {
-                console.log("Flag1");
                 angular.element('#provide_email_dialog').dialog( "open" );
             } else {
-                console.log("Flag2");
                 angular.element('#workingdialog').dialog( "open" );
                 $scope.sendEmailConcierge($routeParams.listingId,$rootScope.userId, $rootScope.fullName, $rootScope.userPhone);
             }
@@ -66,11 +64,10 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             $rootScope.fullName = user.fullname;
             $rootScope.userId = user.email;
             $rootScope.userPhone = user.phone;
-            console.log($rootScope.userId);
-            console.log($rootScope.userPhone);
+            $scope.sendEmailConcierge($routeParams.listingId,$rootScope.userId, $rootScope.fullName, $rootScope.userPhone);
             angular.element('#provide_email_dialog').dialog( "close" );
             angular.element('#workingdialog').dialog( "open" );
-            $scope.sendEmailConcierge($routeParams.listingId,$rootScope.userId, $rootScope.fullName, $rootScope.userPhone);
+            
         }
 
         
@@ -116,17 +113,25 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             });
         }
 
-        $scope.sendEmailConcierge = function(listingid,useremail, username, userphone) {
+        $scope.sendEmailConcierge = function(listingid, useremail, username, userphone) {
             // dummy filters
             //var listingId = '542c3f86b43c2c00029a8211';
             listing_url = $rootScope.selectedListing.url
                 
             var responsePromise = $http({
                 //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option,
+                url: 'http://localhost:5000/conciergeEmail',
                 method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: {
+                    email: useremail,
+                    name: username,
+                    phone: userphone,
+                    listingurl: listing_url,
+                    listingid: listingid
+                }
             });
+            console.log(responsePromise)
         }
         
         $scope.validateSelectedListing();
