@@ -13,6 +13,8 @@ angular.module('socrex', [
 config(['$routeProvider', function($routeProvider) {
   
   $routeProvider.when('/preferencesForm', {templateUrl: 'partials/preferencesForm.html'});
+
+  $routeProvider.when('/landingQuestions', {templateUrl: 'partials/landingQuestions.html', controller: 'landingQuestionsController'});
   
   $routeProvider.when('/listing/:listingId', {templateUrl: 'partials/partial1.html', controller: 'listCtrl'});
   

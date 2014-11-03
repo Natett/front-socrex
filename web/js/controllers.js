@@ -1,4 +1,5 @@
 var socrexControllers = angular.module('socrex.controllers', []);
+var dataCollection = []
 
 socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope', '$routeParams' ,
     function($scope,$http, $location,$rootScope, $routeParams) {
@@ -925,4 +926,175 @@ Biking
 Driving 
 Public Transit*/
 
+}]);
+
+socrexControllers.controller('landingQuestionsController', ['$scope' , '$rootScope' , '$http' , '$location', function($scope, $rootScope, $http , $location) {
+$(document).ready(function() {
+  var form = new Form(), general = new generalEvents(), change = new Change(), collect = new dataCollect(),
+  ph = form.placeholders(), g = general.selectedType(), c = change.change(), data = collect.collect();
+
+  userPreferences = {}
+
+  function Form() {
+    this.placeholders = function() {
+      $('input').on('focus', function() {
+        var val = $(this).val();
+        switch (val) {
+          case '$ enter amount':
+            $(this).val('$');
+            break;
+          default:
+            $(this).val();
+            break;
+        }
+      });
+      $('input').on('blur', function() {
+        var val = $(this).val();
+        switch (val) {
+          case '':
+            $(this).val('$ enter amount');
+            break;
+          default:
+            $(this).val();
+            break;
+        }
+      });
+    }
+  }
+  
+  function generalEvents() {
+    this.selectedType = function() {
+      $('.size').click(function(e) {
+        e.preventDefault();
+        $('.size').removeClass('selected-type');
+        $(this).toggleClass('selected-type');
+        figA = $(this).text().trim();
+        console.log(figA)
+      });
+      $('.space-type').click(function() {
+        $('.space-type').removeClass('selected-type');
+        $(this).toggleClass('selected-type');
+        figB = $(this).next().html().trim();
+        console.log(figB)
+      });
+      $('.pro-type').click(function() {
+        $('.pro-type').removeClass('selected-type');
+        $(this).toggleClass('selected-type');
+        figC = $(this).next().html().trim();
+        console.log(figC)
+      });
+    }
+  }
+  
+  function Change() {
+    this.change = function() {
+      $('.amount').on("keyup", function() {
+        var pattern = /[^-0-9|$]/g, value = $(this).val(), sanitize = value.replace(pattern, '');
+        sanitize = sanitize.replace(/(.)-/, '$1');
+        $(this).val(sanitize);
+      });
+    }
+  }
+  
+  function dataCollect() {
+    this.collect = function() {
+      $('.controls .btn').on("click", function() {
+
+        switch (figA){
+            case 'Room or Sublet':
+                userPreferences['sublet_roomate'] = true;
+                break;
+            case 'Studio':
+                userPreferences['studio'] = true;
+                break;
+            case 'One Bedroom':
+                userPreferences['1bed'] = true;
+                break;
+            case 'Two Bedroom':
+                userPreferences['2bed'] = true;
+                break;
+        }
+
+        switch (figB){
+            case 'Modern and Bustling':
+                userPreferences['Near_action'] = true
+                userPreferences['Locales_good'] = true
+                userPreferences['Parks'] = true
+                userPreferences['Modern'] = true
+                userPreferences['Easy_transport'] = true
+
+                userPreferences['modern'] = true
+                userPreferences['loft'] = true
+                break;
+            case 'Classic Boston':
+                userPreferences['Near_action'] = true
+                userPreferences['Easy_transport'] = true
+                userPreferences['Classic'] = true
+
+                userPreferences['lighting'] = true
+                userPreferences['hardwood'] = true
+                userPreferences['laundry'] = true
+                userPreferences['classic'] = true
+                break;
+            case 'Chill Burbs':
+                userPreferences['Quiet'] = true;
+
+                userPreferences['deck_balcony'] = true;
+                userPreferences['cieling'] = true;
+                userPreferences['kitchen'] = true;
+                userPreferences['ameneties'] = true;
+                break;
+        }
+
+        switch (figC){
+            case 'Student':
+                userPreferences['Parking'] = true
+                userPreferences['Student_vibe'] = true
+                break;
+            case 'Professional':
+                userPreferences['Near_action'] = true
+                userPreferences['Locales_good'] = true
+                break;
+            case 'Family':
+                userPreferences['Safe'] = true;
+                userPreferences['Parks'] = true;
+                break;
+        }
+
+        userPreferences['budget'] = $('.budget').val()
+        movein = $('.movein').val()
+        userPreferences['movein'] = movein.split("-").join("");
+
+        saveUserPreferences();
+      });
+    }
+  }
+
+  saveUserPreferences = function(){
+    // do call to server to save preferences
+    var responsePromise = $http({
+        //url: 'http://127.0.0.1:5000/listings/filter', 
+        //url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
+        url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+        method: 'POST',
+        data: $.param(userPreferences),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    });
+
+    responsePromise.success(function(data, status, headers, config) {
+        console.log("Succeeded response");
+        $scope.redirecToListingList(data.Data.PreferenceId.$oid);
+    });
+    
+    responsePromise.error(function(data, status, headers, config) {
+        console.log("Succeeded response");
+    }); 
+  }
+
+  $scope.redirecToListingList = function(filterId){
+            $location.path( "/listings/filter/" + filterId);   
+        }
+
+});
+  
 }]);
