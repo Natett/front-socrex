@@ -934,6 +934,9 @@ $(document).ready(function() {
   ph = form.placeholders(), g = general.selectedType(), c = change.change(), data = collect.collect();
 
   userPreferences = {}
+  figA = 'Room or Sublet';
+  figB = 'Modern and Bustling';
+  figC = 'Student';
 
   function Form() {
     this.placeholders = function() {
@@ -960,6 +963,14 @@ $(document).ready(function() {
         }
       });
     }
+  }
+  
+  $scope.onSubmitFirstPage = function(){
+      console.log("onSubmitFirstPage");
+      console.log("userPreferences");
+      console.log(this.userPreferences);
+      $('#initialQuestionsForm').submit();
+      //this.onClickNextButton();
   }
   
   function generalEvents() {
@@ -998,7 +1009,11 @@ $(document).ready(function() {
   
   function dataCollect() {
     this.collect = function() {
-      $('.controls .btn').on("click", function() {
+    //$('#initialQuestionsForm').submit();
+        
+      
+      //$('.controls .btn').on("click", function() {
+      $('#initialQuestionsForm').on("submit" , function (){
 
         switch (figA){
             case 'Room or Sublet':
@@ -1067,6 +1082,7 @@ $(document).ready(function() {
 
         saveUserPreferences();
       });
+      
     }
   }
 
