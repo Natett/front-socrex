@@ -11,6 +11,11 @@ body{
 
 body {
     overflow-x: hidden;
+    padding:20px;
+}
+
+.search{
+  margin-left:10px;
 }
 
 body li {
