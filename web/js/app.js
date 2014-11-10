@@ -14,8 +14,13 @@ config(['$routeProvider', function($routeProvider) {
   
   $routeProvider.when('/preferencesForm', {templateUrl: 'partials/preferencesForm.html'});
 
-  $routeProvider.when('/', {templateUrl: 'partials/landing.html'});
-  $routeProvider.when('/listings', {templateUrl: 'partials/listings.html'});
+  $routeProvider.when('/', {templateUrl: 'partials/landing.html', controller: 'initialFormCtrl'});
+  $routeProvider.when('/listings', {templateUrl: 'partials/listingsList.html', controller: 'listingsListCtrl'});
+  //$routeProvider.when('/listingDetails', {templateUrl: 'partials/listingDetails.html'});
+  $routeProvider.when('/listingDetails:listingId', {templateUrl: 'partials/listingDetails.html'});
+  $routeProvider.when('/listings/filter/:filterId', { templateUrl: 'partials/listingsList.html', controller: 'listingsListCtrl'})
+
+  //$routeProvider.when('/listings', {templateUrl: 'partials/listings.html'});
 
   $routeProvider.when('/landingQuestions', {templateUrl: 'partials/landingQuestions.html', controller: 'landingQuestionsController'});
   
@@ -23,7 +28,7 @@ config(['$routeProvider', function($routeProvider) {
   
   //$routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'listCtrl2'});
   
-  $routeProvider.when('/listings/filter/:filterId', { templateUrl: 'partials/partial2.html', controller: 'listCtrl2'})
+  //$routeProvider.when('/listings/filter/:filterId', { templateUrl: 'partials/partial2.html', controller: 'listCtrl2'})
   
   //$routeProvider.otherwise({redirectTo: '/view2'});
   

@@ -1,6 +1,8 @@
 var socrexControllers = angular.module('socrex.controllers', []);
 var dataCollection = []
 
+filters={}
+
 socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope', '$routeParams' ,
     function($scope,$http, $location,$rootScope, $routeParams) {
         
@@ -1097,4 +1099,262 @@ $(document).ready(function() {
 
 });
   
+}]);
+
+
+
+
+
+
+
+
+socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$http' , '$location', function ($scope, $rootScope, $http, $location) {
+
+    this.initialForm = {};
+    $rootScope.prefs = {}
+
+
+    $scope.onSubmitInitial = function(){
+        this.initialForm.movein = this.initialForm.movein.split("-").join("");
+        $rootScope.prefs.movein = this.initialForm.movein;
+        saveUserPreferences(this.initialForm);
+    }
+
+    $scope.toListingList = function(){
+        $location.path( "/listings/");   
+    }
+
+    saveUserPreferences = function(requestObj){
+        // do call to server to save preferences
+        var responsePromise = $http({
+            //url: 'http://127.0.0.1:5000/listings/filter', 
+            url: 'http://localhost:5000/userpreferences',
+            method: 'POST',
+            data: $.param(requestObj),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+
+        responsePromise.success(function(data, status, headers, config) {
+            console.log("Succeeded response");
+            $rootScope.currentListingFilter = data.Data.PreferenceId.$oid;
+            $scope.toListingList();
+        });
+        
+        responsePromise.error(function(data, status, headers, config) {
+            console.log("Succeeded response - error");
+        }); 
+    }
+
+}]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$http' , '$location', function ($scope, $rootScope, $http, $location) {
+
+    $scope.showListingsFlag = false;
+    $scope.isLoadingListingsFlag = true;
+    $scope.noListingFoundFlag = false;
+    $scope.unexpectedErrorFlag = false;
+
+
+    $scope.rooms = [
+        {type: "Studio", option: ["studio"]},
+        {type: "1 Bedroom", option: ["1bed"]},
+        {type: "2 Bedroom", option: ["2bed"]},
+        {type: "Room", option: ["room_sublet"]}
+    ];
+
+    $scope.persons = [
+        {type: "Student", option: ["Parking", "Student_vibe"]},
+        {type: "Professional", option: ["Near_action", "Locales_good"]},
+        {type: "Family", option: ["Safe", "Parks"]}
+    ];
+
+    $scope.hoods = [
+        {type: "Classic Boston", option: ["Near_action", "Easy_transport", "Classic", "lighting", "hardwood", "laundry", "classic"]},
+        {type: "Modern and Bustling", option: ["Near_action", "Locales_good", "Parks", "Modern", "Easy_transport", "modern", "loft"]},
+        {type: "Chill Burbs", option: ["Quiet", "deck_balcony", "cieling","kitchen", "ameneties"]}
+    ];
+
+    $scope.onSubmitFilters = function(){
+
+        filters = $scope.filter;
+        requestObject = {};
+
+        for (var filter in filters){
+            if (filters.hasOwnProperty(filter)){
+                filterObj = filters[filter];
+                if (typeof(filterObj) != "string"){
+                    filtersList = filterObj['option'];
+                    for(var i=0; i<filtersList.length; i++){
+                        requestObject[filtersList[i]]=true;
+                    }
+                } else{
+                    requestObject["budget"] = parseInt(filterObj);
+                }
+            }
+        }
+
+        requestObject["movein"] = $rootScope.prefs.movein;
+
+        saveUserPreferences(requestObject);
+
+        console.log(requestObject);
+        console.log($.param(requestObject));
+        console.log($scope.filter);
+        console.log($rootScope.prefs);
+
+
+    }
+
+    $scope.init = function(){
+        // Do the first call to server
+
+        $scope.filterId = $rootScope.currentListingFilter
+        $scope.filterListings(1,9);
+        
+        // init rating 
+        //$scope.initRating();
+    }
+
+     // when the filter listings request fails, this method is added in the requestobject on the error attribute
+    $scope.onErrorFilterListings = function(data, status, headers, config) {
+        console.log("Error");
+        $scope.errorFilterListings();
+    }
+    
+    $scope.errorFilterListings = function() {
+        $scope.updateLoadingListingsFlag(false);
+        $scope.updateUnexpectedErrorFlag(true);
+    }
+    
+    // when the filter listings request succeeded, this method is added in the requestobject on the success attribute
+    $scope.onSuccessFilterListings = function(data, status, headers, config) {
+        console.log(data)
+        if(data.IsValid === true)
+        { 
+            if(data.Data.Listings.length > 0){
+                $rootScope.currentListingFilter = $scope.filterId;
+                $rootScope.currentListedListings = data.Data.Listings;
+                console.log(data.Data.Listings);
+                $scope.rowdata = data.Data.Listings;
+                $scope.showListings();
+
+                // $scope.rows2 = data.Data.Listings;
+
+                // $scope.showTable();
+                
+                if($scope.totalPages != data.Data.TotalPages){
+                    $scope.totalPages = data.Data.TotalPages;
+                }
+                    
+                if($scope.totalListings != data.Data.Total){
+                    $scope.totalListings = data.Data.Total;
+                }
+                // $rootScope.reloadMap = true;
+                
+            }else{
+                console.log("0 Listings found");
+                $scope.updateLoadingListingsFlag(false);
+                $scope.updateNoListingFoundFlag(true);
+            }
+        } else {
+            console.log("Data invalid error");
+            $scope.errorFilterListings();
+        }
+    };
+    
+    $scope.filterListings = function(currentPage, numberOfItems) {
+        console.log($scope.filterId)
+        // dummy filters
+        // must be very careful with the filters value structure, it has to start with single quotes, and the inner quotes must be double
+        // otherwise there would be an error in python decoding  
+        //var filters = {'filters':'{"bedroom":2}'};
+        var filters = {'id':$scope.filterId, 'currentPage' : currentPage , 'itemsOnPage': numberOfItems };
+        // clean current listing list
+        $scope.hideListings();
+        $scope.updateLoadingListingsFlag(true);
+        // do call to server to retrieve listings list
+        var responsePromise = $http({
+            url: 'http://localhost:5000/listings/filter',
+            method: 'POST',
+            data: $.param(filters),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+        // added methods when call succeeds or fails
+        responsePromise.success($scope.onSuccessFilterListings);
+        responsePromise.error($scope.onErrorFilterListings);
+    }
+
+    saveUserPreferences = function(requestObj){
+        // do call to server to save preferences
+        var responsePromise = $http({
+            //url: 'http://127.0.0.1:5000/listings/filter', 
+            url: 'http://localhost:5000/userpreferences',
+            method: 'POST',
+            data: $.param(requestObj),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+
+        responsePromise.success(function(data, status, headers, config) {
+            console.log("Succeeded response");
+            $scope.filterId = data.Data.PreferenceId.$oid;
+            // $scope.reloadListingList(data.Data.PreferenceId.$oid);
+            $scope.filterListings(1,6)
+        });
+        
+        responsePromise.error(function(data, status, headers, config) {
+            console.log("Succeeded response - error");
+        }); 
+    }
+
+    // Functions for handling showing of elements
+
+    $scope.hideListings = function(){
+        //$scope.rowdata.length = 0;
+        $scope.updateShowListingsFlag(false);
+    }
+    
+    $scope.showListings = function(){
+        $scope.updateShowListingsFlag(true);
+        $scope.updateLoadingListingsFlag(false);
+        $scope.updateNoListingFoundFlag(false);
+    }
+
+    
+    $scope.updateShowListingsFlag = function(value){
+        $scope.showListingsFlag = value;
+    }
+    
+    $scope.updateLoadingListingsFlag = function(value){
+        $scope.isLoadingListingsFlag = value;
+    }
+    
+    $scope.updateNoListingFoundFlag = function(value){
+        $scope.noListingFoundFlag = value;
+    }
+    
+    $scope.updateUnexpectedErrorFlag = function(value){
+        $scope.unexpectedErrorFlag = value;
+    }
+
+    $scope.init();
+
+
 }]);
