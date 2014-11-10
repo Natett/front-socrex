@@ -17,7 +17,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {templateUrl: 'partials/landing.html', controller: 'initialFormCtrl'});
   $routeProvider.when('/listings', {templateUrl: 'partials/listingsList.html', controller: 'listingsListCtrl'});
   //$routeProvider.when('/listingDetails', {templateUrl: 'partials/listingDetails.html'});
-  $routeProvider.when('/listingDetails:listingId', {templateUrl: 'partials/listingDetails.html'});
+  $routeProvider.when('/listingDetails/:listingId', {templateUrl: 'partials/listingDetails.html', controller: 'detailsCtrl'});
   $routeProvider.when('/listings/filter/:filterId', { templateUrl: 'partials/listingsList.html', controller: 'listingsListCtrl'})
 
   //$routeProvider.when('/listings', {templateUrl: 'partials/listings.html'});

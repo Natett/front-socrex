@@ -1103,8 +1103,12 @@ $(document).ready(function() {
 
 
 
-
-
+// *******************************************************************************
+// *******************************************************************************
+// *******************************************************************************
+// *******************************************************************************
+// *******************************************************************************
+// *******************************************************************************
 
 
 
@@ -1128,7 +1132,7 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
         // do call to server to save preferences
         var responsePromise = $http({
             //url: 'http://127.0.0.1:5000/listings/filter', 
-            url: 'http://localhost:5000/userpreferences',
+            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
             method: 'POST',
             data: $.param(requestObj),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1146,22 +1150,6 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
     }
 
 }]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1255,10 +1243,6 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
                 console.log(data.Data.Listings);
                 $scope.rowdata = data.Data.Listings;
                 $scope.showListings();
-
-                // $scope.rows2 = data.Data.Listings;
-
-                // $scope.showTable();
                 
                 if($scope.totalPages != data.Data.TotalPages){
                     $scope.totalPages = data.Data.TotalPages;
@@ -1267,7 +1251,6 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
                 if($scope.totalListings != data.Data.Total){
                     $scope.totalListings = data.Data.Total;
                 }
-                // $rootScope.reloadMap = true;
                 
             }else{
                 console.log("0 Listings found");
@@ -1292,7 +1275,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         $scope.updateLoadingListingsFlag(true);
         // do call to server to retrieve listings list
         var responsePromise = $http({
-            url: 'http://localhost:5000/listings/filter',
+            url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
             method: 'POST',
             data: $.param(filters),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1306,7 +1289,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         // do call to server to save preferences
         var responsePromise = $http({
             //url: 'http://127.0.0.1:5000/listings/filter', 
-            url: 'http://localhost:5000/userpreferences',
+            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
             method: 'POST',
             data: $.param(requestObj),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1322,6 +1305,38 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         responsePromise.error(function(data, status, headers, config) {
             console.log("Succeeded response - error");
         }); 
+    }
+
+    $scope.getDetailedListing = function(listingId) {
+            
+        var responsePromise = $http({
+            url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+            method: 'GET',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+
+        responsePromise.success(function(data, status, headers, config) {
+            $rootScope.selectedListing = data.Data;
+            $scope.redirecToListingDetail();
+        });
+            
+        responsePromise.error(function(data, status, headers, config) {
+            $scope.updateLoadingListingsFlag(false);
+            $scope.updateUnexpectedErrorFlag(true);
+        });
+
+        return false;
+    }
+
+    $scope.redirecToListingDetail = function(){
+        $location.path( "/listingDetails/" + $rootScope.selectedListing._id.$oid, false );
+    }
+
+
+    $scope.clickedPaginationButton = function(pageNumber) {
+            
+        $scope.filterListings(pageNumber,9);
+
     }
 
     // Functions for handling showing of elements
@@ -1358,3 +1373,142 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
 
 
 }]);
+
+
+
+socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$rootScope', '$routeParams' ,
+    function($scope,$http, $location,$rootScope, $routeParams) {
+        
+        $scope.pictures = []
+        
+        $scope.getDetailedListing = function(listingId) {
+            // dummy filters
+            //var listingId = '542c3f86b43c2c00029a8211';
+                
+            var responsePromise = $http({
+                //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                method: 'GET',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+    
+            responsePromise.success(function(data, status, headers, config) {
+                $rootScope.selectedListing = data.Data;
+                // add pictures to slider
+                $scope.pictures = $rootScope.selectedListing.pictures
+                
+                //$scope.addPictureArrayToSlider($rootScope.selectedListing.pictures);
+                // reload slider styles
+                $scope.$broadcast('reload-slider')
+            });
+                
+            responsePromise.error(function(data, status, headers, config) {
+                alert("AJAX failed!");
+            });
+        }
+        
+        $scope.onClickOriginalListingButton = function(){
+            $scope.openOriginalListingTab();
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"originallisting");
+        }
+        
+        $scope.onClickContact = function(){
+            angular.element('#contactdialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"sendemail");
+        }
+
+        $scope.onClickInterested = function(){
+            if (typeof($rootScope.userId) === 'undefined' || $rootScope.userId == "") {
+                angular.element('#provide_email_dialog').dialog( "open" );
+            } else {
+                angular.element('#workingdialog').dialog( "open" );
+                $scope.sendEmailConcierge($routeParams.listingId,$rootScope.userId, $rootScope.fullName, $rootScope.userPhone);
+            }
+        }
+
+        $scope.onSubmitConcierge = function(user){
+
+            $rootScope.fullName = user.fullname;
+            $rootScope.userId = user.email;
+            $rootScope.userPhone = user.phone;
+            $scope.sendEmailConcierge($routeParams.listingId,$rootScope.userId, $rootScope.fullName, $rootScope.userPhone);
+            angular.element('#provide_email_dialog').dialog( "close" );
+            angular.element('#workingdialog').dialog( "open" );
+            
+        }
+
+        
+        $scope.onClickVerifyAvailability = function(){
+            angular.element('#verifyavailabilitydialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"verifyavailability");
+        }
+        
+        $scope.onClickExpertReview = function(){
+            angular.element('#expertreviewdialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"expertreview");
+        }
+        
+        $scope.onClickTour = function(){
+            angular.element('#tourdialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"virtualtour");
+        }
+        
+        $scope.openOriginalListingTab = function(){
+            window.open($rootScope.selectedListing.url,'_blank');
+        }
+        
+        $scope.redirecToListingList = function(){
+            $location.path( "/listings/filter/"+$rootScope.currentListingFilter, false );
+        }
+        
+        $scope.validateSelectedListing = function(){
+            // always call listing detail from server to get images
+            //if($rootScope.selectedListing == null){
+                $scope.getDetailedListing($routeParams.listingId)
+            //}
+        }
+        
+        $scope.saveClickOnDB = function(listingid,useremail, option) {
+            // dummy filters
+            //var listingId = '542c3f86b43c2c00029a8211';
+            url = ""
+
+            if (typeof(useremail) === 'undefined' || useremail == "") {
+                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+            } else {
+                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+            }
+                
+            var responsePromise = $http({
+                //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: url,
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+        }
+
+        $scope.sendEmailConcierge = function(listingid, useremail, username, userphone) {
+            // dummy filters
+            //var listingId = '542c3f86b43c2c00029a8211';
+            listing_url = $rootScope.selectedListing.url
+                
+            var responsePromise = $http({
+                //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: 'http://byopapp-api-stage.herokuapp.com/conciergeEmail',
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: {
+                    email: useremail,
+                    name: username,
+                    phone: userphone,
+                    listingurl: listing_url,
+                    listingid: listingid
+                }
+            });
+            console.log(responsePromise)
+        }
+        
+        $scope.validateSelectedListing();
+        
+    }
+]);
