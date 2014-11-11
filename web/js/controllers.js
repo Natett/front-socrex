@@ -1,4 +1,4 @@
-var socrexControllers = angular.module('socrex.controllers', []);
+var socrexControllers = angular.module('socrex.controllers', ['ui.bootstrap']);
 var dataCollection = []
 
 filters={}
@@ -25,7 +25,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/' + listingId,
                 method: 'GET',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -110,9 +110,9 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             url = ""
 
             if (typeof(useremail) === 'undefined' || useremail == "") {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+                url = 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listing/'+listingid+'/'+option;
             } else {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+                url = 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listing/'+listingid+'/user/'+useremail+'/'+option;
             }
     		    
             var responsePromise = $http({
@@ -130,7 +130,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
                 
             var responsePromise = $http({
                 //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/conciergeEmail',
+                url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/conciergeEmail',
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: {
@@ -179,6 +179,8 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         $rootScope.reloadMap = false;
         
         $rootScope.currentListedListings = [];
+        
+        $rootScope.paginationInfo = { 'totalPages' : 0 , 'totalListings' : 0  };
         
         
         
@@ -251,7 +253,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/' + listingId,
                 method: 'GET',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -267,6 +269,13 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
                 alert("AJAX failed!");
             });*/
         }
+        
+        $scope.$watch(function() {
+                return $rootScope.paginationCurrentPage;
+            }, function() {
+                $scope.clickedPaginationButton($rootScope.paginationCurrentPage);
+            }, true
+        );
         
         
         
@@ -285,7 +294,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/' + listingId,
                 method: 'GET',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -328,13 +337,23 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
                     //$rootScope.userId = data.Data.Email
                     $scope.showTable();
                     
-                    if($scope.totalPages != data.Data.TotalPages){
-                        $scope.totalPages = data.Data.TotalPages;
+                    var totalPages = data.Data.TotalPages;
+                    var totalListings = data.Data.Total;
+                    
+                    
+                    
+                    if($scope.totalPages != totalPages){
+                        $scope.totalPages = totalPages;
                         //$scope.totalPages = 6;
                     }
                         
-                    if($scope.totalListings != data.Data.Total){
-                        $scope.totalListings = data.Data.Total;
+                    if($scope.totalListings != totalListings){
+                        $scope.totalListings = totalListings;
+                    }
+                    
+                    $rootScope.paginationInfo = {
+                        'totalPages' : totalPages
+                        , 'totalListings' : totalListings
                     }
                         
                     $rootScope.reloadMap = true;
@@ -347,6 +366,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
                 $scope.errorFilterListings();
             }
         };
+        
         
         $scope.filterListings = function(currentPage, numberOfItems) {
 		    // dummy filters
@@ -361,7 +381,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
 		        //url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/filter',
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
+                url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/filter',
                 method: 'POST',
 		        data: $.param(filters),
 		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -394,9 +414,9 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
     		//var listingId = '542c3f86b43c2c00029a8211';
             url = ""
             if (typeof(useremail) === 'undefined' || useremail == "") {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+                url = 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listing/'+listingid+'/'+option;
             } else {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+                url = 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listing/'+listingid+'/user/'+useremail+'/'+option;
             }
     		    
             var responsePromise = $http({
@@ -759,7 +779,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
 		        //url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
-                url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+                url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
                 method: 'POST',
 		        data: $.param(this.userPreferences),
 		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -936,6 +956,9 @@ $(document).ready(function() {
   ph = form.placeholders(), g = general.selectedType(), c = change.change(), data = collect.collect();
 
   userPreferences = {}
+  figA = 'Room or Sublet';
+  figB = 'Modern and Bustling';
+  figC = 'Student';
 
   function Form() {
     this.placeholders = function() {
@@ -962,6 +985,14 @@ $(document).ready(function() {
         }
       });
     }
+  }
+  
+  $scope.onSubmitFirstPage = function(){
+      console.log("onSubmitFirstPage");
+      console.log("userPreferences");
+      console.log(this.userPreferences);
+      $('#initialQuestionsForm').submit();
+      //this.onClickNextButton();
   }
   
   function generalEvents() {
@@ -1000,7 +1031,11 @@ $(document).ready(function() {
   
   function dataCollect() {
     this.collect = function() {
-      $('.controls .btn').on("click", function() {
+    //$('#initialQuestionsForm').submit();
+        
+      
+      //$('.controls .btn').on("click", function() {
+      $('#initialQuestionsForm').on("submit" , function (){
 
         switch (figA){
             case 'Room or Sublet':
@@ -1069,6 +1104,7 @@ $(document).ready(function() {
 
         saveUserPreferences();
       });
+      
     }
   }
 
@@ -1077,7 +1113,7 @@ $(document).ready(function() {
     var responsePromise = $http({
         //url: 'http://127.0.0.1:5000/listings/filter', 
         //url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
-        url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+        url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
         method: 'POST',
         data: $.param(userPreferences),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1132,7 +1168,7 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
         // do call to server to save preferences
         var responsePromise = $http({
             //url: 'http://127.0.0.1:5000/listings/filter', 
-            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+            url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
             method: 'POST',
             data: $.param(requestObj),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1159,13 +1195,15 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     $scope.isLoadingListingsFlag = true;
     $scope.noListingFoundFlag = false;
     $scope.unexpectedErrorFlag = false;
+    
+    $rootScope.paginationInfo = { 'totalPages' : 0 , 'totalListings' : 0  };
 
 
     $scope.rooms = [
         {type: "Studio", option: ["studio"]},
         {type: "1 Bedroom", option: ["1bed"]},
         {type: "2 Bedroom", option: ["2bed"]},
-        {type: "Single Room", option: ["room_sublet"]}
+        {type: "Room", option: ["room_sublet"]}
     ];
 
     $scope.persons = [
@@ -1244,12 +1282,23 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
                 $scope.rowdata = data.Data.Listings;
                 $scope.showListings();
                 
-                if($scope.totalPages != data.Data.TotalPages){
-                    $scope.totalPages = data.Data.TotalPages;
+                var totalPages = data.Data.TotalPages;
+                var totalListings = data.Data.Total;
+                    
+                    
+                    
+                if($scope.totalPages != totalPages){
+                    $scope.totalPages = totalPages;
+                    //$scope.totalPages = 6;
+                }
+                        
+                if($scope.totalListings != totalListings){
+                    $scope.totalListings = totalListings;
                 }
                     
-                if($scope.totalListings != data.Data.Total){
-                    $scope.totalListings = data.Data.Total;
+                $rootScope.paginationInfo = {
+                    'totalPages' : totalPages
+                    , 'totalListings' : totalListings
                 }
                 
             }else{
@@ -1275,7 +1324,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         $scope.updateLoadingListingsFlag(true);
         // do call to server to retrieve listings list
         var responsePromise = $http({
-            url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
+            url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/filter',
             method: 'POST',
             data: $.param(filters),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1289,7 +1338,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         // do call to server to save preferences
         var responsePromise = $http({
             //url: 'http://127.0.0.1:5000/listings/filter', 
-            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+            url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
             method: 'POST',
             data: $.param(requestObj),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1310,7 +1359,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     $scope.getDetailedListing = function(listingId) {
             
         var responsePromise = $http({
-            url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+            url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/' + listingId,
             method: 'GET',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
@@ -1338,6 +1387,13 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         $scope.filterListings(pageNumber,9);
 
     }
+    
+    $scope.$watch(function() {
+                return $rootScope.paginationCurrentPage;
+            }, function() {
+                $scope.clickedPaginationButton($rootScope.paginationCurrentPage);
+            }, true
+        );
 
     // Functions for handling showing of elements
 
@@ -1387,7 +1443,7 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
                 
             var responsePromise = $http({
                 //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/' + listingId,
                 method: 'GET',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -1474,9 +1530,9 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
             url = ""
 
             if (typeof(useremail) === 'undefined' || useremail == "") {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+                url = 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listing/'+listingid+'/'+option;
             } else {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+                url = 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listing/'+listingid+'/user/'+useremail+'/'+option;
             }
                 
             var responsePromise = $http({
@@ -1500,7 +1556,7 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
                 
             var responsePromise = $http({
                 //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/conciergeEmail',
+                url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/conciergeEmail',
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: {
@@ -1518,3 +1574,27 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
         
     }
 ]);
+
+
+socrexControllers.controller('PaginationDemoCtrl2', [ '$scope' , '$rootScope' , function ($scope, $rootScope) {
+    $scope.maxSize = 10;
+    $scope.bigCurrentPage = 1;
+    $scope.bigTotalItems = 0;
+    $scope.bigTotalPages = 0;
+    
+    $scope.pageChanged = function() {
+        console.log('Page changed to: ' + $scope.bigCurrentPage);
+        $rootScope.paginationCurrentPage = $scope.bigCurrentPage;
+    };
+    
+    $scope.$watch(function() {
+            return $rootScope.paginationInfo;
+        }, function() {
+            $scope.bigTotalItems = $rootScope.paginationInfo.totalListings;
+            $scope.bigTotalPages = $rootScope.paginationInfo.totalPages;
+        }, true
+    );
+    
+    
+      
+}]);
