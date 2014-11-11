@@ -1165,7 +1165,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         {type: "Studio", option: ["studio"]},
         {type: "1 Bedroom", option: ["1bed"]},
         {type: "2 Bedroom", option: ["2bed"]},
-        {type: "Room", option: ["room_sublet"]}
+        {type: "1 Room", option: ["room_sublet"]}
     ];
 
     $scope.persons = [
