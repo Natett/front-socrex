@@ -16,7 +16,7 @@
                   <div class="tab-pane fade in active" id="detail">
                     <div class="row">
                       <div class="col-md-12">
-                        <h2>The Urban Life</h2>
+                        <h2>Property Details</h2>
                         <div id="slider-property" class="carousel slide" data-ride="carousel">
                           <ol class="carousel-indicators">
                             <li data-target="#slider-property" data-slide-to="{{$index}}" ng-repeat="picture in pictures | limitTo:4" ng-class="{active:$first}">
@@ -307,8 +307,8 @@
     </div>
     <!-- end:content -->
 
-<div id="provide_email_dialog" title="Provide email" jqueryuidialog>
-  <p>Please provide us with your basic contact information so that we can reach you regarding this apartment.</p>
+<div id="provide_email_dialog" title="Contact info" jqueryuidialog>
+  <p>We wanna help you check this place out, First tell us how to reach you.</p>
   <br>
   <div>
     <form ng-submit="onSubmitConcierge(user);">
@@ -332,6 +332,5 @@
 </div>
 
 <div id="workingdialog" title="Thank you" jqueryuidialog>
-  <p>Thank you for your request!</p>
-  <p>One of our agents will be reviewing this listing for you and will get back to you as soon as possible!</p>
+  <p>Thanks! We will add tis place your list. Expect a call from us shortly. Please feel free to keep on browsing.</p>
 </div>

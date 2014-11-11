@@ -1396,7 +1396,7 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
                 $rootScope.selectedListing = data.Data;
                 // add pictures to slider
                 $scope.pictures = $rootScope.selectedListing.pictures
-                
+
                 //$scope.addPictureArrayToSlider($rootScope.selectedListing.pictures);
                 // reload slider styles
                 $scope.$broadcast('reload-slider')
@@ -1485,6 +1485,12 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
+        }
+
+        $scope.setRandomStarRating = function(listingsArray){
+            for (var i = 0; i < listingsArray.length; i++) {
+                listingsArray[i].relevance = $scope.getRandomInt(0,20);
+            }
         }
 
         $scope.sendEmailConcierge = function(listingid, useremail, username, userphone) {
