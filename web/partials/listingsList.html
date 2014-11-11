@@ -111,7 +111,7 @@
               <div class="row container-realestate">
                 <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="row in rowdata">
                   <div class="property-container">
-                    <div class="property-image">
+                    <div class="property-image" ng-click="getDetailedListing('{{row._id.$oid}}');">
                       <img src="{{row.pictures[0]}}" style="height:200px;">
                       <div class="property-price">
                         <!-- <h4>Offices</h4> -->
