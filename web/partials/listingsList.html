@@ -111,7 +111,7 @@
               <div class="row container-realestate">
                 <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="row in rowdata">
                   <div class="property-container">
-                    <div class="property-image" ng-click="getDetailedListing('{{row._id.$oid}}');">
+                    <div class="property-image" ng-init="listingId=row._id.$oid" ng-click="getDetailedListing(listingId);">
                       <img src="{{row.pictures[0]}}" style="height:200px;">
                       <div class="property-price">
                         <!-- <h4>Offices</h4> -->
@@ -128,10 +128,11 @@
                     </div>
                     <div class="property-content">
                       <!-- <h3><a href="{{row.url}}">Craigslist Link</a> <small>{{row.address}}</small></h3> -->
-                      <h3>                        
+                      <h3>                 
                         <!-- <input type="button" value="details" ng-click="getDetailedListing('{{row._id.$oid}}');"> -->
                         <!-- <p ng-click="getDetailedListing('{{row._id.$oid}}');">See details.</p> -->
-                        <a href="javascript:;" ng-click="getDetailedListing('{{row._id.$oid}}');">Details</a>
+                        <!-- <a href="javascript:;" ng-click="getDetailedListing('{{row._id.$oid}}');">Details</a> -->
+                        <a href="javascript:;" ng-init="listingId=row._id.$oid" ng-click="getDetailedListing(listingId);" >Details</a>
                         <small>{{row.address}}</small>
                         <small>{{row.neighborhood.Name}}</small>
                       </h3>
