@@ -18,7 +18,14 @@
               <tr>
                 <td>
                   <label class="landing-label" for="movein">Move in date</label>
-                  <input type="date" name="movein" class="form-control center-block movein" ng-model="initialForm.movein">
+                  <!-- <input type="date" id="datepicker" class="form-control center-block movein" ng-model="initialForm.movein"> -->
+                  <script>
+                    $(function() {
+                      $( "#datepicker" ).datepicker();
+                    });
+                  </script>
+                  <input id="datepicker" class="form-control" type="text" ng-model="initialForm.movein" />
+                  
                 </td>
                 <td>
                   <label class="landing-label" for="city">City</label>
@@ -60,7 +67,7 @@
               </div>
               <div class="service-content">
                 <p class="landing-info-title">Scout and pick</p>
-                <p class="landing-info">We verify availability and requirements; booking showings or providing video tours just for you.</p>
+                <p class="landing-info">We verify availability and requirements, book showings and even provide video tours just for you.</p>
               </div>
             </div>
           </div>

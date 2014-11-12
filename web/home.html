@@ -1,42 +1,26 @@
 <!DOCTYPE html>
 <html ng-app="socrex">
 <head>
-    <!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>-->
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> -->
     <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
-    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script> -->
     <!-- Modal Styles -->
-    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"/>
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
+    <link type="text/css" rel="stylesheet" href="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css"/>
     <!-- bxSlider CSS file -->
     <link type="text/css" href="./lib/jquery.bxslider/jquery.bxslider.css" rel="stylesheet" />
     <!-- simplePagination.js CSS file -->
     <link type="text/css" rel="stylesheet" href="./lib/simplePagination.js-master/simplePagination.css"/>
   	<!-- jRating CSS file -->
   	<link type="text/css" rel="stylesheet" href="./lib/jRating-master/jquery/jRating.jquery.css"/>
-  	<!-- bootstrap datepicker CSS file -->
-  	<link type="text/css" rel="stylesheet" href="./lib/bootstrap-datepicker-master/css/datepicker3.css"/>
-
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,600,800' rel='stylesheet' type='text/css'>
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/responsive.css" rel="stylesheet">
-
-
     <meta charset=utf-8 />
-
-
-
     <title>Socrex - Listings</title>
-    <style type="text/css">
-        .bx-wrapper, .bx-viewport {
-            /*height: 400px !important;*/
-        }
-    </style>
 </head>
 
 <body id="top">
@@ -230,9 +214,18 @@
     <!-- end:modal-signup -->
 </body>
 
-  <!-- jquery -->
+  <!-- jquery 
   <script type="text/javascript" src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
   <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  -->
+
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
+  <!-- bootstrap datepicker js -->
+  <script type="text/javascript" src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
   <!-- google maps Javascript file -->
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
   <!-- bxSlider Javascript file -->
@@ -243,14 +236,9 @@
   <script type="text/javascript" src="./lib/esimakin-twbs-pagination-0f5fa97/jquery.twbsPagination.js"></script>
   <!-- jrating js -->
   <script type="text/javascript" src="./lib/jRating-master/jquery/jRating.jquery.js"></script>
-  <!-- bootstrap datepicker js -->
-  <script type="text/javascript" src="./lib/bootstrap-datepicker-master/js/bootstrap-datepicker.js"></script>
-  <script type="text/javascript" src="http://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
-  <script type="text/javascript" src="lib/angular/angular.js"></script>
-  <script type="text/javascript" src="lib/angular/angular-route.js"></script>
   <script type="text/javascript" src="lib/checklist-model-master/checklist-model.js"></script>
   <script type="text/javascript" src="js/app.js"></script>
-  <script type="text/javascript"src="js/services.js"></script>
+  <script type="text/javascript" src="js/services.js"></script>
   <script type="text/javascript" src="js/controllers.js"></script>
   <script type="text/javascript" src="js/filters.js"></script>
   <script type="text/javascript" src="js/directives.js"></script>
@@ -260,6 +248,12 @@
   <script src="js/imagesloaded.pkgd.min.js"></script>
   <script src="js/masonry.pkgd.min.js"></script>
   <script src="js/jquery.nicescroll.min.js"></script>
+  <script>
+    $(function() {
+      $( "#datepicker" ).datepicker();
+    });
+  </script>
+  
 </html>
 
   

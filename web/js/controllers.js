@@ -1115,12 +1115,22 @@ $(document).ready(function() {
 socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$http' , '$location', function ($scope, $rootScope, $http, $location) {
 
     this.initialForm = {};
-    $rootScope.prefs = {}
-
+    $rootScope.prefs = {};
+    $rootScope.filter = {};
 
     $scope.onSubmitInitial = function(){
-        this.initialForm.movein = this.initialForm.movein.split("-").join("");
-        $rootScope.prefs.movein = this.initialForm.movein;
+        // optionaly change date format handling in back-end
+        splitDate = this.initialForm.movein.split("/");
+        yearSplit = splitDate[2];
+        splitDate.splice(2,1);
+        splitDate.splice(0,0,yearSplit);
+
+        this.initialForm.movein = splitDate.join("");
+        $rootScope.prefs.movein = this.initialForm.movein.trim();
+        $rootScope.prefs.maxprice = 5000;
+        $rootScope.prefs.aptType = "";
+        $rootScope.prefs.personType = "";
+        $rootScope.prefs.hoodType = "";
         saveUserPreferences(this.initialForm);
     }
 
@@ -1160,7 +1170,6 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     $scope.noListingFoundFlag = false;
     $scope.unexpectedErrorFlag = false;
 
-
     $scope.rooms = [
         {type: "Studio", option: ["studio"]},
         {type: "1 Bedroom", option: ["1bed"]},
@@ -1180,9 +1189,43 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         {type: "Chill Burbs", option: ["Quiet", "deck_balcony", "cieling","kitchen", "ameneties"]}
     ];
 
+    if (typeof($rootScope.filter.room) != "undefined") {
+        for (var i=0; i < $scope.rooms.length; i++){
+            if($scope.rooms[i].type == $rootScope.filter.room.type){
+                $scope.filter.room = $scope.rooms[i];
+                break;
+            }
+        }
+    }
+
+    if (typeof($rootScope.filter.person) != "undefined") {
+        for (var i=0; i < $scope.persons.length; i++){
+            if($scope.persons[i].type == $rootScope.filter.person.type){
+                $scope.filter.person = $scope.persons[i];
+                break;
+            }
+        }
+    }
+
+    if (typeof($rootScope.filter.hoodStyle) != "undefined") {
+        for (var i=0; i < $scope.hoods.length; i++){
+            if($scope.hoods[i].type == $rootScope.filter.hoodStyle.type){
+                $scope.filter.hoodStyle = $scope.hoods[i];
+                break;
+            }
+        }
+    }
+
+    // $scope.persistRoom = $scope.rooms[0];
+    // $scope.persistPrice = $rootScope.filter.priceRange;
+    // $scope.persistPerson = $rootScope.filter.person;
+    // $scope.persistHood = $rootScope.filter.hoodStyle;
+
     $scope.onSubmitFilters = function(){
 
         filters = $scope.filter;
+        // filters.room = $scope.persistRoom;
+        $rootScope.filter = $scope.filter;
         requestObject = {};
 
         for (var filter in filters){
@@ -1203,10 +1246,10 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
 
         saveUserPreferences(requestObject);
 
-        console.log(requestObject);
-        console.log($.param(requestObject));
+        //console.log(requestObject);
+        //console.log($.param(requestObject));
         console.log($scope.filter);
-        console.log($rootScope.prefs);
+        //console.log($rootScope.prefs);
 
 
     }
@@ -1216,6 +1259,16 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
 
         $scope.filterId = $rootScope.currentListingFilter
         $scope.filterListings(1,9);
+
+        // if (typeof($rootScope.filter) != "undefined"){
+        //     $scope.filter = $rootScope.filter;
+        //     $scope.persistRoom = $rootScope.filter.room;
+        //     $scope.persistPrice = $rootScope.filter.priceRange;
+        //     $scope.persistPerson = $rootScope.filter.person;
+        //     $scope.persistHood = $rootScope.filter.hoodStyle;
+        // }
+
+        
         
         // init rating 
         //$scope.initRating();
@@ -1243,6 +1296,11 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
                 console.log(data.Data.Listings);
                 $scope.rowdata = data.Data.Listings;
                 $scope.showListings();
+
+                // $rootScope.prefs.maxprice = $scope.filter.priceRange;
+                // $rootScope.prefs.aptType = $scope.filter.room;
+                // $rootScope.prefs.personType = $scope.filter.person;
+                // $rootScope.prefs.hoodType = $scope.filter.hoodStyle;
                 
                 if($scope.totalPages != data.Data.TotalPages){
                     $scope.totalPages = data.Data.TotalPages;

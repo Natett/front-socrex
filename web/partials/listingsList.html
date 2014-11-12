@@ -16,7 +16,7 @@
                     </div>
                     <div>
                       <label for="maxprice">Max Price ($)</label>
-                      <output class="form-control" id="pricevalue" style="text-align:center;">5000</output>
+                      <output class="form-control" id="pricevalue" style="text-align:center;">{{filter.priceRange}}</output>
                       <input name="priceinput" id="priceinput" type="range" min="0" step="250" max="10000" ng-model="filter.priceRange" value = "1000" oninput="pricevalue.value=value" required>
                     </div>
                     
@@ -112,7 +112,9 @@
                 <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="row in rowdata">
                   <div class="property-container">
                     <div class="property-image">
-                      <img src="{{row.pictures[0]}}" style="height:200px;">
+                      <a href="javascript:;" ng-init="listingId=row._id.$oid" ng-click="getDetailedListing(listingId);" >
+                        <img src="{{row.pictures[0]}}" style="height:200px;">
+                      </a>
                       <div class="property-price">
                         <!-- <h4>Offices</h4> -->
                         <span>${{row.price}}</span>
@@ -131,7 +133,7 @@
                       <h3>                        
                         <!-- <input type="button" value="details" ng-click="getDetailedListing('{{row._id.$oid}}');"> -->
                         <!-- <p ng-click="getDetailedListing('{{row._id.$oid}}');">See details.</p> -->
-                        <a href="javascript:;" ng-click="getDetailedListing('{{row._id.$oid}}');">Details</a>
+                        <a style="font-size:16px;" href="javascript:;" ng-init="listingId=row._id.$oid" ng-click="getDetailedListing(listingId);" >Details</a>
                         <small>{{row.address}}</small>
                         <small>{{row.neighborhood.Name}}</small>
                       </h3>
