@@ -244,9 +244,9 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
             return i==$scope.rows.length-1 && $scope.temp;
         };
         
-        $scope.clickedPaginationButton = function(pageNumber) {
+        $scope.clickedPaginationButton = function(preferenceId,pageNumber) {
             
-            $scope.filterListings(pageNumber,10);
+            $scope.filterListings(preferenceId,pageNumber,9);
             
             /*
     		$scope.saveClickOnDB(listingId,$rootScope.userId ,"listingdetails")
@@ -273,7 +273,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         $scope.$watch(function() {
                 return $rootScope.paginationCurrentPage;
             }, function() {
-                $scope.clickedPaginationButton($rootScope.paginationCurrentPage);
+                $scope.clickedPaginationButton($routeParams.preferenceId , $rootScope.paginationCurrentPage);
             }, true
         );
         
@@ -350,11 +350,13 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
                     if($scope.totalListings != totalListings){
                         $scope.totalListings = totalListings;
                     }
+
+                    /*
                     
                     $rootScope.paginationInfo = {
                         'totalPages' : totalPages
                         , 'totalListings' : totalListings
-                    }
+                    }*/
                         
                     $rootScope.reloadMap = true;
                     
@@ -368,12 +370,12 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
         };
         
         
-        $scope.filterListings = function(currentPage, numberOfItems) {
+        $scope.filterListings = function(preferenceId, currentPage, numberOfItems) {
 		    // dummy filters
             // must be bery carefull with the filters value structure, it has to start with single couotes, and de inner quotes be double
             // otherwise there would be an error in python decoding  
 		    //var filters = {'filters':'{"bedroom":2}'};
-		    var filters = {'id':$scope.filterId, 'currentPage' : currentPage , 'itemsOnPage': numberOfItems };
+		    var filters = {'id':preferenceId, 'currentPage' : currentPage , 'itemsOnPage': numberOfItems };
 		    // clean current listing list
 		    $scope.hideTable();
 		    $scope.updateLoadingListingsFlag(true);
@@ -387,7 +389,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
 		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
             // added methods when call succeeds or fails
-            responsePromise.success($scope.onSuccessFilterListings);
+            //responsePromise.success($scope.onSuccessFilterListings);
             responsePromise.error($scope.onErrorFilterListings);
         }
         
@@ -1160,8 +1162,8 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
         saveUserPreferences(this.initialForm);
     }
 
-    $scope.toListingList = function(){
-        $location.path( "/listings/");   
+    $scope.toListingList = function(preferenceId){
+        $location.path( "/listings/preference/" + preferenceId + "/page/" + 1);   
     }
 
     saveUserPreferences = function(requestObj){
@@ -1176,8 +1178,9 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
 
         responsePromise.success(function(data, status, headers, config) {
             console.log("Succeeded response");
-            $rootScope.currentListingFilter = data.Data.PreferenceId.$oid;
-            $scope.toListingList();
+            //$rootScope.currentListingFilter = data.Data.PreferenceId.$oid;
+            var preferenceId = data.Data.PreferenceId.$oid;
+            $scope.toListingList(preferenceId);
         });
         
         responsePromise.error(function(data, status, headers, config) {
@@ -1189,7 +1192,7 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
 
 
 
-socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$http' , '$location', function ($scope, $rootScope, $http, $location) {
+socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$http' , '$location', '$routeParams', function ($scope, $rootScope, $http, $location, $routeParams) {
 
     $scope.showListingsFlag = false;
     $scope.isLoadingListingsFlag = true;
@@ -1197,6 +1200,16 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     $scope.unexpectedErrorFlag = false;
     
     $rootScope.paginationInfo = { 'totalPages' : 0 , 'totalListings' : 0  };
+
+    $rootScope.preferenceId = $routeParams.preferenceId;
+    $rootScope.paginationCurrentPage = $routeParams.pageNumber;
+
+    // pagination variables
+    $scope.maxSize = 10;
+    $scope.bigCurrentPage = $routeParams.pageNumber;
+    $scope.bigTotalItems = 0;
+    $scope.bigTotalPages = 0;
+    $scope.paginationWidgetFirstLoad = true;
 
 
     $scope.rooms = [
@@ -1217,6 +1230,28 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         {type: "Modern and Bustling", option: ["Near_action", "Locales_good", "Parks", "Modern", "Easy_transport", "modern", "loft"]},
         {type: "Chill Burbs", option: ["Quiet", "deck_balcony", "cieling","kitchen", "ameneties"]}
     ];
+
+    //pagination method
+    // this is a complete mess but was the only way it works: the pageChanged is called automatically when the controller is instanced, latter there are two calls, one with bigCurrentPage = page in url and
+    // then with bigCurrentPage = 1
+    $scope.pageChanged = function() {
+        var pageToLoad = $routeParams.pageNumber;
+        if($scope.bigCurrentPage!=1){
+            pageToLoad = $scope.bigCurrentPage;
+            $scope.redirectToListingList($routeParams.preferenceId , pageToLoad, false);
+        }else{
+            $scope.bigCurrentPage = $routeParams.pageNumber;
+        }
+        $scope.filterListings($routeParams.preferenceId , pageToLoad ,9); 
+    };
+    
+    $scope.$watch(function() {
+            return $rootScope.paginationInfo;
+        }, function() {
+            $scope.bigTotalItems = $rootScope.paginationInfo.totalListings;
+            $scope.bigTotalPages = $rootScope.paginationInfo.totalPages;
+        }, true
+    );
 
     $scope.onSubmitFilters = function(){
 
@@ -1249,14 +1284,9 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
 
     }
 
+    
     $scope.init = function(){
-        // Do the first call to server
-
-        $scope.filterId = $rootScope.currentListingFilter
-        $scope.filterListings(1,9);
-        
-        // init rating 
-        //$scope.initRating();
+        $scope.pageChanged();
     }
 
      // when the filter listings request fails, this method is added in the requestobject on the error attribute
@@ -1295,7 +1325,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
                 if($scope.totalListings != totalListings){
                     $scope.totalListings = totalListings;
                 }
-                    
+                
                 $rootScope.paginationInfo = {
                     'totalPages' : totalPages
                     , 'totalListings' : totalListings
@@ -1312,13 +1342,12 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         }
     };
     
-    $scope.filterListings = function(currentPage, numberOfItems) {
-        console.log($scope.filterId)
+    $scope.filterListings = function(preferenceId, currentPage, numberOfItems) {
         // dummy filters
         // must be very careful with the filters value structure, it has to start with single quotes, and the inner quotes must be double
         // otherwise there would be an error in python decoding  
         //var filters = {'filters':'{"bedroom":2}'};
-        var filters = {'id':$scope.filterId, 'currentPage' : currentPage , 'itemsOnPage': numberOfItems };
+        var filters = {'id':preferenceId, 'currentPage' : currentPage , 'itemsOnPage': numberOfItems };
         // clean current listing list
         $scope.hideListings();
         $scope.updateLoadingListingsFlag(true);
@@ -1382,21 +1411,17 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     }
 
 
-    $scope.clickedPaginationButton = function(pageNumber) {
-            
-        $scope.filterListings(pageNumber,9);
+    $scope.clickedPaginationButton = function(preferenceId,pageNumber) {
+        $scope.filterListings(preferenceId,pageNumber,9);    
+        //$scope.redirectToListingList(preferenceId,pageNumber, false);
 
     }
+
+    $scope.redirectToListingList = function(preferenceId, pageNumber, reloadFlag){
+        $location.path( "/listings/preference/" + preferenceId + "/page/" + pageNumber, reloadFlag);   
+    }
     
-    $scope.$watch(function() {
-                return $rootScope.paginationCurrentPage;
-            }, function() {
-                $scope.clickedPaginationButton($rootScope.paginationCurrentPage);
-            }, true
-        );
-
     // Functions for handling showing of elements
-
     $scope.hideListings = function(){
         //$scope.rowdata.length = 0;
         $scope.updateShowListingsFlag(false);
@@ -1425,8 +1450,8 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         $scope.unexpectedErrorFlag = value;
     }
 
+    // call init method of the controller
     $scope.init();
-
 
 }]);
 
@@ -1574,27 +1599,3 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
         
     }
 ]);
-
-
-socrexControllers.controller('PaginationDemoCtrl2', [ '$scope' , '$rootScope' , function ($scope, $rootScope) {
-    $scope.maxSize = 10;
-    $scope.bigCurrentPage = 1;
-    $scope.bigTotalItems = 0;
-    $scope.bigTotalPages = 0;
-    
-    $scope.pageChanged = function() {
-        console.log('Page changed to: ' + $scope.bigCurrentPage);
-        $rootScope.paginationCurrentPage = $scope.bigCurrentPage;
-    };
-    
-    $scope.$watch(function() {
-            return $rootScope.paginationInfo;
-        }, function() {
-            $scope.bigTotalItems = $rootScope.paginationInfo.totalListings;
-            $scope.bigTotalPages = $rootScope.paginationInfo.totalPages;
-        }, true
-    );
-    
-    
-      
-}]);
