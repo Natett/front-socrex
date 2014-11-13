@@ -147,11 +147,17 @@
               <!-- end:product -->
 
               <!-- begin:pagination -->
+              <!-- 
               <div class="row">
                 <div class="col-md-12">
                  <div dynamic4="{{totalPages}}" class="pagination"></div>
                 </div>
               </div>
+              -->
+              <!-- end:pagination -->
+              <!-- begin:pagination -->
+                    <!-- works!!!! -->
+                    <pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-md" ng-change="pageChanged()" boundary-links="true"></pagination>
               <!-- end:pagination -->
             </div>
             <!-- end:article -->

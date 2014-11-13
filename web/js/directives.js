@@ -96,17 +96,37 @@ angular.module('socrex.directives', []).
       attr.$observe('dynamic4', function(val) {
         
         var totalPages = $parse(val)(scope);
-        if(totalPages !== 0){
+        console.log("totalPages");
+        console.log(totalPages);
+        console.log("typeof totalPages");
+        console.log(typeof totalPages);
+        var visiblePages = 10;
+        if(totalPages !== undefined && totalPages > 0){
           // TOD: this only works once, if the totalpages changes ie. from 45 to 56 it wont be updated
           // ultil the user reload the page
+          
+          
+          if(totalPages < visiblePages){
+            visiblePages = totalPages;
+            //visiblePages = 5;
+          }
+          
+          console.log("totalPages");
+          console.log(totalPages);
+          console.log("visiblePages");
+          console.log(visiblePages);
+          
           element.twbsPagination({
+            //totalPages: totalPages,
             totalPages: totalPages,
-            href : "javascript:void(0);",
-            visiblePages: 10,
-            startPage: 1,
+            //href : "javascript:void(0);",
+            //visiblePages: visiblePages,
+            visiblePages: visiblePages,
+            //startPage: 1,
+            /*
             onPageClick: function (event, page) {
               scope.$apply("clickedPaginationButton("+page+")");
-            }
+            }*/
           });
         }
       });
