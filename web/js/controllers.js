@@ -1254,37 +1254,81 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         }, true
     );
 
-    if (typeof($rootScope.filter.room) != "undefined") {
-        for (var i=0; i < $scope.rooms.length; i++){
-            if($scope.rooms[i].type == $rootScope.filter.room.type){
-                $scope.filter.room = $scope.rooms[i];
-                break;
-            }
-        }
-    }
+    // if ($rootScope.filter != "undefined") {
+    //     if (typeof($rootScope.filter.room) != "undefined") {
+    //         for (var i=0; i < $scope.rooms.length; i++){
+    //             if($scope.rooms[i].type == $rootScope.filter.room.type){
+    //                 $scope.filter.room = $scope.rooms[i];
+    //                 break;
+    //             }
+    //         }
+    //     }
 
-    if (typeof($rootScope.filter.person) != "undefined") {
-        for (var i=0; i < $scope.persons.length; i++){
-            if($scope.persons[i].type == $rootScope.filter.person.type){
-                $scope.filter.person = $scope.persons[i];
-                break;
-            }
-        }
-    }
+    //     if (typeof($rootScope.filter.person) != "undefined") {
+    //         for (var i=0; i < $scope.persons.length; i++){
+    //             if($scope.persons[i].type == $rootScope.filter.person.type){
+    //                 $scope.filter.person = $scope.persons[i];
+    //                 break;
+    //             }
+    //         }
+    //     }
 
-    if (typeof($rootScope.filter.hoodStyle) != "undefined") {
-        for (var i=0; i < $scope.hoods.length; i++){
-            if($scope.hoods[i].type == $rootScope.filter.hoodStyle.type){
-                $scope.filter.hoodStyle = $scope.hoods[i];
-                break;
-            }
-        }
-    }
+    //     if (typeof($rootScope.filter.hoodStyle) != "undefined") {
+    //         for (var i=0; i < $scope.hoods.length; i++){
+    //             if($scope.hoods[i].type == $rootScope.filter.hoodStyle.type){
+    //                 $scope.filter.hoodStyle = $scope.hoods[i];
+    //                 break;
+    //             }
+    //         }
+    //     }
+    // }
 
     // $scope.persistRoom = $scope.rooms[0];
     // $scope.persistPrice = $rootScope.filter.priceRange;
     // $scope.persistPerson = $rootScope.filter.person;
     // $scope.persistHood = $rootScope.filter.hoodStyle;
+
+    $scope.getFilters = function(preferenceId){
+        returnObj = {}
+        returnObj["apartmentType"] = "1 Bedroom";
+        returnObj["hoodType"] = "Modern and Bustling";
+        returnObj["personType"] = "Student";
+        returnObj["budget"] = "3000";
+        returnObj["movein"] = "20141212";
+
+        $scope.filter.movein = returnObj.movein;
+        $scope.filter.budget = returnObj.budget;
+
+
+        if (typeof(returnObj.apartmentType) != "undefined") {
+            for (var i=0; i < $scope.rooms.length; i++){
+                if($scope.rooms[i].type == returnObj.apartmentType){
+                    $scope.filter.room = $scope.rooms[i];
+                    break;
+                }
+            }
+        }
+
+        if (typeof(returnObj.personType) != "undefined") {
+            for (var i=0; i < $scope.persons.length; i++){
+                if($scope.persons[i].type == returnObj.personType){
+                    $scope.filter.person = $scope.persons[i];
+                    break;
+                }
+            }
+        }
+
+        if (typeof(returnObj.hoodType) != "undefined") {
+            for (var i=0; i < $scope.hoods.length; i++){
+                if($scope.hoods[i].type == returnObj.hoodType){
+                    $scope.filter.hoodStyle = $scope.hoods[i];
+                    break;
+                }
+            }
+        }
+
+        $rootScope.filter = $scope.filter;
+    }
 
     $scope.onSubmitFilters = function(){
 
@@ -1292,6 +1336,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         // filters.room = $scope.persistRoom;
         $rootScope.filter = $scope.filter;
         requestObject = {};
+        requestFilters = {};
 
         for (var filter in filters){
             if (filters.hasOwnProperty(filter)){
@@ -1301,13 +1346,23 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
                     for(var i=0; i<filtersList.length; i++){
                         requestObject[filtersList[i]]=true;
                     }
+                    if (filter == "room"){
+                        requestFilters["apartmentType"] = filterObj.type;
+                    } else if (filter == "person"){
+                        requestFilters["personType"] = filterObj.type;
+                    } else if (filter == "hoodStyle"){
+                        requestFilters["hoodType"] = filterObj.type;
+                    } 
                 } else{
                     requestObject["budget"] = parseInt(filterObj);
+                    requestFilters["budget"] = parseInt(filterObj);
                 }
             }
         }
 
         requestObject["movein"] = $rootScope.prefs.movein;
+        requestFilters["movein"] = $rootScope.prefs.movein;
+        requestObject["filters"] = requestFilters;
 
         saveUserPreferences(requestObject);
 
@@ -1320,6 +1375,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     }
 
     $scope.init = function(){
+        $scope.getFilters($rootScope.preferenceId);
         $scope.pageChanged();
     }
 
@@ -1333,6 +1389,17 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         $scope.updateLoadingListingsFlag(false);
         $scope.updateUnexpectedErrorFlag(true);
     }
+
+
+
+    $scope.onSuccessSaveUserPreferences = function(data, status, headers, config) {
+        $scope.filterId = data.Data.PreferenceId.$oid;
+        $routeParams.preferenceId = $scope.filterId;
+        $routeParams.pageNumber = 1;
+        $scope.redirectToListingList($scope.filterId , 1, false);
+        $scope.pageChanged();
+    }
+
     
     // when the filter listings request succeeded, this method is added in the requestobject on the success attribute
     $scope.onSuccessFilterListings = function(data, status, headers, config) {
@@ -1409,14 +1476,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
 
         responsePromise.success(function(data, status, headers, config) {
             console.log("Succeeded response");
-            $scope.filterId = data.Data.PreferenceId.$oid;
-            // $scope.reloadListingList(data.Data.PreferenceId.$oid);
-            //$scope.filterListings(1,6)
-            //$scope.filterListings($scope.filterId , 1 ,true); 
-            $routeParams.preferenceId = $scope.filterId;
-            $routeParams.pageNumber = 1;
-            $scope.redirectToListingList($scope.filterId , 1, false);
-            $scope.pageChanged();
+            $scope.onSuccessSaveUserPreferences(data,status,headers,config);
         });
         
         responsePromise.error(function(data, status, headers, config) {
