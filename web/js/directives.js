@@ -103,6 +103,7 @@ angular.module('socrex.directives', []).
             totalPages: totalPages,
             href : "javascript:void(0);",
             visiblePages: 10,
+            startPage: 1,
             onPageClick: function (event, page) {
               scope.$apply("clickedPaginationButton("+page+")");
             }

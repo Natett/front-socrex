@@ -1,6 +1,8 @@
 var socrexControllers = angular.module('socrex.controllers', []);
 var dataCollection = []
 
+filters={}
+
 socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$rootScope', '$routeParams' ,
     function($scope,$http, $location,$rootScope, $routeParams) {
         
@@ -1114,3 +1116,479 @@ $(document).ready(function() {
 });
   
 }]);
+
+
+
+// *******************************************************************************
+// *******************************************************************************
+// *******************************************************************************
+// *******************************************************************************
+// *******************************************************************************
+// *******************************************************************************
+
+
+
+socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$http' , '$location', function ($scope, $rootScope, $http, $location) {
+
+    this.initialForm = {};
+    $rootScope.prefs = {};
+    $rootScope.filter = {};
+
+    $scope.onSubmitInitial = function(){
+        // optionaly change date format handling in back-end
+        splitDate = this.initialForm.movein.split("/");
+        yearSplit = splitDate[2];
+        splitDate.splice(2,1);
+        splitDate.splice(0,0,yearSplit);
+
+        this.initialForm.movein = splitDate.join("");
+        $rootScope.prefs.movein = this.initialForm.movein.trim();
+        $rootScope.prefs.maxprice = 5000;
+        $rootScope.prefs.aptType = "";
+        $rootScope.prefs.personType = "";
+        $rootScope.prefs.hoodType = "";
+        saveUserPreferences(this.initialForm);
+    }
+
+    $scope.toListingList = function(){
+        $location.path( "/listings/");   
+    }
+
+    saveUserPreferences = function(requestObj){
+        // do call to server to save preferences
+        var responsePromise = $http({
+            //url: 'http://127.0.0.1:5000/listings/filter', 
+            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+            method: 'POST',
+            data: $.param(requestObj),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+
+        responsePromise.success(function(data, status, headers, config) {
+            console.log("Succeeded response");
+            $rootScope.currentListingFilter = data.Data.PreferenceId.$oid;
+            $scope.toListingList();
+        });
+        
+        responsePromise.error(function(data, status, headers, config) {
+            console.log("Succeeded response - error");
+        }); 
+    }
+
+}]);
+
+
+
+socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$http' , '$location', function ($scope, $rootScope, $http, $location) {
+
+    $scope.showListingsFlag = false;
+    $scope.isLoadingListingsFlag = true;
+    $scope.noListingFoundFlag = false;
+    $scope.unexpectedErrorFlag = false;
+
+    $scope.rooms = [
+        {type: "Studio", option: ["studio"]},
+        {type: "1 Bedroom", option: ["1bed"]},
+        {type: "2 Bedroom", option: ["2bed"]},
+        {type: "Single Room", option: ["room_sublet"]}
+    ];
+
+    $scope.persons = [
+        {type: "Student", option: ["Parking", "Student_vibe"]},
+        {type: "Professional", option: ["Near_action", "Locales_good"]},
+        {type: "Family", option: ["Safe", "Parks"]}
+    ];
+
+    $scope.hoods = [
+        {type: "Classic Boston", option: ["Near_action", "Easy_transport", "Classic", "lighting", "hardwood", "laundry", "classic"]},
+        {type: "Modern and Bustling", option: ["Near_action", "Locales_good", "Parks", "Modern", "Easy_transport", "modern", "loft"]},
+        {type: "Chill Burbs", option: ["Quiet", "deck_balcony", "cieling","kitchen", "ameneties"]}
+    ];
+
+    if (typeof($rootScope.filter.room) != "undefined") {
+        for (var i=0; i < $scope.rooms.length; i++){
+            if($scope.rooms[i].type == $rootScope.filter.room.type){
+                $scope.filter.room = $scope.rooms[i];
+                break;
+            }
+        }
+    }
+
+    if (typeof($rootScope.filter.person) != "undefined") {
+        for (var i=0; i < $scope.persons.length; i++){
+            if($scope.persons[i].type == $rootScope.filter.person.type){
+                $scope.filter.person = $scope.persons[i];
+                break;
+            }
+        }
+    }
+
+    if (typeof($rootScope.filter.hoodStyle) != "undefined") {
+        for (var i=0; i < $scope.hoods.length; i++){
+            if($scope.hoods[i].type == $rootScope.filter.hoodStyle.type){
+                $scope.filter.hoodStyle = $scope.hoods[i];
+                break;
+            }
+        }
+    }
+
+    // $scope.persistRoom = $scope.rooms[0];
+    // $scope.persistPrice = $rootScope.filter.priceRange;
+    // $scope.persistPerson = $rootScope.filter.person;
+    // $scope.persistHood = $rootScope.filter.hoodStyle;
+
+    $scope.onSubmitFilters = function(){
+
+        filters = $scope.filter;
+        // filters.room = $scope.persistRoom;
+        $rootScope.filter = $scope.filter;
+        requestObject = {};
+
+        for (var filter in filters){
+            if (filters.hasOwnProperty(filter)){
+                filterObj = filters[filter];
+                if (typeof(filterObj) != "string"){
+                    filtersList = filterObj['option'];
+                    for(var i=0; i<filtersList.length; i++){
+                        requestObject[filtersList[i]]=true;
+                    }
+                } else{
+                    requestObject["budget"] = parseInt(filterObj);
+                }
+            }
+        }
+
+        requestObject["movein"] = $rootScope.prefs.movein;
+
+        saveUserPreferences(requestObject);
+
+        //console.log(requestObject);
+        //console.log($.param(requestObject));
+        console.log($scope.filter);
+        //console.log($rootScope.prefs);
+
+
+    }
+
+    $scope.init = function(){
+        // Do the first call to server
+
+        $scope.filterId = $rootScope.currentListingFilter
+        $scope.filterListings(1,9);
+
+        // if (typeof($rootScope.filter) != "undefined"){
+        //     $scope.filter = $rootScope.filter;
+        //     $scope.persistRoom = $rootScope.filter.room;
+        //     $scope.persistPrice = $rootScope.filter.priceRange;
+        //     $scope.persistPerson = $rootScope.filter.person;
+        //     $scope.persistHood = $rootScope.filter.hoodStyle;
+        // }
+
+        
+        
+        // init rating 
+        //$scope.initRating();
+    }
+
+     // when the filter listings request fails, this method is added in the requestobject on the error attribute
+    $scope.onErrorFilterListings = function(data, status, headers, config) {
+        console.log("Error");
+        $scope.errorFilterListings();
+    }
+    
+    $scope.errorFilterListings = function() {
+        $scope.updateLoadingListingsFlag(false);
+        $scope.updateUnexpectedErrorFlag(true);
+    }
+    
+    // when the filter listings request succeeded, this method is added in the requestobject on the success attribute
+    $scope.onSuccessFilterListings = function(data, status, headers, config) {
+        console.log(data)
+        if(data.IsValid === true)
+        { 
+            if(data.Data.Listings.length > 0){
+                $rootScope.currentListingFilter = $scope.filterId;
+                $rootScope.currentListedListings = data.Data.Listings;
+                console.log(data.Data.Listings);
+                $scope.rowdata = data.Data.Listings;
+                $scope.showListings();
+
+                // $rootScope.prefs.maxprice = $scope.filter.priceRange;
+                // $rootScope.prefs.aptType = $scope.filter.room;
+                // $rootScope.prefs.personType = $scope.filter.person;
+                // $rootScope.prefs.hoodType = $scope.filter.hoodStyle;
+                
+                if($scope.totalPages != data.Data.TotalPages){
+                    $scope.totalPages = data.Data.TotalPages;
+                }
+                    
+                if($scope.totalListings != data.Data.Total){
+                    $scope.totalListings = data.Data.Total;
+                }
+                
+            }else{
+                console.log("0 Listings found");
+                $scope.updateLoadingListingsFlag(false);
+                $scope.updateNoListingFoundFlag(true);
+            }
+        } else {
+            console.log("Data invalid error");
+            $scope.errorFilterListings();
+        }
+    };
+    
+    $scope.filterListings = function(currentPage, numberOfItems) {
+        console.log($scope.filterId)
+        // dummy filters
+        // must be very careful with the filters value structure, it has to start with single quotes, and the inner quotes must be double
+        // otherwise there would be an error in python decoding  
+        //var filters = {'filters':'{"bedroom":2}'};
+        var filters = {'id':$scope.filterId, 'currentPage' : currentPage , 'itemsOnPage': numberOfItems };
+        // clean current listing list
+        $scope.hideListings();
+        $scope.updateLoadingListingsFlag(true);
+        // do call to server to retrieve listings list
+        var responsePromise = $http({
+            url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
+            method: 'POST',
+            data: $.param(filters),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+        // added methods when call succeeds or fails
+        responsePromise.success($scope.onSuccessFilterListings);
+        responsePromise.error($scope.onErrorFilterListings);
+    }
+
+    saveUserPreferences = function(requestObj){
+        // do call to server to save preferences
+        var responsePromise = $http({
+            //url: 'http://127.0.0.1:5000/listings/filter', 
+            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+            method: 'POST',
+            data: $.param(requestObj),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+
+        responsePromise.success(function(data, status, headers, config) {
+            console.log("Succeeded response");
+            $scope.filterId = data.Data.PreferenceId.$oid;
+            // $scope.reloadListingList(data.Data.PreferenceId.$oid);
+            $scope.filterListings(1,6)
+        });
+        
+        responsePromise.error(function(data, status, headers, config) {
+            console.log("Succeeded response - error");
+        }); 
+    }
+
+    $scope.getDetailedListing = function(listingId) {
+            
+        var responsePromise = $http({
+            url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+            method: 'GET',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+
+        responsePromise.success(function(data, status, headers, config) {
+            $rootScope.selectedListing = data.Data;
+            $scope.redirecToListingDetail();
+        });
+            
+        responsePromise.error(function(data, status, headers, config) {
+            $scope.updateLoadingListingsFlag(false);
+            $scope.updateUnexpectedErrorFlag(true);
+        });
+
+        return false;
+    }
+
+    $scope.redirecToListingDetail = function(){
+        $location.path( "/listingDetails/" + $rootScope.selectedListing._id.$oid, false );
+    }
+
+
+    $scope.clickedPaginationButton = function(pageNumber) {
+            
+        $scope.filterListings(pageNumber,9);
+
+    }
+
+    // Functions for handling showing of elements
+
+    $scope.hideListings = function(){
+        //$scope.rowdata.length = 0;
+        $scope.updateShowListingsFlag(false);
+    }
+    
+    $scope.showListings = function(){
+        $scope.updateShowListingsFlag(true);
+        $scope.updateLoadingListingsFlag(false);
+        $scope.updateNoListingFoundFlag(false);
+    }
+
+    
+    $scope.updateShowListingsFlag = function(value){
+        $scope.showListingsFlag = value;
+    }
+    
+    $scope.updateLoadingListingsFlag = function(value){
+        $scope.isLoadingListingsFlag = value;
+    }
+    
+    $scope.updateNoListingFoundFlag = function(value){
+        $scope.noListingFoundFlag = value;
+    }
+    
+    $scope.updateUnexpectedErrorFlag = function(value){
+        $scope.unexpectedErrorFlag = value;
+    }
+
+    $scope.init();
+
+
+}]);
+
+
+
+socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$rootScope', '$routeParams' ,
+    function($scope,$http, $location,$rootScope, $routeParams) {
+        
+        $scope.pictures = []
+        
+        $scope.getDetailedListing = function(listingId) {
+            // dummy filters
+            //var listingId = '542c3f86b43c2c00029a8211';
+                
+            var responsePromise = $http({
+                //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                method: 'GET',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+    
+            responsePromise.success(function(data, status, headers, config) {
+                $rootScope.selectedListing = data.Data;
+                // add pictures to slider
+                $scope.pictures = $rootScope.selectedListing.pictures
+
+                //$scope.addPictureArrayToSlider($rootScope.selectedListing.pictures);
+                // reload slider styles
+                $scope.$broadcast('reload-slider')
+            });
+                
+            responsePromise.error(function(data, status, headers, config) {
+                alert("AJAX failed!");
+            });
+        }
+        
+        $scope.onClickOriginalListingButton = function(){
+            $scope.openOriginalListingTab();
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"originallisting");
+        }
+        
+        $scope.onClickContact = function(){
+            angular.element('#contactdialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"sendemail");
+        }
+
+        $scope.onClickInterested = function(){
+            if (typeof($rootScope.userId) === 'undefined' || $rootScope.userId == "") {
+                angular.element('#provide_email_dialog').dialog( "open" );
+            } else {
+                angular.element('#workingdialog').dialog( "open" );
+                $scope.sendEmailConcierge($routeParams.listingId,$rootScope.userId, $rootScope.fullName, $rootScope.userPhone);
+            }
+        }
+
+        $scope.onSubmitConcierge = function(user){
+
+            $rootScope.fullName = user.fullname;
+            $rootScope.userId = user.email;
+            $rootScope.userPhone = user.phone;
+            $scope.sendEmailConcierge($routeParams.listingId,$rootScope.userId, $rootScope.fullName, $rootScope.userPhone);
+            angular.element('#provide_email_dialog').dialog( "close" );
+            angular.element('#workingdialog').dialog( "open" );
+            
+        }
+
+        
+        $scope.onClickVerifyAvailability = function(){
+            angular.element('#verifyavailabilitydialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"verifyavailability");
+        }
+        
+        $scope.onClickExpertReview = function(){
+            angular.element('#expertreviewdialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"expertreview");
+        }
+        
+        $scope.onClickTour = function(){
+            angular.element('#tourdialog').dialog( "open" );
+            $scope.saveClickOnDB($routeParams.listingId,$rootScope.userId ,"virtualtour");
+        }
+        
+        $scope.openOriginalListingTab = function(){
+            window.open($rootScope.selectedListing.url,'_blank');
+        }
+        
+        $scope.redirecToListingList = function(){
+            $location.path( "/listings/filter/"+$rootScope.currentListingFilter, false );
+        }
+        
+        $scope.validateSelectedListing = function(){
+            // always call listing detail from server to get images
+            //if($rootScope.selectedListing == null){
+                $scope.getDetailedListing($routeParams.listingId)
+            //}
+        }
+        
+        $scope.saveClickOnDB = function(listingid,useremail, option) {
+            // dummy filters
+            //var listingId = '542c3f86b43c2c00029a8211';
+            url = ""
+
+            if (typeof(useremail) === 'undefined' || useremail == "") {
+                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+            } else {
+                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+            }
+                
+            var responsePromise = $http({
+                //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: url,
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+        }
+
+        $scope.setRandomStarRating = function(listingsArray){
+            for (var i = 0; i < listingsArray.length; i++) {
+                listingsArray[i].relevance = $scope.getRandomInt(0,20);
+            }
+        }
+
+        $scope.sendEmailConcierge = function(listingid, useremail, username, userphone) {
+            // dummy filters
+            //var listingId = '542c3f86b43c2c00029a8211';
+            listing_url = $rootScope.selectedListing.url
+                
+            var responsePromise = $http({
+                //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: 'http://byopapp-api-stage.herokuapp.com/conciergeEmail',
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: {
+                    email: useremail,
+                    name: username,
+                    phone: userphone,
+                    listingurl: listing_url,
+                    listingid: listingid
+                }
+            });
+            console.log(responsePromise)
+        }
+        
+        $scope.validateSelectedListing();
+        
+    }
+]);
