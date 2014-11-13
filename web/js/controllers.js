@@ -373,7 +373,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
 		    // do call to server to retrieve listings list
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
-		        //url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/listings/filter',
+		        //url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
                 url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
                 method: 'POST',
 		        data: $.param(filters),
@@ -771,7 +771,7 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
 		    // do call to server to save preferences
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
-		        //url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
+		        //url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
                 url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
                 method: 'POST',
 		        data: $.param(this.userPreferences),
@@ -1104,7 +1104,7 @@ $(document).ready(function() {
     // do call to server to save preferences
     var responsePromise = $http({
         //url: 'http://127.0.0.1:5000/listings/filter', 
-        //url: 'http://byopapp-api-stage-c9-jhonjairoroa877.c9.io/userpreferences',
+        //url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
         url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
         method: 'POST',
         data: $.param(userPreferences),
@@ -1362,7 +1362,8 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
 
         requestObject["movein"] = $rootScope.prefs.movein;
         requestFilters["movein"] = $rootScope.prefs.movein;
-        requestObject["filters"] = requestFilters;
+        //requestObject["filters"] = requestFilters;
+        requestObject["filters"] = JSON.stringify(requestFilters);
 
         saveUserPreferences(requestObject);
 
