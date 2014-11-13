@@ -1155,6 +1155,12 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
         splitDate.splice(0,0,yearSplit);
 
         this.initialForm.movein = splitDate.join("");
+
+        requestFilters = {};
+        requestFilters["movein"] = this.initialForm.movein;
+        this.initialForm["filters"] = JSON.stringify(requestFilters);
+
+        
         $rootScope.prefs.movein = this.initialForm.movein.trim();
         $rootScope.prefs.maxprice = 5000;
         $rootScope.prefs.aptType = "";
@@ -1288,16 +1294,17 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     // $scope.persistPerson = $rootScope.filter.person;
     // $scope.persistHood = $rootScope.filter.hoodStyle;
 
-    $scope.getFilters = function(preferenceId){
-        returnObj = {}
-        returnObj["apartmentType"] = "1 Bedroom";
-        returnObj["hoodType"] = "Modern and Bustling";
-        returnObj["personType"] = "Student";
-        returnObj["budget"] = "3000";
-        returnObj["movein"] = "20141212";
+    $scope.onSuccessGetFilters = function(data, status, headers, config){
+
+        debugger;
+        returnObj = data.Data.filters;
+        $scope.filter = {};
 
         $scope.filter.movein = returnObj.movein;
-        $scope.filter.budget = returnObj.budget;
+
+        if (typeof(returnObj.budget) != "undefined") {
+            $scope.filter.priceRange = returnObj.budget;
+        }
 
 
         if (typeof(returnObj.apartmentType) != "undefined") {
@@ -1328,6 +1335,26 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         }
 
         $rootScope.filter = $scope.filter;
+    }
+
+    $scope.getFilters = function(preferenceId){
+
+        var responsePromise = $http({
+            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences/' + preferenceId,
+            method: 'GET',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+
+        responsePromise.success(function(data, status, headers, config) {
+            console.log("Succeeded response");
+            $scope.onSuccessGetFilters(data,status,headers,config);
+        });
+        
+        responsePromise.error(function(data, status, headers, config) {
+            console.log("Succeeded response - error");
+        }); 
+    
+        
     }
 
     $scope.onSubmitFilters = function(){
@@ -1454,6 +1481,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         $scope.hideListings();
         $scope.updateLoadingListingsFlag(true);
         // do call to server to retrieve listings list
+        // url: 'http://byopapp-api-stage.herokuapp.com/listings/filter'
         var responsePromise = $http({
             url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
             method: 'POST',
@@ -1464,6 +1492,8 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         responsePromise.success($scope.onSuccessFilterListings);
         responsePromise.error($scope.onErrorFilterListings);
     }
+
+
 
     saveUserPreferences = function(requestObj){
         // do call to server to save preferences
