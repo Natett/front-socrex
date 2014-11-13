@@ -1411,7 +1411,12 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
             console.log("Succeeded response");
             $scope.filterId = data.Data.PreferenceId.$oid;
             // $scope.reloadListingList(data.Data.PreferenceId.$oid);
-            $scope.filterListings(1,6)
+            //$scope.filterListings(1,6)
+            //$scope.filterListings($scope.filterId , 1 ,true); 
+            $routeParams.preferenceId = $scope.filterId;
+            $routeParams.pageNumber = 1;
+            $scope.redirectToListingList($scope.filterId , 1, false);
+            $scope.pageChanged();
         });
         
         responsePromise.error(function(data, status, headers, config) {
