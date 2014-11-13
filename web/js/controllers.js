@@ -1158,6 +1158,7 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
 
         requestFilters = {};
         requestFilters["movein"] = this.initialForm.movein;
+        requestFilters["budget"] = 5000;
         this.initialForm["filters"] = JSON.stringify(requestFilters);
 
         
@@ -1296,7 +1297,6 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
 
     $scope.onSuccessGetFilters = function(data, status, headers, config){
 
-        debugger;
         returnObj = data.Data.filters;
         $scope.filter = {};
 
@@ -1359,16 +1359,22 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
 
     $scope.onSubmitFilters = function(){
 
-        filters = $scope.filter;
+        var filters = $scope.filter;
         // filters.room = $scope.persistRoom;
         $rootScope.filter = $scope.filter;
-        requestObject = {};
-        requestFilters = {};
+        var requestObject = {};
+        var requestFilters = {};
 
         for (var filter in filters){
             if (filters.hasOwnProperty(filter)){
                 filterObj = filters[filter];
-                if (typeof(filterObj) != "string"){
+                if (filter == "movein"){
+                    requestObject["movein"] = filterObj;
+                    requestFilters["movein"] = filterObj;
+                } else if (filter == "priceRange"){
+                    requestObject["budget"] = parseInt(filterObj);
+                    requestFilters["budget"] = parseInt(filterObj);
+                } else {
                     filtersList = filterObj['option'];
                     for(var i=0; i<filtersList.length; i++){
                         requestObject[filtersList[i]]=true;
@@ -1380,15 +1386,11 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
                     } else if (filter == "hoodStyle"){
                         requestFilters["hoodType"] = filterObj.type;
                     } 
-                } else{
-                    requestObject["budget"] = parseInt(filterObj);
-                    requestFilters["budget"] = parseInt(filterObj);
                 }
             }
         }
 
-        requestObject["movein"] = $rootScope.prefs.movein;
-        requestFilters["movein"] = $rootScope.prefs.movein;
+        
         //requestObject["filters"] = requestFilters;
         requestObject["filters"] = JSON.stringify(requestFilters);
 
