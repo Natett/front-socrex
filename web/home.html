@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html ng-app="socrex">
 <head>
+
+    <script type="text/javascript">
+    function getRandomNumber(){
+      return Math.floor(Math.random() * 1000);
+    }
+    </script>
+
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+    
+    <!--<script>document.write('<script src="js/app.js?dev=' + getRandomNumber() + '"\><\/script>');</script>-->
     <!-- Modal Styles -->
     <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
     <link type="text/css" rel="stylesheet" href="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css"/>
@@ -17,7 +25,7 @@
     <!-- Custom styles for this template -->
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,600,800' rel='stylesheet' type='text/css'>
     <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
     <link href="css/responsive.css" rel="stylesheet">
     <meta charset=utf-8 />
     <title>Socrex - Listings</title>
@@ -218,7 +226,7 @@
   <script type="text/javascript" src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
   <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   -->
-
+  <script>document.write('<link href="css/style.css?id=' + getRandomNumber() + '" rel="stylesheet">');</script>
   <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
@@ -240,11 +248,16 @@
   <!-- jrating js -->
   <script type="text/javascript" src="./lib/jRating-master/jquery/jRating.jquery.js"></script>
   <script type="text/javascript" src="lib/checklist-model-master/checklist-model.js"></script>
-  <script type="text/javascript" src="js/app.js"></script>
+  <script>document.write('<script src="js/app.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <script>document.write('<script src="js/services.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <script>document.write('<script src="js/controllers.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <script>document.write('<script src="js/filters.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <script>document.write('<script src="js/directives.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <!--<script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript" src="js/services.js"></script>
   <script type="text/javascript" src="js/controllers.js"></script>
   <script type="text/javascript" src="js/filters.js"></script>
-  <script type="text/javascript" src="js/directives.js"></script>
+  <script type="text/javascript" src="js/directives.js"></script>-->
 
   <script src="js/jquery.easing.js"></script>
   <script src="js/jquery.jcarousel.min.js"></script>
