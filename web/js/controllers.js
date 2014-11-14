@@ -25,7 +25,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                url: 'http://localhost:5000/listings/' + listingId,
                 method: 'GET',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -110,9 +110,9 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
             url = ""
 
             if (typeof(useremail) === 'undefined' || useremail == "") {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+                url = 'http://localhost:5000/listing/'+listingid+'/'+option;
             } else {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+                url = 'http://localhost:5000/listing/'+listingid+'/user/'+useremail+'/'+option;
             }
     		    
             var responsePromise = $http({
@@ -130,7 +130,7 @@ socrexControllers.controller('listCtrl', ['$scope' , '$http', '$location', '$roo
                 
             var responsePromise = $http({
                 //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/conciergeEmail',
+                url: 'http://localhost:5000/conciergeEmail',
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: {
@@ -252,7 +252,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                url: 'http://localhost:5000/listings/' + listingId,
                 method: 'GET',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -292,7 +292,7 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
     		    
             var responsePromise = $http({
     		    //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                url: 'http://localhost:5000/listings/' + listingId,
                 method: 'GET',
     		    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -373,8 +373,8 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
 		    // do call to server to retrieve listings list
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
-		        //url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
+		        //url: 'http://localhost:5000/listings/filter',
+                url: 'http://localhost:5000/listings/filter',
                 method: 'POST',
 		        data: $.param(filters),
 		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -407,9 +407,9 @@ socrexControllers.controller('listCtrl2', ['$scope' , '$http', '$location', '$ro
     		//var listingId = '542c3f86b43c2c00029a8211';
             url = ""
             if (typeof(useremail) === 'undefined' || useremail == "") {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+                url = 'http://localhost:5000/listing/'+listingid+'/'+option;
             } else {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+                url = 'http://localhost:5000/listing/'+listingid+'/user/'+useremail+'/'+option;
             }
     		    
             var responsePromise = $http({
@@ -771,8 +771,8 @@ socrexControllers.controller('preferencesFormController', ['$scope' , '$rootScop
 		    // do call to server to save preferences
             var responsePromise = $http({
 		        //url: 'http://127.0.0.1:5000/listings/filter', 
-		        //url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
-                url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+		        //url: 'http://localhost:5000/userpreferences',
+                url: 'http://localhost:5000/userpreferences',
                 method: 'POST',
 		        data: $.param(this.userPreferences),
 		        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1104,8 +1104,8 @@ $(document).ready(function() {
     // do call to server to save preferences
     var responsePromise = $http({
         //url: 'http://127.0.0.1:5000/listings/filter', 
-        //url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
-        url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+        //url: 'http://localhost:5000/userpreferences',
+        url: 'http://localhost:5000/userpreferences',
         method: 'POST',
         data: $.param(userPreferences),
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1178,7 +1178,7 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
         // do call to server to save preferences
         var responsePromise = $http({
             //url: 'http://127.0.0.1:5000/listings/filter', 
-            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+            url: 'http://localhost:5000/userpreferences',
             method: 'POST',
             data: $.param(requestObj),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1261,44 +1261,43 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         }, true
     );
 
-    // if ($rootScope.filter != "undefined") {
-    //     if (typeof($rootScope.filter.room) != "undefined") {
-    //         for (var i=0; i < $scope.rooms.length; i++){
-    //             if($scope.rooms[i].type == $rootScope.filter.room.type){
-    //                 $scope.filter.room = $scope.rooms[i];
-    //                 break;
-    //             }
-    //         }
-    //     }
+    if (typeof($rootScope.filter) != "undefined") {
+        if (typeof($rootScope.filter.room) != "undefined") {
+            for (var i=0; i < $scope.rooms.length; i++){
+                if($scope.rooms[i].type == $rootScope.filter.room.type){
+                    $scope.filter.room = $scope.rooms[i];
+                    break;
+                }
+            }
+        }
 
-    //     if (typeof($rootScope.filter.person) != "undefined") {
-    //         for (var i=0; i < $scope.persons.length; i++){
-    //             if($scope.persons[i].type == $rootScope.filter.person.type){
-    //                 $scope.filter.person = $scope.persons[i];
-    //                 break;
-    //             }
-    //         }
-    //     }
+        if (typeof($rootScope.filter.person) != "undefined") {
+            for (var i=0; i < $scope.persons.length; i++){
+                if($scope.persons[i].type == $rootScope.filter.person.type){
+                    $scope.filter.person = $scope.persons[i];
+                    break;
+                }
+            }
+        }
 
-    //     if (typeof($rootScope.filter.hoodStyle) != "undefined") {
-    //         for (var i=0; i < $scope.hoods.length; i++){
-    //             if($scope.hoods[i].type == $rootScope.filter.hoodStyle.type){
-    //                 $scope.filter.hoodStyle = $scope.hoods[i];
-    //                 break;
-    //             }
-    //         }
-    //     }
-    // }
+        if (typeof($rootScope.filter.hoodStyle) != "undefined") {
+            for (var i=0; i < $scope.hoods.length; i++){
+                if($scope.hoods[i].type == $rootScope.filter.hoodStyle.type){
+                    $scope.filter.hoodStyle = $scope.hoods[i];
+                    break;
+                }
+            }
+        }
+    }
 
-    // $scope.persistRoom = $scope.rooms[0];
-    // $scope.persistPrice = $rootScope.filter.priceRange;
-    // $scope.persistPerson = $rootScope.filter.person;
-    // $scope.persistHood = $rootScope.filter.hoodStyle;
+
 
     $scope.onSuccessGetFilters = function(data, status, headers, config){
 
         returnObj = data.Data.filters;
-        $scope.filter = {};
+        if (typeof($scope.filter == "undefined")){
+            $scope.filter = {};
+        }
 
         $scope.filter.movein = returnObj.movein;
 
@@ -1340,7 +1339,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     $scope.getFilters = function(preferenceId){
 
         var responsePromise = $http({
-            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences/' + preferenceId,
+            url: 'http://localhost:5000/userpreferences/' + preferenceId,
             method: 'GET',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
@@ -1360,7 +1359,6 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     $scope.onSubmitFilters = function(){
 
         var filters = $scope.filter;
-        // filters.room = $scope.persistRoom;
         $rootScope.filter = $scope.filter;
         var requestObject = {};
         var requestFilters = {};
@@ -1483,9 +1481,9 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         $scope.hideListings();
         $scope.updateLoadingListingsFlag(true);
         // do call to server to retrieve listings list
-        // url: 'http://byopapp-api-stage.herokuapp.com/listings/filter'
+        // url: 'http://localhost:5000/listings/filter'
         var responsePromise = $http({
-            url: 'http://byopapp-api-stage.herokuapp.com/listings/filter',
+            url: 'http://localhost:5000/listings/filter',
             method: 'POST',
             data: $.param(filters),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1501,7 +1499,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
         // do call to server to save preferences
         var responsePromise = $http({
             //url: 'http://127.0.0.1:5000/listings/filter', 
-            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
+            url: 'http://localhost:5000/userpreferences',
             method: 'POST',
             data: $.param(requestObj),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -1520,7 +1518,7 @@ socrexControllers.controller('listingsListCtrl', ['$scope' , '$rootScope' , '$ht
     $scope.getDetailedListing = function(listingId) {
             
         var responsePromise = $http({
-            url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+            url: 'http://localhost:5000/listings/' + listingId,
             method: 'GET',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
@@ -1602,7 +1600,7 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
                 
             var responsePromise = $http({
                 //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/listings/' + listingId,
+                url: 'http://localhost:5000/listings/' + listingId,
                 method: 'GET',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             });
@@ -1689,9 +1687,9 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
             url = ""
 
             if (typeof(useremail) === 'undefined' || useremail == "") {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/'+option;
+                url = 'http://localhost:5000/listing/'+listingid+'/'+option;
             } else {
-                url = 'http://byopapp-api-stage.herokuapp.com/listing/'+listingid+'/user/'+useremail+'/'+option;
+                url = 'http://localhost:5000/listing/'+listingid+'/user/'+useremail+'/'+option;
             }
                 
             var responsePromise = $http({
@@ -1715,7 +1713,7 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
                 
             var responsePromise = $http({
                 //url: 'http://127.0.0.1:5000/listings/filter', 
-                url: 'http://byopapp-api-stage.herokuapp.com/conciergeEmail',
+                url: 'http://localhost:5000/conciergeEmail',
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: {
