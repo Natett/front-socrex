@@ -1142,32 +1142,33 @@ $(document).ready(function() {
 
 socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$http' , '$location', function ($scope, $rootScope, $http, $location) {
 
-    this.initialForm = {};
+    $scope.initialForm = {};
+    // $scope.initialForm.movein = "mm/dd/yyyy"
     $rootScope.prefs = {};
     $rootScope.filter = {};
 
-
     $scope.onSubmitInitial = function(){
         // optionaly change date format handling in back-end
-        splitDate = this.initialForm.movein.split("/");
+
+        splitDate = $scope.initialForm.movein.split("/");
         yearSplit = splitDate[2];
         splitDate.splice(2,1);
         splitDate.splice(0,0,yearSplit);
 
-        this.initialForm.movein = splitDate.join("");
+        $scope.initialForm.movein = splitDate.join("");
 
         requestFilters = {};
-        requestFilters["movein"] = this.initialForm.movein;
+        requestFilters["movein"] = $scope.initialForm.movein;
         requestFilters["budget"] = 5000;
-        this.initialForm["filters"] = JSON.stringify(requestFilters);
+        $scope.initialForm["filters"] = JSON.stringify(requestFilters);
 
         
-        $rootScope.prefs.movein = this.initialForm.movein.trim();
+        $rootScope.prefs.movein = $scope.initialForm.movein.trim();
         $rootScope.prefs.maxprice = 5000;
         $rootScope.prefs.aptType = "";
         $rootScope.prefs.personType = "";
         $rootScope.prefs.hoodType = "";
-        saveUserPreferences(this.initialForm);
+        saveUserPreferences($scope.initialForm);
     }
 
     $scope.toListingList = function(preferenceId){
