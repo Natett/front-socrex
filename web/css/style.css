@@ -448,7 +448,8 @@ input[type="color"]:focus,
 
 .signup{
 	padding: 12px 12px 10px !important;
-	margin-top: 19px;
+	margin-top: 8px;
+	margin-bottom: 8px;
 	margin-left: 15px;
 	background-color: #3399ff !important;
 	color: #fff !important;
