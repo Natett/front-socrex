@@ -1,0 +1,124 @@
+    <!-- begin:header -->
+    <div id="header" class="carousel slide carousel-fade" data-ride="carousel">
+      <div class="carousel-inner">
+        <div style="height:50px">
+        </div>
+    </div>
+    <!-- end:header -->
+
+
+
+    <!-- begin:service -->
+    <div id="service">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-xs-12">
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="service-container">
+              <div class="service-content">
+                <p class="landing-info-title">Great!</p>
+                <p class="landing-info">Your apartment search personal assistant is Armando </p>
+                <p class="landing-info">Here is what happens next</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="service-container">
+              <div class="service-icon">
+                <a><i class="fa fa-phone"></i></a>
+              </div>
+              <div class="service-content">
+                <p class="landing-info-title">Connect</p>
+                <p class="landing-info">Connect with Armando: </p>
+                <p class="landing-info">He will give you a call within a day </p>
+                <p class="landing-info">In the meantime fell free to compelte your profile and start to look for apartments you might like </p>
+              </div>
+            </div>
+          </div>
+          <!-- break -->
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="service-container">
+              <div class="service-icon">
+                <a ><i class="fa fa-check-square-o"></i></a>
+              </div>
+              <div class="service-content">
+                <p class="landing-info-title">Verify</p>
+                <p class="landing-info">Armando helps you to verify propoerties and visit them.
+                Chat with Aramando at any time for advise on anything from neighborhoods to costs
+                Search for apartments and choose out your favorites Armando ensures they are right for you, verifies availavility and books showings for you </p>
+              </div>
+            </div>
+          </div>
+          <!-- break -->
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="service-container">
+              <div class="service-icon">
+                <a><i class="fa fa-trophy"></i></a>
+              </div>
+              <div class="service-content">
+                <p class="landing-info-title">Tour and Close</p>
+                <p class="landing-info">You can tour apartments at a distance</p>
+                <p class="landing-info">Armando will personally scout out apartments for you, film video and provide and onest assesment of them</p>
+                <p class="landing-info">Lastly, Armando will help you file the application paperwork remotely</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end:service -->
+
+     <!-- begin:search -->
+    <div class="the-search">
+      <div class="container">
+          <form role="form" ng-submit="onSubmitInitial();">
+              <table class="search-table">
+              <tr>
+                <td>
+                  <label class="landing-label" for="movein">Move in date</label>
+                  <!-- <input type="date" id="datepicker" class="form-control center-block movein" ng-model="initialForm.movein"> -->
+                  <script>
+                    $(function() {
+                      $( "#datepicker" ).datepicker();
+                    });
+                  </script>
+                  <input id="datepicker" class="form-control" type="text" ng-model="initialForm.movein" />
+                  
+                </td>
+                <td>
+                  <label class="landing-label" for="city">City</label>
+                  <select class="form-control">
+                    <option>Boston</option>
+                  </select>
+                </td>
+                <td>
+                  <label for="submit">&nbsp;</label>
+                  <button type="submit" name="submit" class="btn btn-success btn-block">Start Search</button>
+                </td>
+              </tr>
+              </table>
+          </form>
+      </div>
+    </div>
+    <!-- end:search -->
+
+
+    <!-- begin:partner -->
+    <div id="partner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div style="height:50px">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end:partner -->
+</html>
