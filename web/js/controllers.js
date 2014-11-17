@@ -1146,6 +1146,10 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
     $rootScope.prefs = {};
     $rootScope.filter = {};
 
+    $scope.onClickFindAPlaceButton = function(){
+        $location.path( "/expert");   
+    }
+
 
     $scope.onSubmitInitial = function(){
         // optionaly change date format handling in back-end
