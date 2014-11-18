@@ -196,6 +196,11 @@ input[type="color"]:focus,
 	font-size: 18px;
 }
 
+.expert-info{
+	font-size: 18px;
+	text-align: left;
+}
+
 .landing-info-title{
 	font-size: 22px;
 	font-weight: 700;
@@ -666,6 +671,19 @@ input[type="color"]:focus,
     text-align: center;
 }
 
+.expert-table{
+	margin-right: auto;
+	margin-left: auto;
+	border-collapse: separate;
+    border-spacing: 25px;
+    text-align: center;
+}
+
+.expert-button-container{
+	width: 100%;
+	background-color: #f4f4f4;
+}
+
 .the-search{
 	width: 100%;
 	padding-top: 40px;
@@ -777,6 +795,10 @@ input[type="color"]:focus,
 .service-container{
 	display: block;
 	margin-bottom: 20px;
+}
+
+.expert-container{
+	margin-top: 50px;
 }
 
 .service-container:hover > .service-icon a{
