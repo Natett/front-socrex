@@ -1750,60 +1750,9 @@ socrexControllers.controller('expertCtrl', ['$scope' , '$http', '$location', '$r
             });
         }
 
-        $scope.initialForm = {};
-    // $scope.initialForm.movein = "mm/dd/yyyy"
-    $rootScope.prefs = {};
-    $rootScope.filter = {};
-
-    $scope.onSubmitInitial = function(){
-        // optionaly change date format handling in back-end
-
-        splitDate = $scope.initialForm.movein.split("/");
-        yearSplit = splitDate[2];
-        splitDate.splice(2,1);
-        splitDate.splice(0,0,yearSplit);
-
-        $scope.initialForm.movein = splitDate.join("");
-
-        requestFilters = {};
-        requestFilters["movein"] = $scope.initialForm.movein;
-        requestFilters["budget"] = 5000;
-        $scope.initialForm["filters"] = JSON.stringify(requestFilters);
-
         
-        $rootScope.prefs.movein = $scope.initialForm.movein.trim();
-        $rootScope.prefs.maxprice = 5000;
-        $rootScope.prefs.aptType = "";
-        $rootScope.prefs.personType = "";
-        $rootScope.prefs.hoodType = "";
-        saveUserPreferences($scope.initialForm);
-    }
 
-    $scope.toListingList = function(preferenceId){
-        $location.path( "/listings/preference/" + preferenceId + "/page/" + 1);   
-    }
-
-    saveUserPreferences = function(requestObj){
-        // do call to server to save preferences
-        var responsePromise = $http({
-            //url: 'http://127.0.0.1:5000/listings/filter', 
-            url: 'http://byopapp-api-stage.herokuapp.com/userpreferences',
-            method: 'POST',
-            data: $.param(requestObj),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        });
-
-        responsePromise.success(function(data, status, headers, config) {
-            console.log("Succeeded response");
-            //$rootScope.currentListingFilter = data.Data.PreferenceId.$oid;
-            var preferenceId = data.Data.PreferenceId.$oid;
-            $scope.toListingList(preferenceId);
-        });
-        
-        responsePromise.error(function(data, status, headers, config) {
-            console.log("Succeeded response - error");
-        }); 
-    }
+    
     }
 
 ]);
@@ -1828,6 +1777,10 @@ socrexControllers.controller('contactinfoCtrl', ['$scope' , '$http', '$location'
             $scope.sendEmailConcierge("Expert sign up",$rootScope.userId, $rootScope.fullName, $rootScope.userPhone);
             
         }
+
+        $scope.redirectToProcess = function(){
+            $location.path( "/process", false );
+        }
         
 
         $scope.sendEmailConcierge = function(listingid, useremail, username, userphone) {
@@ -1850,6 +1803,7 @@ socrexControllers.controller('contactinfoCtrl', ['$scope' , '$http', '$location'
             });
             console.log(responsePromise)
             $modalInstance.close(true);
+            $scope.redirectToProcess();
         }
     }
 
