@@ -15,6 +15,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/preferencesForm', {templateUrl: 'partials/preferencesForm.html'});
 
   $routeProvider.when('/', {templateUrl: 'partials/landing.html', controller: 'initialFormCtrl'});
+  $routeProvider.when('/process', {templateUrl: 'partials/process.html', controller: 'initialFormCtrl'});
   $routeProvider.when('/listings', {templateUrl: 'partials/listingsList.html', controller: 'listingsListCtrl'});
   $routeProvider.when('/expert', {templateUrl: 'partials/expert.html', controller: 'expertCtrl'});
   $routeProvider.when('/listings/preference/:preferenceId/page/:pageNumber', {templateUrl: 'partials/listingsList.html', controller: 'listingsListCtrl'});
