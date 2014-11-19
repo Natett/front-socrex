@@ -1147,6 +1147,10 @@ socrexControllers.controller('initialFormCtrl', ['$scope' , '$rootScope' , '$htt
     $rootScope.prefs = {};
     $rootScope.filter = {};
 
+    $scope.onClickFindAPlaceButton = function(){
+        $location.path( "/expert");   
+    }
+
     $scope.onSubmitInitial = function(){
         // optionaly change date format handling in back-end
 
@@ -1731,4 +1735,76 @@ socrexControllers.controller('detailsCtrl', ['$scope' , '$http', '$location', '$
         $scope.validateSelectedListing();
         
     }
+]);
+
+
+socrexControllers.controller('expertCtrl', ['$scope' , '$http', '$location', '$rootScope', '$modal' ,
+    function($scope,$http, $location,$rootScope, $modal) {
+    
+        $scope.onClickInterested = function(){
+            
+            var modalInstance = $modal.open({
+                templateUrl: 'partials/modals/contactinfo.html',
+                controller: 'contactinfoCtrl'
+                
+            });
+        }
+
+        
+
+    
+    }
+
+]);
+
+
+socrexControllers.controller('contactinfoCtrl', ['$scope' , '$http', '$location', '$rootScope', '$modalInstance' ,
+    function($scope,$http, $location, $rootScope, $modalInstance) {
+
+        // $scope.ok = function () {
+        // $modalInstance.close($scope.selected.item);
+        // };
+
+        // $scope.cancel = function () {
+        // $modalInstance.dismiss('cancel');
+        // };
+
+        $scope.onSubmitConcierge = function(user){
+
+            $rootScope.fullName = user.fullname;
+            $rootScope.userId = user.email;
+            $rootScope.userPhone = user.phone;
+            $scope.sendEmailConcierge("Expert sign up",$rootScope.userId, $rootScope.fullName, $rootScope.userPhone);
+            
+        }
+
+        $scope.redirectToProcess = function(){
+            $location.path( "/process", false );
+        }
+        
+
+        $scope.sendEmailConcierge = function(listingid, useremail, username, userphone) {
+            // dummy filters
+            //var listingId = '542c3f86b43c2c00029a8211';
+            listing_url = "none"
+                
+            var responsePromise = $http({
+                //url: 'http://127.0.0.1:5000/listings/filter', 
+                url: 'http://byopapp-api-stage.herokuapp.com/conciergeEmail',
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: {
+                    email: useremail,
+                    name: username,
+                    phone: userphone,
+                    listingurl: listing_url,
+                    listingid: listingid
+                }
+            });
+            console.log(responsePromise)
+            $modalInstance.close(true);
+            $scope.redirectToProcess();
+        }
+    }
+
 ]);

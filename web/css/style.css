@@ -448,7 +448,8 @@ input[type="color"]:focus,
 
 .signup{
 	padding: 12px 12px 10px !important;
-	margin-top: 19px;
+	margin-top: 8px;
+	margin-bottom: 8px;
 	margin-left: 15px;
 	background-color: #3399ff !important;
 	color: #fff !important;
@@ -463,6 +464,10 @@ input[type="color"]:focus,
 .signup:focus,
 .signup:active{
 	background-color: #117be5 !important;
+}
+
+.modal {
+	height: 600px;
 }
 
 #modal-signin .modal-header h4,
@@ -665,6 +670,28 @@ input[type="color"]:focus,
     text-align: center;
 }
 
+.expert-table{
+	margin-right: auto;
+	margin-left: auto;
+	border-collapse: separate;
+    border-spacing: 25px;
+    text-align: center;
+}
+
+.expert-button-container{
+	width: 100%;
+	padding-top: 20px;
+}
+
+.expert-info{
+	font-size: 18px;
+	text-align: left;
+}
+
+.expert-container{
+	padding-top: 60px;
+}
+
 .the-search{
 	width: 100%;
 	padding-top: 40px;
@@ -776,6 +803,16 @@ input[type="color"]:focus,
 .service-container{
 	display: block;
 	margin-bottom: 20px;
+}
+
+.service-container-text{
+	display: block;
+	margin-bottom: 20px;
+	background: gainsboro;
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	height: 400px;
 }
 
 .service-container:hover > .service-icon a{
