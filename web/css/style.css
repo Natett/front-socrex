@@ -334,9 +334,9 @@ input[type="color"]:focus,
 	color: #898ba2;
 	font-size: 16px;
 	text-shadow: none;
-	padding-top: 30px;
+	/*padding-top: 30px;*/
 	padding-right: 20px;
-	padding-bottom: 30px;
+	/*padding-bottom: 30px;*/
 	padding-left: 20px;
 	-webkit-transition: all 0.2s ease-in-out;
 	   -moz-transition: all 0.2s ease-in-out;
@@ -702,7 +702,7 @@ input[type="color"]:focus,
 #header.heading{
 	position: relative;
 	min-height: 200px;
-	padding-top: 140px;
+	padding-top: 100px;
 	padding-bottom: 40px;
 	-webkit-background-size: cover !important;
 	   -moz-background-size: cover !important;
