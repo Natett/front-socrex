@@ -40,10 +40,13 @@
 	[1. GLOBAL STYLE]
 	==================
 */
+
+
+
 body{
 	margin: 0;
 	padding: 0;
-	font-family: 'Myriad Pro Regular' , MyriadPro-Regular, sans-serif;
+	font-family: 'Roboto' , sans-serif;
 	font-size: 14px;
 	line-height: 24px;
 	color: #6b6e80;
@@ -95,7 +98,7 @@ body{
 }
 
 h1,h2,h3,h4,h5,h6{
-	font-family: 'Myriad Pro Regular' , MyriadPro-Regular, sans-serif;
+	font-family: 'Open Sans Condensed' , sans-serif;
 	font-weight: 800;
 }
 
@@ -1519,7 +1522,7 @@ input[type="color"]:focus,
 }
 
 .sidebar .widget .widget-header h3{
-	font-family: 'Myriad Pro Regular' , MyriadPro-Regular, sans-serif;
+	font-family: 'Roboto' , sans-serif;
 	color: #7f8c8d;
 	font-size: 16px;
 	font-weight: 700;
@@ -1887,7 +1890,7 @@ input[type="color"]:focus,
 	padding: 0;
 	margin-top: 0;
 	margin-bottom: 0;
-	font-family: 'Myriad Pro Regular' , MyriadPro-Regular, sans-serif;
+	font-family: 'Roboto' , sans-serif;
 	font-size: 14px;
 	line-height: 18px;
 	font-weight: 600;
@@ -2321,7 +2324,7 @@ input[type="color"]:focus,
 }
 
 #footer .widget h2{
-	font-family: 'Myriad Pro Regular' , MyriadPro-Regular, sans-serif;
+	font-family: 'Roboto' , sans-serif;
 	font-size: 32px;
 	line-height: 36px;
 	font-weight: 800;
@@ -2330,7 +2333,7 @@ input[type="color"]:focus,
 }
 
 #footer .widget h3{
-	font-family: 'Myriad Pro Regular' , MyriadPro-Regular, sans-serif;
+	font-family: 'Roboto' , sans-serif;
 	font-size: 20px;
 	line-height: 26px;
 	font-weight: 800;
@@ -2380,7 +2383,7 @@ input[type="color"]:focus,
 #footer .widget.widget_recent_comments > ul > li > a:before,
 #footer .widget.widget_recent_comments ul > li > a:before {
 	content: "";
-	font-family: 'Myriad Pro Regular' , MyriadPro-Regular, sans-serif;
+	font-family: 'Roboto' , sans-serif;
 	padding-right: 0;
 }
 
