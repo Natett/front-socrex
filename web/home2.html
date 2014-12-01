@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html ng-app="socrex">
+<head>
+
+    <script type="text/javascript">
+    function getRandomNumber(){
+      return Math.floor(Math.random() * 1000);
+    }
+    </script>
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    
+    <!--<script>document.write('<script src="js/app.js?dev=' + getRandomNumber() + '"\><\/script>');</script>-->
+    <!-- Modal Styles -->
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"/>
+    <link type="text/css" rel="stylesheet" href="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/css/datepicker3.css"/>
+    <!-- bxSlider CSS file -->
+    <link type="text/css" href="./lib/jquery.bxslider/jquery.bxslider.css" rel="stylesheet" />
+    <!-- simplePagination.js CSS file -->
+    <link type="text/css" rel="stylesheet" href="./lib/simplePagination.js-master/simplePagination.css"/>
+  	<!-- jRating CSS file -->
+  	<link type="text/css" rel="stylesheet" href="./lib/jRating-master/jquery/jRating.jquery.css"/>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
+    <link href="css/responsive.css" rel="stylesheet">
+    <meta charset=utf-8 />
+    <title>Trotter - Expert help. No hassle. Less money.</title>
+    <link rel="icon" 
+      type="image/png" 
+      href="img/logos/House-Dark-NoName.png">
+</head>
+
+<body id="top">
+
+    <!-- begin:navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-top">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button> -->
+          <a class="navbar-brand" href="#"><img src="img/logos/House-White-WithName.png" alt="socrex"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling   -->
+        <div class="collapse navbar-collapse" id="navbar-top">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#/aboutus">About Us</a></li>
+            <li><a href="#/aboutus">Log in</a></li>
+            <li><a href="#/aboutus">Become a Trotter</a></li>
+            <li><a href="#/aboutus">Blog</a></li>
+            <!-- <li class="active"><a href="index.html">Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Property <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="search.html">Search (Grid View)</a></li>
+                <li><a href="search_list.html">Search (List View)</a></li>
+                <li><a href="category.html">Category (Grid View)</a></li>
+                <li><a href="category_list.html">Category (List View)</a></li>
+                <li><a href="single.html">Single page</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="blog.html">Blog Archive</a></li>
+                <li><a href="blog_single.html">Blog Single</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+              </ul>
+            </li>
+            <li><a href="#" class="signup" data-toggle="modal" data-target="#modal-signin">Sign in</a></li>
+            <li><a href="#" class="signup" data-toggle="modal" data-target="#modal-signup">Sign up</a></li>-->
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav>
+    <!-- end:navbar -->
+
+    <!-- <img src="./img/logos/socrexsmall2.png" alt="(socrexlogo)" > -->
+    <!-- <div ng-view></div> -->
+	
+	<div data-ride="carousel" class="carousel slide carousel-fade ng-scope" id="header">
+      <div class="carousel-inner">
+        <div style="background-image: url(img/walking.jpg); height:100%; opacity: .9;" class="item active">
+          <div class="landing-message">
+            <h1>RENT YOUR NEW PLACE, FROM ANYWHERE IN THE WORLD</h1>
+            <h3>Expert help. Save time. Less money.</h3>
+          </div>
+        </div>
+    </div>
+    <!-- end:header -->
+
+    
+
+    <!-- begin:service -->
+<!--  <div id="service">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="service-container">
+              <div class="service-icon">
+                <div><i class="fa fa-search"></i></div>
+              </div>
+              <div class="service-content">
+                <p class="landing-info-title">Browse and learn</p>
+                <p class="landing-info">Identify apartments you like in neighborhoods great for you.</p>
+              </div>
+            </div>
+          </div>
+-->
+          <!-- break -->
+<!--          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="service-container">
+              <div class="service-icon">
+                <div><i class="fa fa-user"></i></div>
+              </div>
+              <div class="service-content">
+                <p class="landing-info-title">Scout and pick</p>
+                <p class="landing-info">We verify availability and requirements, book showings and even provide video tours just for you.</p>
+              </div>
+            </div>
+          </div>
+-->          <!-- break -->
+ <!--         <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="service-container">
+              <div class="service-icon">
+                <div><i class="fa fa-key"></i></div>
+              </div>
+              <div class="service-content">
+                <p class="landing-info-title">Click and rent</p>
+                <p class="landing-info">We help you close your rental lease online.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  -->  <!-- end:service -->
+
+    
+  
+	
+	<div id="sub_title">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="heading-title bg-white">
+					  <h3>Hire a trotter to get you into your new place for less than a night in a hotel</h3>
+					  <button type="button" class="btn btn-default navbar-btn">Hire a trotter</button>
+					  <h3>Or</h3>
+					  <button type="button" class="btn btn-default navbar-btn">Search yourself</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="what_is">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="heading-title bg-white">
+						<h3>What is a trotter?</h3>
+						<h4>Glad you asked. Trotters are locals, on a mission to find people great apartments </h4>
+						<div class="splitter"></div>
+						<div class="col-md-4">
+							<iframe width="325" height="255" src="//www.youtube.com/embed/kPBzTxZQG5Q?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+						</div>
+						<div class="col-md-8">
+							<ul>
+								<li>Consult with a trotter about where to live and about what you can afford</li>
+								<li>Save time by having your trotter search and verify listings from dozens of sites</li>
+								<li>Skip the house hunting trip. A trotter can film a showing for you and help you rent remotely</li>
+								<li>Trotters only care about your interests, no hidden agendas</li>
+								<li>Save hundreds compared to using a traditional realtor</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="how_works">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="heading-title bg-white">
+						<h3>How it works</h3>
+						<div class="col-md-12">
+							<div class="box left">
+								<p><span>1.</span> First of all, tell your trotter a few things about your needs.</p>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="box right">
+								<p><span>2.</span> Your trotter will point out a short list of units he thinks are right for you, they have access to thousands of listings on all major sites. Trotters don't have exclusive listings, so they won't push specific units on you. </p>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="box left">
+								<p><span>3.</span>Choose which ones you would like him to confirm available and book showings. He will make all the calls for you and manage your showing schedule</p>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="box right">
+								<p><span>4.</span>If you're not in town, or don't have time for showings; send your trotter! He will film the tour for you objectively, so you can make the right call.</p>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="box left">
+								<p><span>5.</span>Once you’ve found a place you like, your trotter will help you handle the paperwork and close the rental.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="our_rates">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="heading-title bg-white">
+						<h3>Our rates</h3>
+						<div class="splitter"></div>
+						<h4>Trotters work on a single, flat rate for the duration of your apartment search and not a percentage of the rent.</h4>
+						<h4>At $149, we save you hundreds over alternatives. <button type="button" class="btn btn-default navbar-btn">Hire a trotter</button></h4>
+						<h4>We will gladly go to a showing and film them on your behalf, so you can make your decision faster and remotely for an additional $49 per showing.</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="col-md-3 box">
+						<h4 class="blue">Example cost with Trotter</h4>
+						<div class="under col-md-7">Base fee</div>
+						<div class="under col-md-5">$149</div>
+						<div class="under col-md-7">3 virtual showings (optional)</div>
+						<div class="under col-md-5">3 x $49</div>
+						<div class="under col-md-7">&nbsp;</div>
+						<div class="under col-md-5">&nbsp;</div>
+						<div class="border col-md-6"></div>
+						<div class="under total col-md-7">Total</div>
+						<div class="under total col-md-5">$296</div>
+					</div>
+					<div class="col-md-3 box">
+						<h4 class="gray">Example cost with house hunting trip (Boston)</h4>
+						<div class="under col-md-7">Realtor</div>
+						<div class="under col-md-5">$2,100</div>
+						<div class="under col-md-7">Plane tickets</div>
+						<div class="under col-md-5">$350</div>
+						<div class="under col-md-7">Hotel</div>
+						<div class="under col-md-5">$400</div>
+						<div class="border col-md-6"></div>
+						<div class="under total col-md-7">Total</div>
+						<div class="under total col-md-5">$2,850</div>
+					</div>
+					<div class="col-md-5 text">
+						A trotter will save you hours of endless searching in multiple web sites and in frustrating back and fourth with landlords and realtors 
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	  <!-- begin:testimony -->
+   <div id="testimony" style="background-image: url(img/img01.jpg);">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div id="testislider" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="item active">
+                  <div class="testimony-container">
+                    <div class="testimony-image" style="background: url(img/team01.jpg)"></div>
+                    <div class="testimony-content">
+                      <h3>Jane Doe</h3>
+                      <blockquote>
+                        <p>Phasellus quis lectus metus, at posuere neque. Sed pharetra nibh eget orci convallis at posuere leo convallis</p>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="testimony-container">
+                    <div class="testimony-image" style="background: url(img/team02.jpg)"></div>
+                    <div class="testimony-content">
+                      <h3>Cen Lung</h3>
+                      <blockquote>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+                <div class="item">
+                  <div class="testimony-container">
+                    <div class="testimony-image" style="background: url(img/team03.jpg)"></div>
+                    <div class="testimony-content">
+                      <h3>Julia</h3>
+                      <blockquote>
+                        <p>Vivamus sit amet libero turpis, non venenatis urna. In blandit, odio convallis suscipit venenatis, ante ipsum cursus augue.</p>
+                      </blockquote>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a class="left carousel-control" href="#testislider" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" href="#testislider" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end:testimony -->
+	
+
+    <!-- begin:partner -->
+    <div id="partner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="heading-title bg-white">
+              <h3>Backed by</h3>
+            </div>
+            <div class="partner-images-container">
+              <img src="img/logos/socialatom.png">
+              <img src="img/logos/ruta-n.png">
+            </div>
+            <div class="heading-title bg-white">
+              <h3>As seen in</h3>
+            </div>
+            <div class="partner-images-container">
+              <img src="img/logos/bostonstartupsguide.png">
+              <img src="img/logos/pulsosocial.png">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end:partner -->
+
+	</div>
+	
+    <!-- begin:footer -->
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="widget">
+              <h3>Trotter Inc.</h3>
+              <address>
+                <strong>Contact information:</strong><br>
+                695 Atlantic Avenue, FL 9<br> Boston MA 02111<br>
+                <br>
+                Phone : +1 (617)-842-8225<br>
+                Email : questions@gotrotter.com
+              </address>
+            </div>
+          </div>
+          <!-- break -->
+          <!-- <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="widget">
+              <h3>Top Real Estate Listed</h3>
+              <ul class="list-unstyled">
+                <li><a href="#">Apartments</a></li>
+                <li><a href="#">Office</a></li>
+                <li><a href="#">Bungalows</a></li>
+                <li><a href="#">Serviced Residence</a></li>
+                <li><a href="#">Villa</a></li>
+              </ul>
+            </div>
+          </div> -->
+          <!-- break -->
+          <!-- <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="widget">
+              <h3>Top Agents Listed</h3>
+              <ul class="list-unstyled">
+                <li><a href="#">Lorenso</a></li>
+                <li><a href="#">Bardiman</a></li>
+                <li><a href="#">Tarjono noto boto limo</a></li>
+                <li><a href="#">Surti</a></li>
+                <li><a href="#">Ngatinem</a></li>
+              </ul>
+            </div>
+          </div> -->
+          <!-- break -->
+          <!-- <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="widget">
+              <h3>Features</h3>
+              <ul class="list-unstyled">
+                <li><a href="#">My Account</a></li>
+                <li><a href="#">How To</a></li>
+                <li><a href="#">Market Trend</a></li>
+                <li><a href="#">Android App</a></li>
+                <li><a href="#">IOS App</a></li>
+              </ul>
+            </div>
+          </div> -->
+          <!-- break -->
+        </div>
+        <!-- break -->
+
+        <!-- begin:copyright -->
+        <!-- <div class="row">
+          <div class="col-md-12 copyright">
+            <p>&copy; 2014 Mikha by <strong>avriqqlabs.</strong> All Right Reserved.</p>
+          </div>
+        </div> -->
+        <!-- end:copyright -->
+
+      </div>
+    </div>
+    <!-- end:footer -->
+
+    <!-- begin:modal-signin -->
+    <div class="modal fade" id="modal-signin" tabindex="-1" role="dialog" aria-labelledby="modal-signin" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Sign in</h4>
+          </div>
+          <div class="modal-body">
+            <form role="form">
+              <div class="form-group">
+                <label for="emailAddress">Email address</label>
+                <input type="email" class="form-control input-lg" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control input-lg" placeholder="Password">
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="forget"> Keep me logged in
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <p>Don't have account ? <a href="#modal-signup"  data-toggle="modal" data-target="#modal-signup">Sign up here.</a></p>
+            <input type="submit" class="btn btn-success btn-block btn-lg" value="Sign in">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end:modal-signin -->
+
+    <!-- begin:modal-signup -->
+    <div class="modal fade" id="modal-signup" tabindex="-1" role="dialog" aria-labelledby="modal-signup" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Sign up</h4>
+          </div>
+          <div class="modal-body">
+            <form role="form">
+              <div class="form-group">
+                <input type="email" class="form-control input-lg" placeholder="Enter email">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control input-lg" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control input-lg" placeholder="Confirm Password">
+              </div>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="agree"> Agree to our <a href="#">terms of use</a> and <a href="#">privacy policy</a>
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <p>Already have account ? <a href="#modal-signin" data-toggle="modal" data-target="#modal-signin">Sign in here.</a></p>
+            <input type="submit" class="btn btn-success btn-block btn-lg" value="Sign up">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end:modal-signup -->
+</body>
+
+  <!-- jquery 
+  <script type="text/javascript" src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  -->
+  <script>document.write('<link href="css/style.css?id=' + getRandomNumber() + '" rel="stylesheet">');</script>
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-route.js"></script>
+  <!-- bootstrap -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <!-- bootstrap datepicker js -->
+  <script type="text/javascript" src="http://eternicode.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+  <!-- Bootstrap components written in pure AngularJS by the AngularUI Team http://angular-ui.github.io/bootstrap/ -->
+  <script type="text/javascript" src="./lib/ui-bootstrap-tpls/ui-bootstrap-tpls-0.11.2.min.js"></script>
+  <!-- google maps Javascript file -->
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+  <!-- bxSlider Javascript file -->
+  <script type="text/javascript" src="./lib/jquery.bxslider/jquery.bxslider.min.js"></script>
+  <!-- simplePagination.js -->
+  <script type="text/javascript" src="./lib/simplePagination.js-master/jquery.simplePagination.js"></script>
+  <!-- http://esimakin.github.io/twbs-pagination/ -->
+  <script type="text/javascript" src="./lib/esimakin-twbs-pagination-0f5fa97/jquery.twbsPagination.js"></script>
+  <!-- jrating js -->
+  <script type="text/javascript" src="./lib/jRating-master/jquery/jRating.jquery.js"></script>
+  <script type="text/javascript" src="lib/checklist-model-master/checklist-model.js"></script>
+  <script>document.write('<script src="js/app.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <script>document.write('<script src="js/services.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <script>document.write('<script src="js/controllers.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <script>document.write('<script src="js/filters.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <script>document.write('<script src="js/directives.js?dev=' + getRandomNumber() + '"\><\/script>');</script>
+  <!--<script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/services.js"></script>
+  <script type="text/javascript" src="js/controllers.js"></script>
+  <script type="text/javascript" src="js/filters.js"></script>
+  <script type="text/javascript" src="js/directives.js"></script>-->
+
+  <script src="js/jquery.easing.js"></script>
+  <script src="js/jquery.jcarousel.min.js"></script>
+  <script src="js/imagesloaded.pkgd.min.js"></script>
+  <script src="js/masonry.pkgd.min.js"></script>
+  <script src="js/jquery.nicescroll.min.js"></script>
+  <script>
+    $(function() {
+      $( "#datepicker" ).datepicker();
+    });
+  </script>
+  
+</html>
+
